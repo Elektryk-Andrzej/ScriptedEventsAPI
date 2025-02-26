@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
+            Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{FA94121F-C3B2-462E-A741-9D90790DE268}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>ScriptedEventsAPI</RootNamespace>
+        <AssemblyName>ScriptedEventsAPI</AssemblyName>
+        <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System"/>
+        <Reference Include="System.Core"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="ActionAPI\ActionArgumentProcessor.cs" />
+        <Compile Include="ActionAPI\ActionArguments\Structures\Arguments.cs" />
+        <Compile Include="ActionAPI\ActionResponses\IActionResponse.cs" />
+        <Compile Include="ActionAPI\ActionResponses\MissingArgumentResponse.cs" />
+        <Compile Include="ActionAPI\ActionResponses\SuccessResponse.cs" />
+        <Compile Include="ActionAPI\Actions\BaseAction.cs" />
+        <Compile Include="ActionAPI\Actions\PrintAction.cs" />
+        <Compile Include="ActionAPI\ActionArguments\BaseActionArgument.cs" />
+        <Compile Include="ActionAPI\ActionArguments\ParsedStringArgument.cs" />
+        <Compile Include="EaqoldHelpers\Nullable.cs" />
+        <Compile Include="Other\Log.cs" />
+        <Compile Include="ScriptAPI\Script.cs" />
+        <Compile Include="TokenizingAPI\Contexts\ActionContext.cs" />
+        <Compile Include="TokenizingAPI\Contexts\BaseContext.cs" />
+        <Compile Include="TokenizingAPI\Tokenizer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\ActionTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\BaseTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\CommentTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\ControlFlowTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\FlagTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\LiteralValueTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\LiteralVariableTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\ParenthesesTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\PlayerVariableTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLinker.cs" />
+        <Compile Include="TokenizingAPI\Tokens\ActionToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\BaseToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\CommentToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\ControlFlowToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\EndLineToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\FlagToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\LiteralValueToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\LiteralVariableToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\ParenthesesToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\PlayerVariableToken.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs"/>
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+
+</Project>

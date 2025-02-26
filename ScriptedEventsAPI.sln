@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptedEventsAPI", "ScriptedEventsAPI.csproj", "{FA94121F-C3B2-462E-A741-9D90790DE268}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA94121F-C3B2-462E-A741-9D90790DE268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA94121F-C3B2-462E-A741-9D90790DE268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA94121F-C3B2-462E-A741-9D90790DE268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA94121F-C3B2-462E-A741-9D90790DE268}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
