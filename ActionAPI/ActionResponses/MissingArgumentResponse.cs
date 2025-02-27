@@ -1,6 +1,6 @@
 ﻿namespace ScriptedEventsAPI.ActionAPI.ActionResponses;
 
-public struct MissingArgumentResponse(string argName) : IActionResponse
+public class MissingArgumentResponse(string argName) : IActionResponse
 {
-    
+    public string ArgName { get; set; } = argName;
 }

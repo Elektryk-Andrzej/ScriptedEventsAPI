@@ -1,6 +1,3 @@
 ﻿namespace ScriptedEventsAPI.ActionAPI.ActionResponses;
 
-public interface IActionResponse
-{
-    
-}
+public interface IActionResponse;

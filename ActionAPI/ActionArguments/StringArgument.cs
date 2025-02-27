@@ -3,11 +3,11 @@ using ScriptedEventsAPI.TokenizingAPI.Tokens;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments;
 
-public class ParsedStringArgument(string name) : BaseActionArgument(name)
+public class StringArgument(string name) : BaseActionArgument(name)
 {
     public string Value { get; set; } = string.Empty;
     
-    public static implicit operator string(ParsedStringArgument arg) => arg.Value;
+    public static implicit operator string(StringArgument arg) => arg.Value;
 
     public override bool CanConvert(BaseToken token)
     {

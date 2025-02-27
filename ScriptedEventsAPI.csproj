@@ -47,7 +47,7 @@
         <Compile Include="ActionAPI\Actions\BaseAction.cs" />
         <Compile Include="ActionAPI\Actions\PrintAction.cs" />
         <Compile Include="ActionAPI\ActionArguments\BaseActionArgument.cs" />
-        <Compile Include="ActionAPI\ActionArguments\ParsedStringArgument.cs" />
+        <Compile Include="ActionAPI\ActionArguments\StringArgument.cs" />
         <Compile Include="EaqoldHelpers\Nullable.cs" />
         <Compile Include="Other\Log.cs" />
         <Compile Include="ScriptAPI\Script.cs" />

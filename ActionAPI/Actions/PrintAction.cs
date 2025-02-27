@@ -10,12 +10,12 @@ public class PrintAction : BaseAction
     public override string Description => "Prints the text provided to the server console.";
 
     public override BaseActionArgument[] RequiredArguments { get; } = [
-        new ParsedStringArgument("text")
+        new StringArgument("text")
     ];
     
     public override IActionResponse Execute()
     {
-        var text = ArgumentsProvided.Get<ParsedStringArgument>("text");
+        var text = ArgumentsProvided.Get<StringArgument>("text");
         Console.WriteLine(text);
         return new SuccessResponse();
     }
