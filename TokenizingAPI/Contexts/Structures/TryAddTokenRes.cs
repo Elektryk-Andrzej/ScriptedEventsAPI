@@ -1,0 +1,38 @@
+﻿using System;
+
+namespace ScriptedEventsAPI.TokenizingAPI.Contexts.Structures;
+
+public class TryAddTokenRes
+{
+    public static TryAddTokenRes Continue()
+    {
+        return new TryAddTokenRes()
+        {
+            ShouldContinueExecution = true,
+            HasErrored = false,
+        };
+    }
+
+    public static TryAddTokenRes Error(string errorMessage)
+    {
+        return new TryAddTokenRes()
+        {
+            HasErrored = true,
+            ShouldContinueExecution = false,
+            Message = errorMessage,
+        };
+    }
+
+    public static TryAddTokenRes End()
+    {
+        return new TryAddTokenRes()
+        {
+            ShouldContinueExecution = false,
+            HasErrored = false,
+        };
+    }
+    
+    public required bool ShouldContinueExecution;
+    public required bool HasErrored;
+    public string Message;
+}

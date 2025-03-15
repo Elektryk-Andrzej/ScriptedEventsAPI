@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ScriptedEventsAPI.Other;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.TokenizingAPI.TokenLexers;
 using ScriptedEventsAPI.TokenizingAPI.Tokens;
@@ -22,24 +23,19 @@ public class Tokenizer(Script script)
 
     public static List<BaseToken> GetTokensFromLine(string lineContent)
     {
-        return InternalGetTokensFromFileLine(lineContent.ToCharArray().ToList());
+        return InternalGetTokensFromFileLine(lineContent.ToCharArray());
     }
     
-    public static List<BaseToken> GetTokensFromLine(List<char> lineContent)
+    public static List<BaseToken> InternalGetTokensFromFileLine(char[] lineContent)
     {
-        return InternalGetTokensFromFileLine(lineContent);
-    }
-
-    public static List<BaseToken> InternalGetTokensFromFileLine(List<char> lineContent)
-    {
-        BaseTokenLexer? currentTokenLexer = default;
+        BaseTokenLexer? currentTokenLexer = null;
         List<BaseToken> tokens = [];
         bool isFirstChar = true;
 
-        for (var index = 0; index < lineContent.Count; index++)
+        for (var index = 0; index < lineContent.Length; index++)
         {
             var character = lineContent[index];
-            EaqoldHelpers.Nullable<char> nextChar = index + 1 < lineContent.Count 
+            char? nextChar = index + 1 < lineContent.Length 
                 ? lineContent[index + 1] 
                 : null;
             
@@ -51,12 +47,18 @@ public class Tokenizer(Script script)
                     continue;
                 }
 
-                if (nextChar.HasValue(out char c) && char.IsWhiteSpace(c))
+                if (nextChar.HasValue && char.IsWhiteSpace(nextChar.Value))
                 {
-                    Console.Out.WriteLine("");
                     continue;
                 }
 
+                if (currentTokenLexer.IsFinalStateValid().HasErrored(out var error))
+                {
+                    Log.Debug($"Error! Token lexer has errored! error: '{error}' | lexer: {currentTokenLexer} | rep: '{currentTokenLexer.Token.AsString}'");
+                    currentTokenLexer = null;
+                    break;
+                }
+                
                 tokens.Add(currentTokenLexer.Token);
                 currentTokenLexer = null;
             }
@@ -81,15 +83,16 @@ public class Tokenizer(Script script)
             switch (character)
             {
                 case '#':
-                    return [new CommentToken(), new EndLineToken()];
+                    currentTokenLexer = new CommentTokenLexer();
+                    continue;
                 case '!':
-                    currentTokenLexer = new FlagTokenLexer(character);
+                    currentTokenLexer = new FlagTokenLexer();
                     continue;
                 case '@':
-                    currentTokenLexer = new PlayerVariableTokenLexer(character);
+                    currentTokenLexer = new PlayerVariableTokenLexer();
                     continue;
                 case '$':
-                    currentTokenLexer = new LiteralVariableTokenLexer(character);
+                    currentTokenLexer = new LiteralVariableTokenLexer();
                     continue;
                 case '(':
                     currentTokenLexer = new ParenthesesTokenLexer();
@@ -108,7 +111,21 @@ public class Tokenizer(Script script)
                 continue;
             }
 
-            currentTokenLexer = new LiteralValueTokenLexer(character);
+            if (!char.IsWhiteSpace(character))
+            {
+                currentTokenLexer = new UnclassifiedValueTokenLexer(character);
+            }
+        }
+
+        if (currentTokenLexer is not null)
+        {
+            if (currentTokenLexer.IsFinalStateValid().HasErrored(out var error))
+            {
+                Log.Debug(
+                    $"Token lexer {currentTokenLexer} has failed to end its scanning. Error: '{error}'");    
+            }
+            
+            tokens.Add(currentTokenLexer.Token);
         }
 
         tokens.Add(new EndLineToken());

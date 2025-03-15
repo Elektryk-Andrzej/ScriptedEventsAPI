@@ -1,10 +1,12 @@
-﻿using ScriptedEventsAPI.TokenizingAPI.Tokens;
+﻿using System.Linq;
+using ScriptedEventsAPI.Other.OpRes;
+using ScriptedEventsAPI.TokenizingAPI.Tokens;
 
 namespace ScriptedEventsAPI.TokenizingAPI.TokenLexers;
 
 public class ParenthesesTokenLexer : BaseTokenLexer
 {
-    public int _numberOfOpenParentheses = 1;
+    private int _numberOfOpenParentheses = 1;
     
     public override BaseToken Token { get; set; } = new ParenthesesToken();
 
@@ -26,5 +28,11 @@ public class ParenthesesTokenLexer : BaseTokenLexer
         }
         
         base.TryAddChar(c, out shouldContinueExecution);
+    }
+
+    public override OpRes IsFinalStateValid()
+    {
+        ((ParenthesesToken)Token).Tokens = Tokenizer.GetTokensFromLine(Token.AsString);
+        return _numberOfOpenParentheses == 0;
     }
 }

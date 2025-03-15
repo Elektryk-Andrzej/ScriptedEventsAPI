@@ -1,5 +1,5 @@
 ﻿namespace ScriptedEventsAPI.TokenizingAPI.Tokens;
 
-public class LiteralValueToken : BaseToken
+public class UnclassifiedValueToken : BaseToken
 {
 }

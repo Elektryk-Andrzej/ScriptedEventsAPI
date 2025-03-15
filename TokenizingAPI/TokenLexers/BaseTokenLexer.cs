@@ -1,4 +1,5 @@
-﻿using ScriptedEventsAPI.TokenizingAPI.Tokens;
+﻿using ScriptedEventsAPI.Other.OpRes;
+using ScriptedEventsAPI.TokenizingAPI.Tokens;
 
 namespace ScriptedEventsAPI.TokenizingAPI.TokenLexers;
 
@@ -23,5 +24,15 @@ public abstract class BaseTokenLexer
 
     protected BaseTokenLexer()
     {
+    }
+
+    public override string ToString()
+    {
+        return GetType().Name;
+    }
+
+    public virtual OpRes IsFinalStateValid()
+    {
+        return true;
     }
 }

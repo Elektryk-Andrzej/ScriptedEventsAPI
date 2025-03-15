@@ -2,7 +2,7 @@
 
 namespace ScriptedEventsAPI.TokenizingAPI.TokenLexers;
 
-public class LiteralVariableTokenLexer(char initChar) : BaseTokenLexer(initChar)
+public class LiteralVariableTokenLexer: BaseTokenLexer
 {
     public override BaseToken Token { get; set; } = new LiteralVariableToken();
 

@@ -2,9 +2,9 @@
 
 namespace ScriptedEventsAPI.TokenizingAPI.TokenLexers;
 
-public class FlagTokenLexer(char initChar) : BaseTokenLexer(initChar)
+public class FlagTokenLexer : BaseTokenLexer
 {
-    public readonly char[] _structure = ['!', '-', '-'];
+    private readonly char[] _structure = ['!', '-', '-'];
     
     public override BaseToken Token { get; set; } = new FlagToken();
 

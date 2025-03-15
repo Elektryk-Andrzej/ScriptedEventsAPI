@@ -1,14 +1,14 @@
-﻿using ScriptedEventsAPI.ActionAPI.Actions;
+﻿using System;
+using System.Linq;
+using ScriptedEventsAPI.ActionAPI.Actions;
+using ScriptedEventsAPI.ActionAPI.Actions.BaseActions;
+using ScriptedEventsAPI.Other;
+using ScriptedEventsAPI.Other.OpRes;
+using UnityEngine;
 
 namespace ScriptedEventsAPI.TokenizingAPI.Tokens;
 
 public class ActionToken : BaseToken
 {
-    // todo: change after testing
-    public BaseAction Action { get; set; } = new PrintAction();
-    
-    public override void OnFinished()
-    {
-        // todo: change after testing
-    }
+    public BaseAction? Action { get; set; } = null;
 }

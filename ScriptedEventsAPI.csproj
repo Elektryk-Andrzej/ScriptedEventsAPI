@@ -34,32 +34,89 @@
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
+    <PropertyGroup>
+    <PostBuildEvent>copy /Y "C:\Users\Olgie\RiderProjects\ScriptedEventsAPI\bin\Release\ScriptedEventsAPI.dll" "C:\Users\Olgie\AppData\Roaming\EXILED\Plugins\dependencies\"</PostBuildEvent>
+</PropertyGroup>
     <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+          <HintPath>..\..\Desktop\EXILED REF\Assembly-CSharp-Publicized.dll</HintPath>
+        </Reference>
+        <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
+        </Reference>
+        <Reference Include="Assembly-CSharp-firstpass">
+          <HintPath>..\..\Desktop\EXILED REF\Assembly-CSharp-firstpass.dll</HintPath>
+        </Reference>
+        <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\CommandSystem.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="Exiled.API, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.API.dll</HintPath>
+        </Reference>
+        <Reference Include="Exiled.CreditTags, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.CreditTags.dll</HintPath>
+        </Reference>
+        <Reference Include="Exiled.CustomItems, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.CustomItems.dll</HintPath>
+        </Reference>
+        <Reference Include="Exiled.CustomRoles, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.CustomRoles.dll</HintPath>
+        </Reference>
+        <Reference Include="Exiled.Events, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.Events.dll</HintPath>
+        </Reference>
+        <Reference Include="Exiled.Loader, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.Loader.dll</HintPath>
+        </Reference>
+        <Reference Include="Exiled.Permissions, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.Permissions.dll</HintPath>
+        </Reference>
+        <Reference Include="NorthwoodLib, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\NorthwoodLib.dll</HintPath>
+        </Reference>
+        <Reference Include="PluginAPI, Version=13.1.5.0, Culture=neutral, processorArchitecture=Amd64">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\PluginAPI.dll</HintPath>
+        </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Core"/>
+        <Reference Include="UnityEngine.CoreModule">
+          <HintPath>..\..\Desktop\EXILED REF\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\YamlDotNet.dll</HintPath>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="ActionAPI\ActionArgumentProcessor.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Structures\Arguments.cs" />
+        <Compile Include="ActionAPI\ActionArguments\ActionArgumentProcessor.cs" />
+        <Compile Include="ActionAPI\ActionArguments\Arguments\BaseActionArgument.cs" />
+        <Compile Include="ActionAPI\ActionArguments\Arguments\DurationArgument.cs" />
+        <Compile Include="ActionAPI\ActionArguments\Arguments\StringArgument.cs" />
+        <Compile Include="ActionAPI\ActionArguments\Arguments\TimeSpanArgument.cs" />
+        <Compile Include="ActionAPI\ActionArguments\Structures\ProvidedArguments.cs" />
+        <Compile Include="ActionAPI\ActionIndex.cs" />
         <Compile Include="ActionAPI\ActionResponses\IActionResponse.cs" />
         <Compile Include="ActionAPI\ActionResponses\MissingArgumentResponse.cs" />
         <Compile Include="ActionAPI\ActionResponses\SuccessResponse.cs" />
-        <Compile Include="ActionAPI\Actions\BaseAction.cs" />
+        <Compile Include="ActionAPI\Actions\BaseActions\BaseAction.cs" />
+        <Compile Include="ActionAPI\Actions\BaseActions\StandardAction.cs" />
+        <Compile Include="ActionAPI\Actions\BaseActions\YieldingAction.cs" />
         <Compile Include="ActionAPI\Actions\PrintAction.cs" />
-        <Compile Include="ActionAPI\ActionArguments\BaseActionArgument.cs" />
-        <Compile Include="ActionAPI\ActionArguments\StringArgument.cs" />
+        <Compile Include="ActionAPI\Actions\Yielding\WaitAction.cs" />
         <Compile Include="EaqoldHelpers\Nullable.cs" />
+        <Compile Include="EaqoldHelpers\SafeCoroutines.cs" />
         <Compile Include="Other\Log.cs" />
+        <Compile Include="Other\OpRes\OpRes.cs" />
         <Compile Include="ScriptAPI\Script.cs" />
         <Compile Include="TokenizingAPI\Contexts\ActionContext.cs" />
         <Compile Include="TokenizingAPI\Contexts\BaseContext.cs" />
+        <Compile Include="TokenizingAPI\Contexts\Structures\TryAddTokenRes.cs" />
         <Compile Include="TokenizingAPI\Tokenizer.cs" />
         <Compile Include="TokenizingAPI\TokenLexers\ActionTokenLexer.cs" />
         <Compile Include="TokenizingAPI\TokenLexers\BaseTokenLexer.cs" />
         <Compile Include="TokenizingAPI\TokenLexers\CommentTokenLexer.cs" />
         <Compile Include="TokenizingAPI\TokenLexers\ControlFlowTokenLexer.cs" />
         <Compile Include="TokenizingAPI\TokenLexers\FlagTokenLexer.cs" />
-        <Compile Include="TokenizingAPI\TokenLexers\LiteralValueTokenLexer.cs" />
+        <Compile Include="TokenizingAPI\TokenLexers\UnclassifiedValueTokenLexer.cs" />
         <Compile Include="TokenizingAPI\TokenLexers\LiteralVariableTokenLexer.cs" />
         <Compile Include="TokenizingAPI\TokenLexers\ParenthesesTokenLexer.cs" />
         <Compile Include="TokenizingAPI\TokenLexers\PlayerVariableTokenLexer.cs" />
@@ -70,11 +127,14 @@
         <Compile Include="TokenizingAPI\Tokens\ControlFlowToken.cs" />
         <Compile Include="TokenizingAPI\Tokens\EndLineToken.cs" />
         <Compile Include="TokenizingAPI\Tokens\FlagToken.cs" />
-        <Compile Include="TokenizingAPI\Tokens\LiteralValueToken.cs" />
+        <Compile Include="TokenizingAPI\Tokens\UnclassifiedValueToken.cs" />
         <Compile Include="TokenizingAPI\Tokens\LiteralVariableToken.cs" />
         <Compile Include="TokenizingAPI\Tokens\ParenthesesToken.cs" />
         <Compile Include="TokenizingAPI\Tokens\PlayerVariableToken.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

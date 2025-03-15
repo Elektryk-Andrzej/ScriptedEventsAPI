@@ -7,8 +7,8 @@ public static class Log
     public static void Debug<T>(T obj)
     {
         if (obj is IFormattable formattable)
-            Console.WriteLine($"Debug: {formattable.ToString()}");
+            Exiled.API.Features.Log.Info(formattable.ToString());
         else
-            Console.WriteLine($"Debug: {obj?.ToString() ?? "Error"}");
+            Exiled.API.Features.Log.Info($"Debug: {obj?.ToString() ?? "Error"}");
     }
 }

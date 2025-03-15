@@ -1,31 +1,43 @@
-﻿using ScriptedEventsAPI.ActionAPI;
+﻿using System.Collections.Generic;
+using MEC;
+using ScriptedEventsAPI.ActionAPI;
 using ScriptedEventsAPI.ActionAPI.Actions;
+using ScriptedEventsAPI.ActionAPI.Actions.BaseActions;
 using ScriptedEventsAPI.Other;
+using ScriptedEventsAPI.TokenizingAPI.Contexts.Structures;
 using ScriptedEventsAPI.TokenizingAPI.Tokens;
 
 namespace ScriptedEventsAPI.TokenizingAPI.Contexts;
 
 public class ActionContext(ActionToken actionToken) : BaseContext
 {
-    public readonly BaseAction Action = actionToken.Action;
-    public readonly ActionArgumentProcessor Processor = new(actionToken.Action);
+    public readonly BaseAction Action = actionToken.Action!;
+    public readonly ActionArgumentProcessor Processor = new(actionToken.Action!);
 
-    public override bool TryAddToken(BaseToken token)
+    public override TryAddTokenRes TryAddToken(BaseToken token)
     {
-        if (!Processor.IsValidArgument(token, Action.ArgumentsProvided.Count, out var argument))
+        if (!Processor.IsValidArgument(token, Action.ArgsProvided.Count, out var argument))
         {
-            Log.Debug($"{token.Name} is not a valid argument, ending action parsing");
-            return false;
+            return TryAddTokenRes.Error($"{token.Name} is not a valid argument, ending action parsing");
         }
         
-        Log.Debug($"{token.Name} is valid, adding it to ArgumentsProvided of {Action.Name}");
-        argument.SetValueWith(token);
-        Action.ArgumentsProvided.Add(argument);
-        return true;
+        Log.Debug($"{argument.Name} is valid, adding it to ArgsProvided of {Action.Name}");
+        Action.ArgsProvided.Add(argument);
+        return TryAddTokenRes.Continue();
     }
 
-    public override void Execute()
+    public override IEnumerator<float> Execute()
     {
-        Action.Execute();
+        Log.Debug($"{Action.Name} context is executing.");
+
+        switch (Action)
+        {
+            case StandardAction stdAct:
+                stdAct.Execute();
+                yield break;
+            case YieldingAction yieldAct:
+                yield return Timing.WaitUntilDone(Timing.RunCoroutine(yieldAct.Execute()));
+                yield break;
+        }
     }
 }

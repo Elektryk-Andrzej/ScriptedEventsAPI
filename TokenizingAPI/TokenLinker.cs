@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Exiled.API.Features;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.TokenizingAPI.Contexts;
 using ScriptedEventsAPI.TokenizingAPI.Tokens;
@@ -24,25 +25,41 @@ public class TokenLinker(Script script)
         
         foreach (var token in script.Tokens)
         {
-            Console.WriteLine($"Linking token {token.Name}");
+            if (token is EndLineToken)
+            {
+                if (currentContext is not null)
+                {
+                    contexts.Add(currentContext);
+                    currentContext = null;
+                }
+                continue;
+            }
+            
             if (currentContext is not null)
             {
-                Console.WriteLine($"Adding token to context {currentContext.Name}");
-                if (currentContext.TryAddToken(token))
+                var result = currentContext.TryAddToken(token);
+                if (result.HasErrored)
+                {
+                    Log.Error($"Error linking '{currentContext}': {result.Message}");
+                    break;
+                }
+
+                if (result.ShouldContinueExecution)
                 {
                     continue;
                 }
                 
-                Console.WriteLine($"Context {currentContext.Name} ended");
+                Log.Info($"Context {currentContext.Name} ended");
                 contexts.Add(currentContext);
                 currentContext = null;
+                continue;
             }
 
             var newCtx = TokenToContext(token);
             if (newCtx is null)
             {
                 // add error
-                Console.WriteLine($"Could not link token {token.Name}");
+                Log.Info($"Could not link token {token.Name}");
                 continue;
             }
 
@@ -51,7 +68,7 @@ public class TokenLinker(Script script)
 
         if (currentContext is not null)
         {
-            Console.WriteLine($"Context {currentContext.Name} ended");
+            Log.Info($"Context {currentContext.Name} ended");
             contexts.Add(currentContext);
         }
         
