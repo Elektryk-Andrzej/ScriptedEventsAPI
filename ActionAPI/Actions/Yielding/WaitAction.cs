@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Exiled.API.Features;
 using MEC;
-using ScriptedEventsAPI.ActionAPI.ActionArguments;
-using ScriptedEventsAPI.ActionAPI.Actions.BaseActions;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
+using ScriptedEventsAPI.ActionAPI.BaseActions;
 
 namespace ScriptedEventsAPI.ActionAPI.Actions.Yielding;
 
@@ -11,15 +10,14 @@ public class WaitAction : YieldingAction
     public override string Name => "Wait";
     public override string Description => "Waits for a specified amount of time.";
 
-    public override BaseActionArgument[] RequiredArguments { get; } =
+    public override BaseActionArgument[] ExpectedArguments { get; } =
     [
         new TimeSpanArgument("duration")
     ];
     
     public override IEnumerator<float> Execute()
     {
-        var dur = ArgsProvided.GetOptional<TimeSpanArgument>("duration");
-        Log.Warn($"Value: {dur.Value.TotalSeconds}");
+        var dur = Args.Get<TimeSpanArgument>("duration");
         yield return Timing.WaitForSeconds((float)dur.Value.TotalSeconds);
     }
 }

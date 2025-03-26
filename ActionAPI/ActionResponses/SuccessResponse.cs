@@ -1,6 +1,3 @@
 ﻿namespace ScriptedEventsAPI.ActionAPI.ActionResponses;
 
-public struct SuccessResponse : IActionResponse
-{
-    
-}
+public struct SuccessResponse : IActionResponse;

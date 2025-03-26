@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using MEC;
 using ScriptedEventsAPI.EaqoldHelpers;
-using ScriptedEventsAPI.Other;
-using ScriptedEventsAPI.TokenizingAPI;
-using ScriptedEventsAPI.TokenizingAPI.Contexts;
-using ScriptedEventsAPI.TokenizingAPI.Tokens;
+using ScriptedEventsAPI.ScriptAPI.Contexting;
+using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+using ScriptedEventsAPI.VariableAPI.Structures;
 
 namespace ScriptedEventsAPI.ScriptAPI;
 
 public class Script
 {
+    public required string Name { get; set; }
     public string Content { get; set; } = string.Empty;
     public List<BaseToken> Tokens = [];
     public List<BaseContext> Contexts = [];
+    public HashSet<LiteralVariable> LocalLiteralVariables = [];
 
     public void Execute()
     {
@@ -26,13 +29,20 @@ public class Script
         new Tokenizer(this).GetAllFileTokens();
         Console.WriteLine(string.Join("\n", Tokens.Select(t => $"[{t.Name} - {string.Join("", t.Representation)}]")));
         
-        new TokenLinker(this).LinkAllTokens();
+        new Contexter(this).LinkAllTokens();
         Console.WriteLine(string.Join("\n", Contexts.Select(t => $"[{t.Name}]")));
         
         foreach (var context in Contexts)
         {
-            Log.Debug($"Executing {context.Name}...");
-            yield return Timing.WaitUntilDone(context.Execute());
+            switch (context)
+            {
+                case StandardContext standardContext:
+                    standardContext.Execute();
+                    break;
+                case YieldingContext yieldingContext:
+                    yield return Timing.WaitUntilDone(yieldingContext.Execute());
+                    break;
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 
@@ -9,18 +9,18 @@ public class ProvidedArguments
 {
     private List<BaseActionArgument> Arguments { get; set; } = [];
 
-    public T Get<T>(string name) 
-        where T : BaseActionArgument
+    public TArgument Get<TArgument>(string name) 
+        where TArgument : BaseActionArgument
     {
-        return Arguments.FirstOrDefault(a => a.Name == name) as T 
+        return Arguments.FirstOrDefault(a => a.Name == name) as TArgument 
                ?? throw new ArgumentOutOfRangeException(nameof(name), 
                    $"There is no assigned argument to this action with a name of '{name}'");
     }
     
-    public T? GetOptional<T>(string name) 
-        where T : BaseActionArgument
+    public TArgument? GetOptional<TArgument>(string name) 
+        where TArgument : BaseActionArgument
     {
-        return Arguments.SingleOrDefault(a => a.Name == name) as T;
+        return Arguments.SingleOrDefault(a => a.Name == name) as TArgument;
     }
 
     public void Add(BaseActionArgument argument)

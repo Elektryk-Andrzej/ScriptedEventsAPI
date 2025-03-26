@@ -1,8 +1,7 @@
-﻿using ScriptedEventsAPI.TokenizingAPI.Tokens;
+﻿namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
 
-namespace ScriptedEventsAPI.ActionAPI.ActionArguments;
-
-public abstract class BaseActionArgument(string name)
+public abstract class BaseActionArgument(string name, bool required = true)
 {
     public string Name { get; private set; } = name;
+    public bool Required { get; private set; } = required;
 }

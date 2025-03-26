@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ScriptedEventsAPI.ActionAPI.Actions;
-using ScriptedEventsAPI.ActionAPI.Actions.BaseActions;
-using ScriptedEventsAPI.Other;
+using ScriptedEventsAPI.ActionAPI.BaseActions;
+using ScriptedEventsAPI.OtherStructures;
 
 namespace ScriptedEventsAPI.ActionAPI;
 
@@ -32,7 +31,7 @@ public static class ActionIndex
     {
         if (NameToActionIndex.ContainsKey(action.Name))
         {
-            Log.Debug("action is already registered");
+            Logger.Debug("action is already registered");
             return;
         }
         

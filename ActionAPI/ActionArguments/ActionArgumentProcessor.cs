@@ -1,93 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ScriptedEventsAPI.ActionAPI.ActionArguments;
-using ScriptedEventsAPI.ActionAPI.Actions;
-using ScriptedEventsAPI.ActionAPI.Actions.BaseActions;
-using ScriptedEventsAPI.Other;
-using ScriptedEventsAPI.Other.OpRes;
-using ScriptedEventsAPI.TokenizingAPI.Tokens;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
+using ScriptedEventsAPI.ActionAPI.BaseActions;
+using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.ScriptAPI;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
-namespace ScriptedEventsAPI.ActionAPI;
+namespace ScriptedEventsAPI.ActionAPI.ActionArguments;
 
-public class ActionArgumentProcessor(BaseAction action)
+public class ActionArgumentProcessor(BaseAction action, Script scr)
 {
-    public BaseAction Action { get; set; } = action;
-
-    public bool IsValidArgument(BaseToken token, int index, out BaseActionArgument argument) 
+    private Dictionary<Type, Func<BaseToken, string, (Result, BaseActionArgument)>> Converters => new()
     {
-        if (index >= Action.RequiredArguments.Length)
+        { typeof(TextArgument), (t, n) => (TryConvert(t, n, out TextArgument arg), arg) },
+        { typeof(DurationArgument), (t, n) => (TryConvert(t, n, out DurationArgument arg), arg) },
+        { typeof(TimeSpanArgument), (t, n) => (TryConvert(t, n, out TimeSpanArgument arg), arg) },
+    };
+
+    public Result IsValidArgument(BaseToken token, int index, out BaseActionArgument argument) 
+    {
+        if (index < action.ExpectedArguments.Length)
         {
-            Log.Debug("Provided index is too big.");
-            argument = null!;
-            return false;
+            return TryConvertGeneral(token, action.ExpectedArguments[index], out argument);
         }
         
-        var res = TryConvertGeneral(token, Action.RequiredArguments[index], out argument);
-        if (argument is StringArgument stringArgument)
-        {
-            Log.Debug($"CHECKING OUT VAL {stringArgument.Value}");
-        }
-        
-        return res;
+        argument = null!;
+        return $"Action {action.Name} does not expect more arguments than {action.ExpectedArguments.Length}.";
     }
 
-    public static bool TryConvertGeneral<T>(BaseToken token, T argument, out T resultArg)
-        where T : BaseActionArgument
+    public Result TryConvertGeneral<TArgument>(BaseToken token, TArgument argument, out TArgument resultArg)
+        where TArgument : BaseActionArgument
     {
         resultArg = null!;
-        
-        var converters = new Dictionary<Type, Func<BaseToken, string, (OpRes, BaseActionArgument)>>
+
+        return argument switch
         {
-            { typeof(StringArgument), (t, n) => (TryConvert(t, n, out StringArgument arg), arg) },
-            { typeof(DurationArgument), (t, n) => (TryConvert(t, n, out DurationArgument arg), arg) },
-            { typeof(TimeSpanArgument), (t, n) => (TryConvert(t, n, out TimeSpanArgument arg), arg) },
+            TextArgument stringArgument => Convert(stringArgument, out resultArg),
+            DurationArgument durationArgument => Convert(durationArgument, out resultArg),
+            TimeSpanArgument timeSpanArgument => Convert(timeSpanArgument, out resultArg),
+            _ => $"No converter for {typeof(TArgument)} found."
         };
 
-        switch (argument)
-        {
-            case StringArgument stringArgument:
-                return Convert(stringArgument, out resultArg);
-            case DurationArgument durationArgument:
-                return Convert(durationArgument, out resultArg);
-            case TimeSpanArgument timeSpanArgument:
-                return Convert(timeSpanArgument, out resultArg);
-        }
-
-        Log.Debug($"No converter for {typeof(T)} found.");
-        return false;
-
-        bool Convert<TConv>(TConv inArg, out T outArg)
-            where TConv : BaseActionArgument
+        Result Convert<TArgConv>(TArgConv inArg, out TArgument outArg)
+            where TArgConv : BaseActionArgument
         {
             outArg = null!;
-            if (!converters.TryGetValue(typeof(TConv), out var converter))
+            if (!Converters.TryGetValue(typeof(TArgConv), out var converter))
             {
-                return false;
+                return $"No converter for {typeof(TArgConv)} found.";
             }
             
             var (result, resArg) = converter(token, inArg.Name);
-            if (result.HasErrored(out var error) || resArg is not T actionArgumentWithValue)
+            if (result.HasErrored())
             {
-                Log.Debug($"Converted argument {inArg.Name} to {typeof(TConv)} failed. Reason: {error}");
-                return false;
+                return result;
             }
-            
-            Log.Debug($"arg changed to {typeof(TConv).Name}");
+
+            if (resArg is not TArgument actionArgumentWithValue)
+            {
+                throw new Exception($"Converter for {typeof(TArgConv)} returned a value of type not matching {typeof(TArgument)}.");
+            }
 
             outArg = actionArgumentWithValue;
-            if (outArg is StringArgument stringArgument)
-            {
-                Log.Debug($"string! {stringArgument.Value}");
-            }
             return true;
         }
     }
 
-
-    public static OpRes TryConvert(BaseToken token, string argName, out DurationArgument argument)
+    public static Result TryConvert(BaseToken token, string argName, out DurationArgument argument)
     {
-        argument = default!;
+        argument = null!;
         
         if (token is not UnclassifiedValueToken valueToken)
         {
@@ -107,38 +89,39 @@ public class ActionArgumentProcessor(BaseAction action)
         return true;
     }
     
-    public static OpRes TryConvert(BaseToken token, string argName, out StringArgument argument)
+    public Result TryConvert(BaseToken token, string argName, out TextArgument argument)
     {
         switch (token)
         {
             case ParenthesesToken parenthesesToken:
-                argument = new(argName)
-                {
-                    Value = parenthesesToken.AsString
-                };
-                break;
+                argument = new(argName, () => parenthesesToken.AsString);
+                return true;
             case UnclassifiedValueToken valueToken:
-                argument = new(argName)
+                argument = new(argName, () => valueToken.AsString);
+                return true;
+            case LiteralVariableToken literalVariableToken:
+                argument = new(argName, () =>
                 {
-                    Value = valueToken.AsString
-                };
-                break;
+                    var variable = scr.LocalLiteralVariables.FirstOrDefault(v => v.Name == literalVariableToken.AsString);
+                    return variable is not null
+                        ? variable.Value
+                        : $"${literalVariableToken.AsString}";
+                });
+                
+                return true;
             default:
                 argument = null!;
                 return false;
         }
-        
-        Log.Debug($"arg: '{argument.Value}'");
-        return true;
     }
     
-    public static OpRes TryConvert(BaseToken token, string argName, out TimeSpanArgument argument)
+    public static Result TryConvert(BaseToken token, string argName, out TimeSpanArgument argument)
     {
         argument = null!;
         var unitIndex = token.Representation.FindIndex(char.IsLetter);
         if (unitIndex == -1)
         {
-            return new(false, "No unit provided.");
+            return "No unit provided.";
         }
         
         var valuePart = token.Representation.Take(unitIndex).ToArray();

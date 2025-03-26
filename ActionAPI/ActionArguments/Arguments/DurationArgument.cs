@@ -1,7 +1,6 @@
 ﻿using System;
-using ScriptedEventsAPI.TokenizingAPI.Tokens;
 
-namespace ScriptedEventsAPI.ActionAPI.ActionArguments;
+namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
 
 public class DurationArgument(string name) : BaseActionArgument(name)
 {
