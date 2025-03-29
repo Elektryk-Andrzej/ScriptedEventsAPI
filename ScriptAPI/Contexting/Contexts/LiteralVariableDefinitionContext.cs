@@ -24,7 +24,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
         
         if (!_hasEqualsSignBeenVerified)
         {
-            if (token.AsString != "=")
+            if (token.AsString != "::")
             {
                 return TryAddTokenRes.Error(
                     "When a line starts with a variable, the only possibility is setting said variable to a value, " +

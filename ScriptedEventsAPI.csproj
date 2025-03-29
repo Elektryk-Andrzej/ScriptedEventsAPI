@@ -104,6 +104,12 @@
         <Compile Include="ActionAPI\BaseActions\StringReturningStandardAction.cs" />
         <Compile Include="ActionAPI\BaseActions\StandardAction.cs" />
         <Compile Include="ActionAPI\BaseActions\YieldingAction.cs" />
+        <Compile Include="ConditionAPI\ConditionElements\Clause.cs" />
+        <Compile Include="ConditionAPI\ConditionElements\Operator.cs" />
+        <Compile Include="ConditionAPI\ConditionElements\OperatorType.cs" />
+        <Compile Include="ConditionAPI\ConditionEvaluator.cs" />
+        <Compile Include="ConditionAPI\ConditionElements\IConditionElement.cs" />
+        <Compile Include="ConditionAPI\ConditionElements\Operand.cs" />
         <Compile Include="EaqoldHelpers\Nullable.cs" />
         <Compile Include="EaqoldHelpers\SafeCoroutines.cs" />
         <Compile Include="OtherStructures\Either.cs" />
@@ -142,6 +148,9 @@
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="ConditionAPI\Strucutres\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
