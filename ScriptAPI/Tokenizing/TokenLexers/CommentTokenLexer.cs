@@ -1,4 +1,5 @@
-﻿using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+﻿using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;
 

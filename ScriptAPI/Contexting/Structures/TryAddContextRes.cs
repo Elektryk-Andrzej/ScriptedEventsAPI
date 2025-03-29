@@ -1,6 +1,6 @@
 ﻿namespace ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
 
-public struct TryAddTokenRes()
+public class TryAddContextRes
 {
     public static TryAddTokenRes Continue()
     {

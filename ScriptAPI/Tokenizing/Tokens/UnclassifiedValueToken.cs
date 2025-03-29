@@ -1,5 +1,5 @@
-﻿namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+﻿using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 
-public class UnclassifiedValueToken : BaseToken
-{
-}
+namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+
+public class UnclassifiedValueToken : BaseToken;

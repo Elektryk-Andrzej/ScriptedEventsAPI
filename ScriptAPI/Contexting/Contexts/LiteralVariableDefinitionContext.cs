@@ -3,6 +3,7 @@ using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 using ScriptedEventsAPI.VariableAPI.Structures;
 
@@ -24,7 +25,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
         
         if (!_hasEqualsSignBeenVerified)
         {
-            if (token.AsString != "::")
+            if (token.RawRepresentation != "::")
             {
                 return TryAddTokenRes.Error(
                     "When a line starts with a variable, the only possibility is setting said variable to a value, " +
@@ -50,15 +51,15 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             return TryAddTokenRes.Continue();
         }
         
-        _variable = new(varToken, token.AsString);
+        _variable = new(varToken, token.RawRepresentation);
         return TryAddTokenRes.End();
     }
 
     public override Result VerifyCurrentState()
     {
-        return new(
-            _variable is not null,
-            $"Cannot initalize a variable! There is no value to set the variable to.");
+        return _variable is not null || _action is not null
+            ? true 
+            :  "Cannot initalize a variable! There is no value to set the variable to.";
     }
 
     public override void Execute()

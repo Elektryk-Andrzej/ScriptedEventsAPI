@@ -1,7 +1,4 @@
-﻿using Exiled.API.Features;
-using ScriptedEventsAPI.OtherStructures;
-
-namespace ScriptedEventsAPI.ActionAPI.BaseActions;
+﻿namespace ScriptedEventsAPI.ActionAPI.BaseActions;
 
 public abstract class StringReturningStandardAction : StandardAction
 {

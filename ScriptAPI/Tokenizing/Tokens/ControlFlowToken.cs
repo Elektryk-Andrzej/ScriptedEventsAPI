@@ -1,5 +1,18 @@
-﻿namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+﻿using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
+using ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 
-public class ControlFlowToken : BaseToken
+namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+
+public class ControlFlowToken : BaseContextableToken
 {
+    public override BaseContext? GetResultingContext()
+    {
+        return RawRepresentation.ToLower() switch
+        {
+            "if" => new IfStatementContext(),
+            "end" => new TerminationContext(),
+            _ => null
+        };
+    }
 }

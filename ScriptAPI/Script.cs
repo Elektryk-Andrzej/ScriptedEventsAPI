@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using MEC;
 using ScriptedEventsAPI.EaqoldHelpers;
+using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI.Contexting;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
+using ScriptedEventsAPI.ScriptAPI.Contexting.Extensions;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.VariableAPI.Structures;
 
 namespace ScriptedEventsAPI.ScriptAPI;
@@ -17,7 +19,7 @@ public class Script
     public string Content { get; set; } = string.Empty;
     public List<BaseToken> Tokens = [];
     public List<BaseContext> Contexts = [];
-    public HashSet<LiteralVariable> LocalLiteralVariables = [];
+    public readonly HashSet<LiteralVariable> LocalLiteralVariables = [];
 
     public void Execute()
     {
@@ -26,23 +28,30 @@ public class Script
 
     private IEnumerator<float> InternalExecute()
     {
-        new Tokenizer(this).GetAllFileTokens();
-        Console.WriteLine(string.Join("\n", Tokens.Select(t => $"[{t.Name} - {string.Join("", t.Representation)}]")));
-        
-        new Contexter(this).LinkAllTokens();
-        Console.WriteLine(string.Join("\n", Contexts.Select(t => $"[{t.Name}]")));
+        Logger.Debug("1");
+        try
+        {
+            new Tokenizer(this).GetAllFileTokens();
+        }
+        catch (Exception e)
+        {
+            Logger.Debug(e.Message);
+        }
+
+        Logger.Debug(2);
+        try
+        {
+            new Contexter(this).LinkAllTokens();
+        }
+        catch (Exception e)
+        {
+            Logger.Debug(e.Message);
+        }
         
         foreach (var context in Contexts)
         {
-            switch (context)
-            {
-                case StandardContext standardContext:
-                    standardContext.Execute();
-                    break;
-                case YieldingContext yieldingContext:
-                    yield return Timing.WaitUntilDone(yieldingContext.Execute());
-                    break;
-            }
+            Logger.Debug($"executing {context}!");
+            yield return Timing.WaitUntilDone(context.ExecuteBaseContext());
         }
     }
 }

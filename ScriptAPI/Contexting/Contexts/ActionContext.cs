@@ -7,6 +7,7 @@ using ScriptedEventsAPI.EaqoldHelpers;
 using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
@@ -25,7 +26,7 @@ public class ActionContext(ActionToken actionToken, Script scr) : YieldingContex
         
         if (!Processor.IsValidArgument(token, Action.Args.Count, out var argument))
         {
-            return TryAddTokenRes.Error($"{token.Name} ({token.AsString}) is not a valid argument, ending action parsing");
+            return TryAddTokenRes.Error($"{token.Name} ({token.RawRepresentation}) is not a valid argument, ending action parsing");
         }
         
         Logger.Debug($"Adding argument '{argument.Name}' ({Action.Args.Count}) to action '{Action.Name}'.");

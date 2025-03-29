@@ -1,4 +1,5 @@
-﻿using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+﻿using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;
 
@@ -8,7 +9,7 @@ public class PlayerVariableTokenLexer : BaseTokenLexer
 
     protected override bool IsNotCompleted(char c)
     {
-        if (Token.Representation.Count == 0)
+        if (Token.RawCharRepresentation.Count == 0)
         {
             return c == '@';
         }

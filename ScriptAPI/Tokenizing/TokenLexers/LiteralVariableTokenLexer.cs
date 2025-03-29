@@ -1,13 +1,14 @@
 ﻿using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;
 
-public class LiteralVariableTokenLexer : BaseTokenLexer
+public class LiteralVariableTokenLexer(Script scr) : BaseTokenLexer
 {
     private int _numberOfOpenParentheses = 1;
     
-    public override BaseToken Token { get; set; } = new LiteralVariableToken();
+    public override BaseToken Token { get; set; } = new LiteralVariableToken(scr);
 
     protected override bool IsNotCompleted(char c)
     {
@@ -43,7 +44,7 @@ public class LiteralVariableTokenLexer : BaseTokenLexer
     public override Result IsFinalStateValid()
     {
         // todo: figure something out for this
-        //((ParenthesesToken)Token).Tokens = Tokenizer.GetTokensFromLine(Token.AsString);
+        //((ParenthesesToken)Token).Tokens = Tokenizer.GetTokensFromLine(Token.RawRepresentation);
         return _numberOfOpenParentheses == 0;
     }
 }

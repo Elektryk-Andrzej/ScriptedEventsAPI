@@ -5,6 +5,7 @@ using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments;
@@ -76,7 +77,7 @@ public class ActionArgumentProcessor(BaseAction action, Script scr)
             return false;
         }
         
-        if (!float.TryParse(valueToken.AsString, out float duration))
+        if (!float.TryParse(valueToken.RawRepresentation, out float duration))
         {
             return false;
         }
@@ -93,38 +94,32 @@ public class ActionArgumentProcessor(BaseAction action, Script scr)
     {
         switch (token)
         {
-            case ParenthesesToken parenthesesToken:
-                argument = new(argName, () => parenthesesToken.AsString);
-                return true;
-            case UnclassifiedValueToken valueToken:
-                argument = new(argName, () => valueToken.AsString);
-                return true;
             case LiteralVariableToken literalVariableToken:
                 argument = new(argName, () =>
                 {
-                    var variable = scr.LocalLiteralVariables.FirstOrDefault(v => v.Name == literalVariableToken.AsString);
+                    var variable = scr.LocalLiteralVariables.FirstOrDefault(v => v.Name == literalVariableToken.RawRepresentation);
                     return variable is not null
                         ? variable.Value
-                        : $"${literalVariableToken.AsString}";
+                        : literalVariableToken.WithParentheses;
                 });
                 
                 return true;
             default:
-                argument = null!;
-                return false;
+                argument = new(argName, () => token.RawRepresentation);
+                return true;
         }
     }
     
     public static Result TryConvert(BaseToken token, string argName, out TimeSpanArgument argument)
     {
         argument = null!;
-        var unitIndex = token.Representation.FindIndex(char.IsLetter);
+        var unitIndex = token.RawCharRepresentation.FindIndex(char.IsLetter);
         if (unitIndex == -1)
         {
             return "No unit provided.";
         }
         
-        var valuePart = token.Representation.Take(unitIndex).ToArray();
+        var valuePart = token.RawCharRepresentation.Take(unitIndex).ToArray();
         if (!valuePart.All(char.IsDigit))
         {
             return new(false, $"Value parts ({string.Join("", valuePart)}) only be made of numbers.");
@@ -135,7 +130,7 @@ public class ActionArgumentProcessor(BaseAction action, Script scr)
             return new(false, $"Value parts ({string.Join("", valuePart)}) only be made of numbers.");
         }
 
-        var unit = token.AsString.Substring(unitIndex);
+        var unit = token.RawRepresentation.Substring(unitIndex);
         TimeSpan? timeSpan = unit switch
         {
             "s" => TimeSpan.FromSeconds(valueAsDouble),

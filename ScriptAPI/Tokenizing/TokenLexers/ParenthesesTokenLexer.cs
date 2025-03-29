@@ -1,4 +1,5 @@
 ﻿using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;
@@ -43,7 +44,7 @@ public class ParenthesesTokenLexer : BaseTokenLexer
     public override Result IsFinalStateValid()
     {
         // todo: figure something out for this
-        //((ParenthesesToken)Token).Tokens = Tokenizer.GetTokensFromLine(Token.AsString);
+        //((ParenthesesToken)Token).Tokens = Tokenizer.GetTokensFromLine(Token.RawRepresentation);
         return _numberOfOpenParentheses == 0;
     }
 }

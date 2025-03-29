@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ScriptedEventsAPI.ConditionAPI.ConditionElements;
 using ScriptedEventsAPI.OtherStructures;
 
@@ -9,12 +8,11 @@ namespace ScriptedEventsAPI.ConditionAPI;
 public struct ConditionEvaluator
 {
     public bool Result { get; internal set; }
-    public Result WasConditionSuccessful {get; internal set;}
+    public Result WasConditionSuccessful { get; internal set; }
     
     public ConditionEvaluator(string expression)
     {
         var elements = GetElementsFromExpression(expression);
-        Logger.Debug(string.Join("|", elements.Select(x => x.GetType().Name)));
         var isValid = IsValidClause(elements, out var clause);
         if (!isValid)
         {
@@ -28,12 +26,11 @@ public struct ConditionEvaluator
         Result = result.conditionResult;
     }
 
-    private List<IConditionElement> GetElementsFromExpression(string expression)
+    private static List<IConditionElement> GetElementsFromExpression(string expression)
     {
         List<IConditionElement> history = [];
         foreach (string part in expression.Split([' '], StringSplitOptions.RemoveEmptyEntries))
         {
-            Logger.Debug($"checking part {part}");
             var oper = GetOperator(part);
             if (oper != OperatorType.Invalid)
             {
@@ -53,7 +50,7 @@ public struct ConditionEvaluator
         return history;
     }
 
-    private (bool conditionResult, Result wasSuccess) EvaluateCondition(Clause clause)
+    private static (bool conditionResult, Result wasSuccess) EvaluateCondition(Clause clause)
     {
         var oper = clause.Operator.OperatorType;
         if (oper is OperatorType.And or OperatorType.Or)
@@ -90,7 +87,7 @@ public struct ConditionEvaluator
         return (result, true);
     }
     
-    private Result IsValidClause(List<IConditionElement> elements, out Clause clause)
+    private static Result IsValidClause(List<IConditionElement> elements, out Clause clause)
     {
         clause = null!;
         if (elements.Count != 3)

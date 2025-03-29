@@ -1,6 +1,6 @@
 ﻿using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 

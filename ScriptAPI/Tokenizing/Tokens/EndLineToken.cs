@@ -1,6 +1,5 @@
-﻿namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+﻿using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 
-public class EndLineToken : BaseToken
-{
-    
-}
+namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+
+public class EndLineToken : BaseToken;

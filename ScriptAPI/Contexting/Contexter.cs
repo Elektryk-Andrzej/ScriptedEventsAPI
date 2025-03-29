@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Exiled.API.Features;
+using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Contexting;
@@ -11,51 +14,105 @@ namespace ScriptedEventsAPI.ScriptAPI.Contexting;
 /// </summary>
 public class Contexter(Script script)
 {
-    public BaseContext? TokenToContext(BaseToken token) => token switch
+    private readonly List<BaseContext> _contexts = [];
+    private BaseContext? _currentContext = null;
+    private readonly List<TreeContext> _treeContexts = [];
+
+    private void HandleCurrentContext(BaseToken token)
     {
-        ActionToken action => new ActionContext(action, script),
-        LiteralVariableToken literalVariable => new LiteralVariableDefinitionContext(literalVariable, script),
-        _ => null
-    };
+        Logger.Debug($"Handling token {token} in context {_currentContext}");
+        
+        var result = _currentContext!.TryAddToken(token);
+        if (result.HasErrored)
+        {
+            Log.Error($"Error linking '{_currentContext}': {result.ErrorMessage}");
+            return;
+        }
+
+        if (result.ShouldContinueExecution)
+        {
+            return;
+        }
+
+        AddCurrentContext();
+        _currentContext = null;
+    }
+
+    private void AddCurrentContext()
+    {
+        if (_currentContext is null)
+        {
+            return;
+        }
+        
+        if (_currentContext is TerminationContext)
+        {
+            if (_treeContexts.Count == 0)
+            {
+                Log.Error("No context to end with the `end` keyword!");
+                return;
+            }
+            
+            _treeContexts.RemoveAt(_treeContexts.Count - 1);
+            return;
+        }
+
+        if (_currentContext!.VerifyCurrentState().HasErrored(out var error))
+        {
+            Logger.Debug($"ERROR!: {error}");
+        }
+        
+        var currentTree = _treeContexts.LastOrDefault();
+        if (currentTree is not null)
+        {
+            Logger.Debug($"Adding finished context {_currentContext} to tree context {currentTree}");
+            currentTree.Children.Add(_currentContext);
+        }
+        else
+        {
+            Logger.Debug($"Adding finished context {_currentContext} to main collection");
+            _contexts.Add(_currentContext);
+        }
+        
+        if (_currentContext is TreeContext treeContext)
+        {
+            _treeContexts.Add(treeContext);
+        }
+    }
 
     public void LinkAllTokens()
     {
-        List<BaseContext> contexts = [];
-        BaseContext? currentContext = null;
-        
+        var isFirstContextOfLine = true;
         foreach (var token in script.Tokens)
         {
+            Logger.Debug($"Checking token {token}");
             if (token is EndLineToken)
             {
-                if (currentContext is not null)
-                {
-                    contexts.Add(currentContext);
-                    currentContext = null;
-                }
+                isFirstContextOfLine = true;
+                AddCurrentContext();
+                _currentContext = null;
                 continue;
             }
             
-            if (currentContext is not null)
+            if (_currentContext is not null)
             {
-                var result = currentContext.TryAddToken(token);
-                if (result.HasErrored)
-                {
-                    Log.Error($"Error linking '{currentContext}': {result.Message}");
-                    break;
-                }
-
-                if (result.ShouldContinueExecution)
-                {
-                    continue;
-                }
-                
-                Log.Info($"Context {currentContext.Name} ended");
-                contexts.Add(currentContext);
-                currentContext = null;
+                HandleCurrentContext(token);
                 continue;
             }
 
-            var newCtx = TokenToContext(token);
+            if (!isFirstContextOfLine)
+            {
+                Logger.Debug($"Skipping token {token}, not first in line + context does not take it into account");
+                continue;
+            }
+
+            if (token is not BaseContextableToken contextable)
+            {
+                Logger.Debug($"Starting token {token} is not contextable!");
+                continue;
+            }
+
+            var newCtx = contextable.GetResultingContext();
             if (newCtx is null)
             {
                 // add error
@@ -63,15 +120,16 @@ public class Contexter(Script script)
                 continue;
             }
 
-            currentContext = newCtx;
+            Logger.Debug($"Set new context to {newCtx}");
+            _currentContext = newCtx;
         }
 
-        if (currentContext is not null)
+        if (_currentContext is not null)
         {
-            Log.Info($"Context {currentContext.Name} ended");
-            contexts.Add(currentContext);
+            Log.Info($"Context {_currentContext.Name} ended");
+            _contexts.Add(_currentContext);
         }
         
-        script.Contexts = contexts;
+        script.Contexts = new List<BaseContext>(_contexts);
     }
 }

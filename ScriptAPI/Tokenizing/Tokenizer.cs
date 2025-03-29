@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
@@ -36,42 +37,43 @@ public class Tokenizer(Script script)
                 ? lineContent[index + 1] 
                 : null;
             
-            if (currentTokenLexer is not null)
-            {
-                currentTokenLexer.TryAddChar(character, out bool shouldContinueExecution); // should also return error
-                if (shouldContinueExecution)
-                {
-                    continue;
-                }
-
-                if (nextChar.HasValue && char.IsWhiteSpace(nextChar.Value))
-                {
-                    continue;
-                }
-
-                if (currentTokenLexer.IsFinalStateValid().HasErrored(out var error))
-                {
-                    Logger.Debug($"Error! Token lexer has errored! error: '{error}' | lexer: {currentTokenLexer} | rep: '{currentTokenLexer.Token.AsString}'");
-                    currentTokenLexer = null;
-                    break;
-                }
-                
-                tokens.Add(currentTokenLexer.Token);
-                currentTokenLexer = null;
-            }
-
-            // we're waiting for the first char in line
             if (isFirstChar)
             {
+                // ignore indenting
                 if (char.IsWhiteSpace(character))
                 {
                     continue;
                 }
-
+                
                 isFirstChar = false;
             }
 
-            currentTokenLexer = GetLexer(character, ref isFirstChar);
+            if (currentTokenLexer is null)
+            {
+                currentTokenLexer = GetLexer(character);
+                continue;
+            }
+            
+            currentTokenLexer.TryAddChar(character, out bool shouldContinueExecution); // should also return error
+            if (shouldContinueExecution)
+            {
+                continue;
+            }
+
+            if (nextChar.HasValue && char.IsWhiteSpace(nextChar.Value))
+            {
+                continue;
+            }
+
+            if (currentTokenLexer.IsFinalStateValid().HasErrored(out var error))
+            {
+                Logger.Debug($"Error! Token lexer has errored! error: '{error}' | lexer: {currentTokenLexer} | rep: '{currentTokenLexer.Token.RawRepresentation}'");
+                currentTokenLexer = null;
+                break;
+            }
+            
+            tokens.Add(currentTokenLexer.Token);
+            currentTokenLexer = null;
         }
 
         if (currentTokenLexer is not null)
@@ -89,15 +91,14 @@ public class Tokenizer(Script script)
         return tokens;
     }
     
-
-    private BaseTokenLexer? GetLexer(char character, ref bool isFirstChar)
+    private BaseTokenLexer? GetLexer(char character)
     {
         // whitespaces are ignored when no tokenizer is engaged
         if (char.IsWhiteSpace(character))
         {
             return null;
         }
-
+        
         switch (character)
         {
             case '#':
@@ -107,7 +108,7 @@ public class Tokenizer(Script script)
             case '@':
                 return new PlayerVariableTokenLexer();
             case '{':
-                return new LiteralVariableTokenLexer();
+                return new LiteralVariableTokenLexer(script);
             case '(':
                 return new ParenthesesTokenLexer();
         }
@@ -117,9 +118,8 @@ public class Tokenizer(Script script)
             return new ActionTokenLexer(character, script);
         }
 
-        if (char.IsLower(character) && isFirstChar)
+        if (char.IsLower(character))
         {
-            isFirstChar = false;
             return new ControlFlowTokenLexer(character);
         }
             
