@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MEC;
 using ScriptedEventsAPI.EaqoldHelpers;
 using ScriptedEventsAPI.OtherStructures;
@@ -20,6 +19,7 @@ public class Script
     public List<BaseToken> Tokens = [];
     public List<BaseContext> Contexts = [];
     public readonly HashSet<LiteralVariable> LocalLiteralVariables = [];
+    public readonly HashSet<PlayerVariable> LocalPlayerVariables = [];
 
     public void Execute()
     {

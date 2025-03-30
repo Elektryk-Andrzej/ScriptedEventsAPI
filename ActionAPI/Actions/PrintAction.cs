@@ -1,4 +1,5 @@
 ﻿using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 using ScriptedEventsAPI.ActionAPI.ActionResponses;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 
@@ -14,10 +15,10 @@ public class PrintAction : StandardAction
         new TextArgument("text")
     ];
 
-    public override IActionResponse Execute()
+    public override void Execute()
     {
         Exiled.API.Features.Log.Info(
-            $"[Script: {Script.Name}] {Args.Get<TextArgument>("text")}");
-        return new SuccessResponse();
+            $"[Script: {Script.Name}] {Args.GetText("text")}");
+        Response = new SuccessResponse();
     }
 }

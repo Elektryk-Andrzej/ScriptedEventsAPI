@@ -41,7 +41,7 @@ public class ParenthesesTokenLexer : BaseTokenLexer
         base.TryAddChar(c, out shouldContinueExecution);
     }
 
-    public override Result IsFinalStateValid()
+    public override Result IsValid()
     {
         // todo: figure something out for this
         //((ParenthesesToken)Token).Tokens = Tokenizer.GetTokensFromLine(Token.RawRepresentation);

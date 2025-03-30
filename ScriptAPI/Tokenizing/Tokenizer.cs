@@ -29,56 +29,58 @@ public class Tokenizer(Script script)
         BaseTokenLexer? currentTokenLexer = null;
         List<BaseToken> tokens = [];
         bool isFirstChar = true;
+        bool nextCharNotFirst = false;
 
-        for (var index = 0; index < lineContent.Length; index++)
+        foreach (var currentChar in lineContent)
         {
-            var character = lineContent[index];
-            char? nextChar = index + 1 < lineContent.Length 
-                ? lineContent[index + 1] 
-                : null;
+            if (nextCharNotFirst)
+            {
+                isFirstChar = false;
+            }
             
             if (isFirstChar)
             {
                 // ignore indenting
-                if (char.IsWhiteSpace(character))
+                if (char.IsWhiteSpace(currentChar))
                 {
                     continue;
                 }
                 
-                isFirstChar = false;
+                nextCharNotFirst = true;
             }
 
             if (currentTokenLexer is null)
             {
-                currentTokenLexer = GetLexer(character);
+                currentTokenLexer = GetLexer(currentChar, isFirstChar);
+                if (currentTokenLexer is not null)
+                {
+                    Logger.Debug($"Set new token lexer to: {currentTokenLexer}");
+                }
+                
                 continue;
             }
             
-            currentTokenLexer.TryAddChar(character, out bool shouldContinueExecution); // should also return error
+            currentTokenLexer.TryAddChar(currentChar, out bool shouldContinueExecution); // should also return error
             if (shouldContinueExecution)
             {
                 continue;
             }
 
-            if (nextChar.HasValue && char.IsWhiteSpace(nextChar.Value))
-            {
-                continue;
-            }
-
-            if (currentTokenLexer.IsFinalStateValid().HasErrored(out var error))
+            if (currentTokenLexer.IsValid().HasErrored(out var error))
             {
                 Logger.Debug($"Error! Token lexer has errored! error: '{error}' | lexer: {currentTokenLexer} | rep: '{currentTokenLexer.Token.RawRepresentation}'");
                 currentTokenLexer = null;
                 break;
             }
             
+            Logger.Debug($"Token lexer {currentTokenLexer} has stopped on char {currentChar}");
             tokens.Add(currentTokenLexer.Token);
             currentTokenLexer = null;
         }
 
         if (currentTokenLexer is not null)
         {
-            if (currentTokenLexer.IsFinalStateValid().HasErrored(out var error))
+            if (currentTokenLexer.IsValid().HasErrored(out var error))
             {
                 Logger.Debug(
                     $"Token lexer {currentTokenLexer} has failed to end its scanning. Error: '{error}'");    
@@ -91,7 +93,7 @@ public class Tokenizer(Script script)
         return tokens;
     }
     
-    private BaseTokenLexer? GetLexer(char character)
+    private BaseTokenLexer? GetLexer(char character, bool isFirstChar)
     {
         // whitespaces are ignored when no tokenizer is engaged
         if (char.IsWhiteSpace(character))
@@ -113,7 +115,7 @@ public class Tokenizer(Script script)
                 return new ParenthesesTokenLexer();
         }
 
-        if (char.IsUpper(character))
+        if (char.IsUpper(character) && isFirstChar)
         {
             return new ActionTokenLexer(character, script);
         }

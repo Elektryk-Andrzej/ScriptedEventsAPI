@@ -35,7 +35,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <PropertyGroup>
-    <PostBuildEvent>copy /Y "C:\Users\Olgie\RiderProjects\ScriptedEventsAPI\bin\Release\ScriptedEventsAPI.dll" "C:\Users\Olgie\AppData\Roaming\EXILED\Plugins\dependencies\"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "C:\Users\Olgie\RiderProjects\ScriptedEventsAPI\bin\Release\ScriptedEventsAPI.dll" "C:\Users\Olgie\AppData\Roaming\EXILED\Plugins\"</PostBuildEvent>
 </PropertyGroup>
     <ItemGroup>
         <Reference Include="Assembly-CSharp">
@@ -90,8 +90,10 @@
         <Compile Include="ActionAPI\ActionArguments\ActionArgumentProcessor.cs" />
         <Compile Include="ActionAPI\ActionArguments\Arguments\BaseActionArgument.cs" />
         <Compile Include="ActionAPI\ActionArguments\Arguments\DurationArgument.cs" />
+        <Compile Include="ActionAPI\ActionArguments\Arguments\EnumArgument.cs" />
+        <Compile Include="ActionAPI\ActionArguments\Arguments\PlayerVariableArgument.cs" />
         <Compile Include="ActionAPI\ActionArguments\Arguments\TextArgument.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Arguments\TimeSpanArgument.cs" />
+        <Compile Include="ActionAPI\ActionArguments\Structures\ArgumentSkeleton.cs" />
         <Compile Include="ActionAPI\ActionArguments\Structures\ProvidedArguments.cs" />
         <Compile Include="ActionAPI\ActionIndex.cs" />
         <Compile Include="ActionAPI\ActionResponses\IActionResponse.cs" />
@@ -99,9 +101,12 @@
         <Compile Include="ActionAPI\ActionResponses\SuccessResponse.cs" />
         <Compile Include="ActionAPI\Actions\PrintAction.cs" />
         <Compile Include="ActionAPI\Actions\SaveAction.cs" />
+        <Compile Include="ActionAPI\Actions\SetRoleAction.cs" />
+        <Compile Include="ActionAPI\Actions\TestPlayerVarAction.cs" />
         <Compile Include="ActionAPI\Actions\Yielding\WaitAction.cs" />
+        <Compile Include="ActionAPI\AdditionalActionDescriptors\IPureAction.cs" />
         <Compile Include="ActionAPI\BaseActions\BaseAction.cs" />
-        <Compile Include="ActionAPI\BaseActions\StringReturningStandardAction.cs" />
+        <Compile Include="ActionAPI\BaseActions\TextReturningStandardAction.cs" />
         <Compile Include="ActionAPI\BaseActions\StandardAction.cs" />
         <Compile Include="ActionAPI\BaseActions\YieldingAction.cs" />
         <Compile Include="ConditionAPI\ConditionElements\Clause.cs" />
@@ -112,6 +117,7 @@
         <Compile Include="ConditionAPI\ConditionElements\Operand.cs" />
         <Compile Include="EaqoldHelpers\Nullable.cs" />
         <Compile Include="EaqoldHelpers\SafeCoroutines.cs" />
+        <Compile Include="Plugin\Commands\RunScriptCommand.cs" />
         <Compile Include="Plugin\Config.cs" />
         <Compile Include="Plugin\Plugin.cs" />
         <Compile Include="OtherStructures\Either.cs" />
@@ -143,7 +149,7 @@
         <Compile Include="ScriptAPI\Tokenizing\TokenLexers\ParenthesesTokenLexer.cs" />
         <Compile Include="ScriptAPI\Tokenizing\TokenLexers\PlayerVariableTokenLexer.cs" />
         <Compile Include="ScriptAPI\Tokenizing\TokenLexers\UnclassifiedValueTokenLexer.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\ActionToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\CommentToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\ControlFlowToken.cs" />
@@ -153,7 +159,11 @@
         <Compile Include="ScriptAPI\Tokenizing\Tokens\ParenthesesToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\PlayerVariableToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\UnclassifiedValueToken.cs" />
+        <Compile Include="VariableAPI\ObjectReferenceSystem.cs" />
         <Compile Include="VariableAPI\Structures\LiteralVariable.cs" />
+        <Compile Include="VariableAPI\Structures\PlayerVariable.cs" />
+        <Compile Include="VariableAPI\PlayerVariableIndex.cs" />
+        <Compile Include="VariableAPI\Variables\AllPlayers.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

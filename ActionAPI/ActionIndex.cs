@@ -7,7 +7,6 @@ using ScriptedEventsAPI.OtherStructures;
 
 namespace ScriptedEventsAPI.ActionAPI;
 
-// todo: this has to be enabled on plugin start
 public static class ActionIndex
 {
     public static readonly Dictionary<string, Type> NameToActionIndex = new();

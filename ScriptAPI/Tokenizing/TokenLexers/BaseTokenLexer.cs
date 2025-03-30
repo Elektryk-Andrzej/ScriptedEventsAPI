@@ -33,7 +33,7 @@ public abstract class BaseTokenLexer
         return GetType().Name;
     }
 
-    public virtual Result IsFinalStateValid()
+    public virtual Result IsValid()
     {
         return true;
     }

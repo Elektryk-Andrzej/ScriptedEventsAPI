@@ -1,157 +1,72 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+using ScriptedEventsAPI.VariableAPI.Structures;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments;
 
 public class ActionArgumentProcessor(BaseAction action, Script scr)
 {
-    private Dictionary<Type, Func<BaseToken, string, (Result, BaseActionArgument)>> Converters => new()
+    private Dictionary<Type, Func<BaseToken, BaseActionArgument, (Result, object)>> Converters => new()
     {
-        { typeof(TextArgument), (t, n) => (TryConvert(t, n, out TextArgument arg), arg) },
-        { typeof(DurationArgument), (t, n) => (TryConvert(t, n, out DurationArgument arg), arg) },
-        { typeof(TimeSpanArgument), (t, n) => (TryConvert(t, n, out TimeSpanArgument arg), arg) },
+        { typeof(TextArgument), (token, _) => (TextArgument.TryConvert(token, scr, out var value), value) },
+        { typeof(DurationArgument), (token, _) => (DurationArgument.TryConvert(token, out var value), value) },
+        { typeof(PlayerVariableArgument), (token, _) => (PlayerVariableArgument.TryConvert(token, scr, out var value), value)},
+        { typeof(EnumArgument), (token, arg) => (((EnumArgument)arg).TryConvert(token, out var value), value)}
     };
 
-    public Result IsValidArgument(BaseToken token, int index, out BaseActionArgument argument) 
-    {
-        if (index < action.ExpectedArguments.Length)
+    public Result IsValidArgument(BaseToken token, int index, out ArgumentSkeleton skeleton) 
+    {            
+        skeleton = default;
+        
+        if (index >= action.ExpectedArguments.Length)
         {
-            return TryConvertGeneral(token, action.ExpectedArguments[index], out argument);
+            return $"Action '{action.Name}' does not expect more arguments " +
+                   $"than [{action.ExpectedArguments.Length}], but tried to index [{index}].";
+        }
+
+        var arg = action.ExpectedArguments[index];
+        var argType = arg.GetType();
+        if (TryConvertGeneral(token, arg, out var argValue).HasErrored(out var error))
+        {
+            return error;
         }
         
-        argument = null!;
-        return $"Action {action.Name} does not expect more arguments than {action.ExpectedArguments.Length}.";
-    }
-
-    public Result TryConvertGeneral<TArgument>(BaseToken token, TArgument argument, out TArgument resultArg)
-        where TArgument : BaseActionArgument
-    {
-        resultArg = null!;
-
-        return argument switch
+        skeleton = new()
         {
-            TextArgument stringArgument => Convert(stringArgument, out resultArg),
-            DurationArgument durationArgument => Convert(durationArgument, out resultArg),
-            TimeSpanArgument timeSpanArgument => Convert(timeSpanArgument, out resultArg),
-            _ => $"No converter for {typeof(TArgument)} found."
+            Value = argValue,
+            Type = argType,
+            Name = arg.Name,
         };
 
-        Result Convert<TArgConv>(TArgConv inArg, out TArgument outArg)
-            where TArgConv : BaseActionArgument
-        {
-            outArg = null!;
-            if (!Converters.TryGetValue(typeof(TArgConv), out var converter))
-            {
-                return $"No converter for {typeof(TArgConv)} found.";
-            }
-            
-            var (result, resArg) = converter(token, inArg.Name);
-            if (result.HasErrored())
-            {
-                return result;
-            }
-
-            if (resArg is not TArgument actionArgumentWithValue)
-            {
-                throw new Exception($"Converter for {typeof(TArgConv)} returned a value of type not matching {typeof(TArgument)}.");
-            }
-
-            outArg = actionArgumentWithValue;
-            return true;
-        }
-    }
-
-    public static Result TryConvert(BaseToken token, string argName, out DurationArgument argument)
-    {
-        argument = null!;
-        
-        if (token is not UnclassifiedValueToken valueToken)
-        {
-            return false;
-        }
-        
-        if (!float.TryParse(valueToken.RawRepresentation, out float duration))
-        {
-            return false;
-        }
-
-        argument = new(argName)
-        {
-            Value = TimeSpan.FromSeconds(duration)
-        };
-        
         return true;
     }
-    
-    public Result TryConvert(BaseToken token, string argName, out TextArgument argument)
+
+    public Result TryConvertGeneral(BaseToken token, BaseActionArgument arg, out object argValue)
     {
-        switch (token)
-        {
-            case LiteralVariableToken literalVariableToken:
-                argument = new(argName, () =>
-                {
-                    var variable = scr.LocalLiteralVariables.FirstOrDefault(v => v.Name == literalVariableToken.RawRepresentation);
-                    return variable is not null
-                        ? variable.Value
-                        : literalVariableToken.WithParentheses;
-                });
-                
-                return true;
-            default:
-                argument = new(argName, () => token.RawRepresentation);
-                return true;
-        }
-    }
-    
-    public static Result TryConvert(BaseToken token, string argName, out TimeSpanArgument argument)
-    {
-        argument = null!;
-        var unitIndex = token.RawCharRepresentation.FindIndex(char.IsLetter);
-        if (unitIndex == -1)
-        {
-            return "No unit provided.";
-        }
+        argValue = null!;
+        var argType = arg.GetType();
         
-        var valuePart = token.RawCharRepresentation.Take(unitIndex).ToArray();
-        if (!valuePart.All(char.IsDigit))
+        if (!Converters.TryGetValue(argType, out var converter))
         {
-            return new(false, $"Value parts ({string.Join("", valuePart)}) only be made of numbers.");
+            return $"No converter for {argType} found.";
         }
-        
-        if (!double.TryParse(string.Join("", valuePart), out var valueAsDouble))
+            
+        var (result, resValue) = converter(token, arg);
+        if (result.HasErrored())
         {
-            return new(false, $"Value parts ({string.Join("", valuePart)}) only be made of numbers.");
+            return result;
         }
 
-        var unit = token.RawRepresentation.Substring(unitIndex);
-        TimeSpan? timeSpan = unit switch
-        {
-            "s" => TimeSpan.FromSeconds(valueAsDouble),
-            "ms" => TimeSpan.FromMilliseconds(valueAsDouble),
-            "m" => TimeSpan.FromMinutes(valueAsDouble),
-            "h" => TimeSpan.FromHours(valueAsDouble),
-            "d" => TimeSpan.FromDays(valueAsDouble),
-            _ => null
-        };
-
-        if (timeSpan is null)
-        {
-            return new(false, $"Provided unit {unit} is not valid.");
-        }
-
-        argument = new(argName)
-        {
-            Value = timeSpan.Value
-        };
-        
-        Exiled.API.Features.Log.Info($"successs! TimeSpan length is {timeSpan.Value.TotalSeconds}s");
+        argValue = resValue;
         return true;
     }
 }

@@ -1,9 +1,7 @@
-﻿using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+﻿namespace ScriptedEventsAPI.VariableAPI.Structures;
 
-namespace ScriptedEventsAPI.VariableAPI.Structures;
-
-public class LiteralVariable(LiteralVariableToken token, string value)
+public class LiteralVariable
 {
-    public string Name { get; private set; } = token.RawRepresentation;
-    public string Value { get; private set; } = value;
+    public required string Name { get; init; }
+    public required string Value { get; init; }
 }

@@ -24,13 +24,14 @@ public class ActionContext(ActionToken actionToken, Script scr) : YieldingContex
             return TryAddTokenRes.End();
         }
         
-        if (!Processor.IsValidArgument(token, Action.Args.Count, out var argument))
+        Logger.Debug($"Checking if {token} is a valid argument for action {Action.Name}.");
+        if (Processor.IsValidArgument(token, Action.Args.Count, out var skeleton).HasErrored(out var error))
         {
-            return TryAddTokenRes.Error($"{token.Name} ({token.RawRepresentation}) is not a valid argument, ending action parsing");
+            return TryAddTokenRes.Error($"{token.Name} ({token.RawRepresentation}) is not a valid argument, reason: {error}");
         }
         
-        Logger.Debug($"Adding argument '{argument.Name}' ({Action.Args.Count}) to action '{Action.Name}'.");
-        Action.Args.Add(argument);
+        Logger.Debug($"Adding argument '{skeleton.Name}' ({Action.Args.Count}) to action '{Action.Name}'.");
+        Action.Args.Add(skeleton);
         return TryAddTokenRes.Continue();
     }
 

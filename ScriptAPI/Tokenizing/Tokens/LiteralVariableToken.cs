@@ -6,9 +6,10 @@ namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 public class LiteralVariableToken(Script scr) : BaseContextableToken
 {
-    public string WithParentheses => $"{{{RawRepresentation}}}";
-    public override BaseContext? GetResultingContext()
+    public override BaseContext GetResultingContext()
     {
         return new LiteralVariableDefinitionContext(this, scr);
     }
+    
+    
 }

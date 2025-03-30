@@ -16,7 +16,7 @@ public class ActionTokenLexer(char initChar, Script scr) : BaseTokenLexer(initCh
         return char.IsLetter(c);
     }
 
-    public override Result IsFinalStateValid()
+    public override Result IsValid()
     {
         if (!ActionIndex.NameToActionIndex.TryGetValue(Token.RawRepresentation, out var actType))
         {

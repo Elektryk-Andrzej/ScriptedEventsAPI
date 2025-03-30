@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
@@ -13,7 +14,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
 {
     private LiteralVariable? _variable;
     private ActionContext? _actionContext;
-    private StringReturningStandardAction? _action;
+    private TextReturningStandardAction? _action;
     private bool _hasEqualsSignBeenVerified = false;
     
     public override TryAddTokenRes TryAddToken(BaseToken token)
@@ -25,7 +26,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
         
         if (!_hasEqualsSignBeenVerified)
         {
-            if (token.RawRepresentation != "::")
+            if (token.RawRepresentation != "=")
             {
                 return TryAddTokenRes.Error(
                     "When a line starts with a variable, the only possibility is setting said variable to a value, " +
@@ -39,7 +40,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
 
         if (token is ActionToken actionToken)
         {
-            if (actionToken.Action is not StringReturningStandardAction resultStandardAction)
+            if (actionToken.Action is not TextReturningStandardAction resultStandardAction)
             {
                 return TryAddTokenRes.Error(
                     "An action you are using does not return a value, " +
@@ -51,7 +52,12 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             return TryAddTokenRes.Continue();
         }
         
-        _variable = new(varToken, token.RawRepresentation);
+        _variable = new()
+        {
+            Name = varToken.Name,
+            Value = varToken.RawRepresentation
+        };
+        
         return TryAddTokenRes.End();
     }
 
@@ -68,19 +74,23 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
         {
             _action.Execute();
 
-            if (_action.Result == null)
+            if (_action.TextReturn == null)
             {
                 throw new Exception($"Tried to execute {GetType().Name}, but action result is null.");
             }
-            
-            _variable = new(varToken, _action.Result);
+
+            _variable = new()
+            {
+                Name = varToken.Name,
+                Value = _action.TextReturn
+            };
         }
-        else if (_variable == null)
+        else if (_variable is null)
         {
             throw new Exception($"Tried to execute {GetType().Name} without a variable set.");
         }
         
-        Logger.Debug($"Added variable '${_variable.Name}' to script '{scr.Name}'.");
+        Logger.Debug($"Added variable '${_variable.Value}' to script '{scr.Name}'.");
         scr.LocalLiteralVariables.Add(_variable);
     }
 }

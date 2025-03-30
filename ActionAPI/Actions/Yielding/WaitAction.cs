@@ -12,12 +12,12 @@ public class WaitAction : YieldingAction
 
     public override BaseActionArgument[] ExpectedArguments { get; } =
     [
-        new TimeSpanArgument("duration")
+        new DurationArgument("duration")
     ];
     
     public override IEnumerator<float> Execute()
     {
-        var dur = Args.Get<TimeSpanArgument>("duration");
-        yield return Timing.WaitForSeconds((float)dur.Value.TotalSeconds);
+        var dur = Args.GetDuration("duration");
+        yield return Timing.WaitForSeconds((float)dur.TotalSeconds);
     }
 }

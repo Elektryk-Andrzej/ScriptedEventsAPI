@@ -1,31 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Exiled.API.Features;
 using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
+using ScriptedEventsAPI.ActionAPI.BaseActions;
+using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 
-public class ProvidedArguments
+public class ProvidedArguments(BaseAction action)
 {
-    private List<BaseActionArgument> Arguments { get; set; } = [];
+    private Dictionary<(string name, Type type), object> Arguments { get; set; } = [];
 
-    public TArgument Get<TArgument>(string name) 
-        where TArgument : BaseActionArgument
+    public TimeSpan GetDuration(string argName)
     {
-        return Arguments.FirstOrDefault(a => a.Name == name) as TArgument 
-               ?? throw new ArgumentOutOfRangeException(nameof(name), 
-                   $"There is no assigned argument to this action with a name of '{name}'");
+        return GetValue<TimeSpan, DurationArgument>(argName);
     }
     
-    public TArgument? GetOptional<TArgument>(string name) 
-        where TArgument : BaseActionArgument
+    public string GetText(string argName)
     {
-        return Arguments.SingleOrDefault(a => a.Name == name) as TArgument;
+        return GetValue<string, TextArgument>(argName);
     }
 
-    public void Add(BaseActionArgument argument)
+    public List<Player> GetPlayers(string argName)
     {
-        Arguments.Add(argument);
+        return GetValue<List<Player>, PlayerVariableArgument>(argName);
+    }
+
+    public TEnum GetEnum<TEnum>(string argName)
+    {
+        return (TEnum)((Func<object>)GetValue(argName, typeof(EnumArgument)))();
+    }
+
+    private TValue GetValue<TValue, TArg>(string argName)
+    {
+        return ((Func<TValue>)GetValue(argName, typeof(TArg)))();
+    }
+
+    private object GetValue(string argName, Type argType)
+    {
+        if (!Arguments.TryGetValue((argName, argType), out object value))
+        {
+            throw new KeyNotFoundException($"There is no argument registered of type '{argType.Name}' and name '{argName}'.");
+        }
+
+        return value;
+    }
+
+    public void Add(ArgumentSkeleton skeleton)
+    {
+        Logger.Debug($"Registering variable {skeleton.Name} of type {skeleton.Type.Name} for action {action.Name}.");
+        Arguments.Add((skeleton.Name, skeleton.Type), skeleton.Value);
     }
 
     public int Count => Arguments.Count;
