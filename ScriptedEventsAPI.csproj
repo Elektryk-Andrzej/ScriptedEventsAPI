@@ -163,6 +163,7 @@
         <Compile Include="VariableAPI\Structures\LiteralVariable.cs" />
         <Compile Include="VariableAPI\Structures\PlayerVariable.cs" />
         <Compile Include="VariableAPI\PlayerVariableIndex.cs" />
+        <Compile Include="VariableAPI\VariableSubstitution.cs" />
         <Compile Include="VariableAPI\Variables\AllPlayers.cs" />
     </ItemGroup>
     <ItemGroup>

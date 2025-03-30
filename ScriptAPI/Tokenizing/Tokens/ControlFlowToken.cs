@@ -4,13 +4,13 @@ using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
-public class ControlFlowToken : BaseContextableToken
+public class ControlFlowToken(Script scr) : BaseContextableToken
 {
     public override BaseContext? GetResultingContext()
     {
         return RawRepresentation.ToLower() switch
         {
-            "if" => new IfStatementContext(),
+            "if" => new IfStatementContext(scr),
             "end" => new TerminationContext(),
             _ => null
         };

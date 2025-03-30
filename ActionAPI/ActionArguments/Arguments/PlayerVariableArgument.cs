@@ -22,23 +22,8 @@ public class PlayerVariableArgument(string name, bool required = true) : BaseAct
                    $"but got provided with type {token.GetType().Name}.";
         }
 
-        var localPlrVar = scr.LocalPlayerVariables.FirstOrDefault(
-            v => v.Name == playerVariableToken.RawRepresentation);
-        
-        if (localPlrVar != null)
-        {
-            value = localPlrVar.Players;
-            return true;
-        }
-
-        var globalPlrVar = PlayerVariableIndex.GlobalVariables
-            .FirstOrDefault(v => v.Name == playerVariableToken.NameWithoutPrefix);
-        if (globalPlrVar == null)
-        {
-            return $"There is no player variable named '{playerVariableToken.NameWithoutPrefix}'.";
-        }
-
-        value = globalPlrVar.Players;
-        return true;
+        var res = scr.TryGetPlayerVariable(playerVariableToken.NameWithoutPrefix, out var variable);
+        value = variable.Players;
+        return res;
     }
 }

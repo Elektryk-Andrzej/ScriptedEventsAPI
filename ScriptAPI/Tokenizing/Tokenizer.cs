@@ -115,14 +115,14 @@ public class Tokenizer(Script script)
                 return new ParenthesesTokenLexer();
         }
 
-        if (char.IsUpper(character) && isFirstChar)
+        if (char.IsUpper(character))
         {
             return new ActionTokenLexer(character, script);
         }
 
-        if (char.IsLower(character))
+        if (char.IsLower(character) && isFirstChar)
         {
-            return new ControlFlowTokenLexer(character);
+            return new ControlFlowTokenLexer(character, script);
         }
             
         return new UnclassifiedValueTokenLexer(character);

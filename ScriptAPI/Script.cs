@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MEC;
 using ScriptedEventsAPI.EaqoldHelpers;
 using ScriptedEventsAPI.OtherStructures;
@@ -8,6 +9,7 @@ using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Extensions;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
+using ScriptedEventsAPI.VariableAPI;
 using ScriptedEventsAPI.VariableAPI.Structures;
 
 namespace ScriptedEventsAPI.ScriptAPI;
@@ -53,5 +55,43 @@ public class Script
             Logger.Debug($"executing {context}!");
             yield return Timing.WaitUntilDone(context.ExecuteBaseContext());
         }
+    }
+
+    public Result TryGetPlayerVariable(string name, out PlayerVariable variable)
+    {
+        var localPlrVar = LocalPlayerVariables.FirstOrDefault(
+            v => v.Name == name);
+        
+        if (localPlrVar != null)
+        {
+            variable = localPlrVar;
+            return true;
+        }
+
+        var globalPlrVar = PlayerVariableIndex.GlobalVariables
+            .FirstOrDefault(v => v.Name == name);
+        if (globalPlrVar == null)
+        {
+            variable = null!;
+            return $"There is no player variable named '{name}'.";
+        }
+
+        variable = globalPlrVar;
+        return true;
+    }
+    
+    public Result TryGetLiteralVariable(string name, out LiteralVariable variable)
+    {
+        var localPlrVar = LocalLiteralVariables.FirstOrDefault(
+            v => v.Name == name);
+        
+        if (localPlrVar != null)
+        {
+            variable = localPlrVar;
+            return true;
+        }
+        
+        variable = null!;
+        return $"There is no literal variable named '{name}'.";
     }
 }

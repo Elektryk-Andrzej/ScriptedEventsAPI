@@ -54,8 +54,8 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
         
         _variable = new()
         {
-            Name = varToken.Name,
-            Value = varToken.RawRepresentation
+            Name = varToken.NameWithoutBraces,
+            Value = token.RawRepresentation,
         };
         
         return TryAddTokenRes.End();
@@ -78,10 +78,12 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             {
                 throw new Exception($"Tried to execute {GetType().Name}, but action result is null.");
             }
+            
+            Logger.Debug($"action returned {_action.TextReturn} to set the value of the variable");
 
             _variable = new()
             {
-                Name = varToken.Name,
+                Name = varToken.NameWithoutBraces,
                 Value = _action.TextReturn
             };
         }
@@ -90,7 +92,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             throw new Exception($"Tried to execute {GetType().Name} without a variable set.");
         }
         
-        Logger.Debug($"Added variable '${_variable.Value}' to script '{scr.Name}'.");
+        Logger.Debug($"Added variable '{_variable.Name}' to script '{scr.Name}'.");
         scr.LocalLiteralVariables.Add(_variable);
     }
 }

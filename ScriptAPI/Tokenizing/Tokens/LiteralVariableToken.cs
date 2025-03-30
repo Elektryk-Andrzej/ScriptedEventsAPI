@@ -11,5 +11,5 @@ public class LiteralVariableToken(Script scr) : BaseContextableToken
         return new LiteralVariableDefinitionContext(this, scr);
     }
     
-    
+    public string NameWithoutBraces => RawRepresentation.Substring(1, RawRepresentation.Length - 2);
 }

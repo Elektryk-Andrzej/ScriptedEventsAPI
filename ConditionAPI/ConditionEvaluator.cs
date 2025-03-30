@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using ScriptedEventsAPI.ConditionAPI.ConditionElements;
 using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.ScriptAPI;
+using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.ConditionAPI;
 
-public struct ConditionEvaluator
+public readonly struct ConditionEvaluator
 {
-    public bool Result { get; internal set; }
-    public Result WasConditionSuccessful { get; internal set; }
+    public bool Result { get; }
+    public Result WasConditionSuccessful { get; }
+    private readonly Script _script;
     
-    public ConditionEvaluator(string expression)
+    public ConditionEvaluator(string expression, Script scr)
     {
+        _script = scr;
+        
         var elements = GetElementsFromExpression(expression);
         var isValid = IsValidClause(elements, out var clause);
         if (!isValid)
@@ -50,13 +55,16 @@ public struct ConditionEvaluator
         return history;
     }
 
-    private static (bool conditionResult, Result wasSuccess) EvaluateCondition(Clause clause)
+    private (bool conditionResult, Result wasSuccess) EvaluateCondition(Clause clause)
     {
         var oper = clause.Operator.OperatorType;
         if (oper is OperatorType.And or OperatorType.Or)
         {
             throw new NotImplementedException("`and` as well as `or` operators are not supported");
         }
+        
+        VariableSubstitution.Process(ref clause.FirstOperand.Value, _script);
+        VariableSubstitution.Process(ref clause.SecondOperand.Value, _script);
 
         bool result;
         if (oper is OperatorType.Equal)

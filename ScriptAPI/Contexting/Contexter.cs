@@ -116,7 +116,7 @@ public class Contexter(Script script)
             if (newCtx is null)
             {
                 // add error
-                Log.Error($"Could not link token {token.Name}");
+                Log.Error($"Could not link token {token.TokenName}");
                 continue;
             }
 

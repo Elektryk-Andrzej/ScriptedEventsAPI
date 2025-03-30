@@ -11,7 +11,7 @@ using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
 
-public class IfStatementContext : TreeContext
+public class IfStatementContext(Script scr) : TreeContext
 {
     private string? _condition;
     
@@ -32,11 +32,11 @@ public class IfStatementContext : TreeContext
     {
         if (_condition is null) yield break;
 
-        var res = new ConditionEvaluator(_condition);
+        var res = new ConditionEvaluator(_condition, scr);
 
         if (!res.WasConditionSuccessful)
         {
-            Log.Error($"condtion {_condition} is malformed!");
+            Log.Error($"condtion {_condition} is malformed! Reason: {res.WasConditionSuccessful.Message}");
             yield break;
         }
 
