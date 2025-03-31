@@ -8,7 +8,7 @@ public class ParenthesesTokenLexer : BaseTokenLexer
 {
     private int _numberOfOpenParentheses = 1;
     
-    public override BaseToken Token { get; set; } = new ParenthesesToken();
+    public override BaseToken Token { get; protected set; } = new ParenthesesToken();
 
     protected override bool IsNotCompleted(char c)
     {

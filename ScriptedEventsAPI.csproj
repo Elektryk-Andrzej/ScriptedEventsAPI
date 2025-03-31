@@ -159,11 +159,12 @@
         <Compile Include="ScriptAPI\Tokenizing\Tokens\ParenthesesToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\PlayerVariableToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\UnclassifiedValueToken.cs" />
+        <Compile Include="ScriptAPI\Tokenizing\Tokens\VariableDefinitionToken.cs" />
         <Compile Include="VariableAPI\ObjectReferenceSystem.cs" />
         <Compile Include="VariableAPI\Structures\LiteralVariable.cs" />
         <Compile Include="VariableAPI\Structures\PlayerVariable.cs" />
         <Compile Include="VariableAPI\PlayerVariableIndex.cs" />
-        <Compile Include="VariableAPI\VariableSubstitution.cs" />
+        <Compile Include="VariableAPI\VariableParser.cs" />
         <Compile Include="VariableAPI\Variables\AllPlayers.cs" />
     </ItemGroup>
     <ItemGroup>

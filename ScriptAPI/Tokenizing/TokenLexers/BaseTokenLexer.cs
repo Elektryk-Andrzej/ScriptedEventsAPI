@@ -5,7 +5,7 @@ namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;
 
 public abstract class BaseTokenLexer
 {
-    public abstract BaseToken Token { get; set; }
+    public abstract BaseToken Token { get; protected set; }
     protected abstract bool IsNotCompleted(char c);
 
     public virtual void TryAddChar(char c, out bool shouldContinueExecution)

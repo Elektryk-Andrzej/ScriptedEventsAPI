@@ -14,13 +14,9 @@ public class TextArgument(string name) : BaseActionArgument(name)
         switch (token)
         {
             case LiteralVariableToken literalVariableToken:
-                value = () =>
-                {
-                    var variable = scr.LocalLiteralVariables.FirstOrDefault(v => v.Name == literalVariableToken.RawRepresentation);
-                    return variable != null
-                        ? variable.Value
-                        : literalVariableToken.RawRepresentation;
-                };
+                value = () => scr.TryGetLiteralVariable(literalVariableToken.NameWithoutBraces, out var variable) 
+                    ? variable.Value 
+                    : literalVariableToken.RawRepresentation;
                 return true;
             default:
                 value = () => token.RawRepresentation;

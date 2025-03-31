@@ -7,9 +7,9 @@ using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;
 
-public class ActionTokenLexer(char initChar, Script scr) : BaseTokenLexer(initChar)
+public class ActionTokenLexer(char initChar, Script scr, BaseToken? previousToken) : BaseTokenLexer(initChar)
 {
-    public override BaseToken Token { get; set; } = new ActionToken();
+    public override BaseToken Token { get; protected set; } = new ActionToken();
 
     protected override bool IsNotCompleted(char c)
     {
@@ -18,6 +18,17 @@ public class ActionTokenLexer(char initChar, Script scr) : BaseTokenLexer(initCh
 
     public override Result IsValid()
     {
+        // if the action is not the first token and is not following an "=", it means that its not an action
+        if (previousToken is not null and not { RawRepresentation: "=" })
+        {
+            Token = new UnclassifiedValueToken()
+            {
+                RawCharRepresentation = Token.RawCharRepresentation,
+            };
+            
+            return true;
+        }
+        
         if (!ActionIndex.NameToActionIndex.TryGetValue(Token.RawRepresentation, out var actType))
         {
             return $"There is no action named '{Token.RawRepresentation}'.";

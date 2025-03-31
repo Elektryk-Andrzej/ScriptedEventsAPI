@@ -7,7 +7,7 @@ public class FlagTokenLexer : BaseTokenLexer
 {
     private readonly char[] _structure = ['!', '-', '-'];
     
-    public override BaseToken Token { get; set; } = new FlagDefinitionToken();
+    public override BaseToken Token { get; protected set; } = new FlagDefinitionToken();
 
     protected override bool IsNotCompleted(char c)
     {

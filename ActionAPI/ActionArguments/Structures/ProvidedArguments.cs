@@ -5,12 +5,13 @@ using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
+using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 
 public class ProvidedArguments(BaseAction action)
 {
-    private Dictionary<(string name, Type type), object> Arguments { get; set; } = [];
+    private Dictionary<(string name, Type type), object> Arguments { get; } = [];
 
     public TimeSpan GetDuration(string argName)
     {
@@ -18,6 +19,11 @@ public class ProvidedArguments(BaseAction action)
     }
     
     public string GetText(string argName)
+    {
+        return VariableParser.ReplaceVariables(GetValue<string, TextArgument>(argName), action.Script);
+    }
+    
+    public string GetTextUnprocessed(string argName)
     {
         return GetValue<string, TextArgument>(argName);
     }

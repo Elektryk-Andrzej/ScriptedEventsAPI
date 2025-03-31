@@ -5,7 +5,7 @@ namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 public abstract class BaseToken
 {
     public string TokenName => GetType().Name;
-    public List<char> RawCharRepresentation { get; } = [];
+    public List<char> RawCharRepresentation { get; init; } = [];
     public string RawRepresentation => string.Join("", RawCharRepresentation);
 
     public void AddChar(char c)

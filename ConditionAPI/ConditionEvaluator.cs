@@ -63,8 +63,8 @@ public readonly struct ConditionEvaluator
             throw new NotImplementedException("`and` as well as `or` operators are not supported");
         }
         
-        VariableSubstitution.Process(ref clause.FirstOperand.Value, _script);
-        VariableSubstitution.Process(ref clause.SecondOperand.Value, _script);
+        VariableParser.ReplaceVariables(ref clause.FirstOperand.Value, _script);
+        VariableParser.ReplaceVariables(ref clause.SecondOperand.Value, _script);
 
         bool result;
         if (oper is OperatorType.Equal)

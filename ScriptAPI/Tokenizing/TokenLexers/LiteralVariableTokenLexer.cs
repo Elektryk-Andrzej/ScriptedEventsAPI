@@ -8,7 +8,7 @@ public class LiteralVariableTokenLexer(Script scr) : BaseTokenLexer('{')
 {
     private int _numberOfOpenParentheses = 1;
     
-    public override BaseToken Token { get; set; } = new LiteralVariableToken(scr);
+    public override BaseToken Token { get; protected set; } = new LiteralVariableToken(scr);
 
     public override void TryAddChar(char c, out bool shouldContinueExecution)
     {
