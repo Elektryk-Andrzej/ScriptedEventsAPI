@@ -41,10 +41,10 @@ public class ActionContext(ActionToken actionToken, Script scr) : YieldingContex
         var requiredArgs = Action.ExpectedArguments.Count(arg => arg.Required);
         var providedArgs = Action.Args.Count;
 
-        return new(
-            requiredArgs >= providedArgs, 
-            $"Action '{Action.Name}' is missing required arguments! " +
-            $"Provided arguments: {providedArgs}, required arguments: {requiredArgs}");
+        return providedArgs >= requiredArgs
+            ? true
+            : $"Action '{Action.Name}' is missing required arguments! " +
+              $"Provided arguments: {providedArgs}, required arguments: {requiredArgs}";
     }
 
     public override IEnumerator<float> Execute()
