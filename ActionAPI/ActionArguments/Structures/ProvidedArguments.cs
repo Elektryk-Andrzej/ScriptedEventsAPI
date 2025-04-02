@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Exiled.API.Features;
 using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Interfaces;
+using ScriptedEventsAPI.ActionAPI.ActionExceptions;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.VariableAPI;
@@ -10,7 +13,7 @@ namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 
 public class ProvidedArguments(BaseAction action)
 {
-    private Dictionary<(string name, Type type), object> Arguments { get; } = [];
+    private Dictionary<(string name, Type type), IArgEvalRes> Arguments { get; } = [];
 
     public TimeSpan GetDuration(string argName)
     {
@@ -34,19 +37,30 @@ public class ProvidedArguments(BaseAction action)
 
     public TEnum GetEnum<TEnum>(string argName)
     {
-        return (TEnum)((Func<object>)GetValue(argName, typeof(EnumArgument)))();
+        return GetValue<TEnum, EnumArgument>(argName);
     }
 
     private TValue GetValue<TValue, TArg>(string argName)
     {
-        return ((Func<TValue>)GetValue(argName, typeof(TArg)))();
+        var res = GetValueInternal(argName, typeof(TArg));
+        if (res.GetResult().HasErrored())
+        {
+            throw new ArgumentFetchException();
+        }
+
+        if (res is not ArgEvalRes<TValue> argEvalRes)
+        {
+            throw new Exception();
+        }
+        
+        return argEvalRes.GetValue();
     }
 
-    private object GetValue(string argName, Type argType)
+    private IArgEvalRes GetValueInternal(string argName, Type argType)
     {
-        if (!Arguments.TryGetValue((argName, argType), out object value))
+        if (!Arguments.TryGetValue((argName, argType), out IArgEvalRes value))
         {
-            throw new KeyNotFoundException($"There is no argument registered of type '{argType.Name}' and name '{argName}'.");
+            throw new Exception($"There is no argument registered of type '{argType.Name}' and name '{argName}'.");
         }
 
         return value;

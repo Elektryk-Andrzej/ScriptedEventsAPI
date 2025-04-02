@@ -1,5 +1,6 @@
-﻿using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
-using ScriptedEventsAPI.ActionAPI.ActionResponses;
+﻿using Exiled.API.Features;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
+using ScriptedEventsAPI.ActionAPI.ActionExceptions;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 
 namespace ScriptedEventsAPI.ActionAPI.Actions;
@@ -16,8 +17,7 @@ public class PrintAction : StandardAction
 
     public override void Execute()
     {
-        Exiled.API.Features.Log.Info(
-            $"[Script: {Script.Name}] {Args.GetText("text")}");
-        Response = new SuccessResponse();
+        var text = Args.GetText("text");
+        Log.Info($"[Script '{Script.Name}'] {text}");
     }
 }

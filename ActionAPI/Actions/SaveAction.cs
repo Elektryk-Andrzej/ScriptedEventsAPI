@@ -1,5 +1,5 @@
 ﻿using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
-using ScriptedEventsAPI.ActionAPI.ActionResponses;
+using ScriptedEventsAPI.ActionAPI.ActionExceptions;
 using ScriptedEventsAPI.ActionAPI.AdditionalActionDescriptors;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 
@@ -19,6 +19,5 @@ public class SaveAction : TextReturningStandardAction, IPureAction
     public override void Execute()
     {
         TextReturn = Args.GetText("text");
-        Response = new SuccessResponse();
     }
 }

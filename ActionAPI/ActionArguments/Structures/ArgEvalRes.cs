@@ -6,13 +6,13 @@ namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 
 public class ArgEvalRes<T> : IArgEvalRes
 {
-    private ConversionResult? _dynConRes = null;
+    private ResInfo? _dynConRes = null;
     
     public bool IsStatic { get; }
     public Func<T> GetValue { get; }
     public Func<Result> GetResult { get; }
 
-    public ArgEvalRes(ConversionResult staticResult)
+    public ArgEvalRes(ResInfo staticResult)
     {
         IsStatic = true;
         GetValue = () => staticResult.Value;
@@ -40,7 +40,7 @@ public class ArgEvalRes<T> : IArgEvalRes
         GetResult = () => result;
     }
 
-    public ArgEvalRes(Func<ConversionResult> dynamicResult)
+    public ArgEvalRes(Func<ResInfo> dynamicResult)
     {
         IsStatic = false;
         GetValue = () =>
@@ -55,17 +55,17 @@ public class ArgEvalRes<T> : IArgEvalRes
         };
     }
 
-    public static implicit operator ArgEvalRes<T>(Func<ConversionResult> dynamicResult)
+    public static implicit operator ArgEvalRes<T>(Func<ResInfo> dynamicResult)
     {
         return new(dynamicResult);
     }
     
-    public static implicit operator ArgEvalRes<T>(ConversionResult staticResult)
+    public static implicit operator ArgEvalRes<T>(ResInfo staticResult)
     {
         return new(staticResult);
     }
 
-    public class ConversionResult
+    public class ResInfo
     {
         public required T Value { get; init; }
         public required Result Result { get; init; }

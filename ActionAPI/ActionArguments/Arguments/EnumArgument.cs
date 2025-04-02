@@ -15,7 +15,7 @@ public class EnumArgument(string name, Type enumType) : BaseActionArgument(name)
             : new(InternalConvert(token.RawRepresentation));
     }
 
-    private ArgEvalRes<object>.ConversionResult InternalConvert(string value)
+    private ArgEvalRes<object>.ResInfo InternalConvert(string value)
     {
         if (!Enum.IsDefined(enumType, value))
         {

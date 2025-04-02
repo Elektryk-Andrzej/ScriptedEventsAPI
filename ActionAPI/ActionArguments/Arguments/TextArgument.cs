@@ -1,8 +1,6 @@
-﻿using System;
-using ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
+﻿using ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
@@ -17,6 +15,10 @@ public class TextArgument(string name) : BaseActionArgument(name)
                 Result = true,
                 Value = getProcessedVariableValueFunc(),
             })
-            : new(token.RawRepresentation);
+            : new(new ArgEvalRes<string>.ResInfo
+            {
+                Result = true,
+                Value = token.RawRepresentation,
+            });
     }
 }

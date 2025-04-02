@@ -17,7 +17,7 @@ public class DurationArgument(string name) : BaseActionArgument(name)
             : new(InternalConvert(token.RawRepresentation));
     }
 
-    private static ArgEvalRes<TimeSpan>.ConversionResult InternalConvert(string value)
+    private static ArgEvalRes<TimeSpan>.ResInfo InternalConvert(string value)
     {
         var unitIndex = Array.FindIndex(value.ToCharArray(), char.IsLetter);
         if (unitIndex == -1)

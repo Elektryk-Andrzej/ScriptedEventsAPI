@@ -59,6 +59,7 @@ public class ActionArgumentProcessor(BaseAction action, Script scr)
         var res = evaluator.GetResult();
         if (res.HasErrored())
         {
+            Logger.Debug($"value of resMsg: {res.ErrorMsg}");
             return rs.AddExternal(res);
         }
         

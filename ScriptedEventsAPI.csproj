@@ -98,9 +98,8 @@
         <Compile Include="ActionAPI\ActionArguments\Structures\ArgumentSkeleton.cs" />
         <Compile Include="ActionAPI\ActionArguments\Structures\ProvidedArguments.cs" />
         <Compile Include="ActionAPI\ActionIndex.cs" />
-        <Compile Include="ActionAPI\ActionResponses\IActionResponse.cs" />
-        <Compile Include="ActionAPI\ActionResponses\MissingArgumentResponse.cs" />
-        <Compile Include="ActionAPI\ActionResponses\SuccessResponse.cs" />
+        <Compile Include="ActionAPI\ActionExceptions\MissingArgumentResponse.cs" />
+        <Compile Include="ActionAPI\ActionExceptions\SuccessResponse.cs" />
         <Compile Include="ActionAPI\Actions\PrintAction.cs" />
         <Compile Include="ActionAPI\Actions\SaveAction.cs" />
         <Compile Include="ActionAPI\Actions\SetRoleAction.cs" />
