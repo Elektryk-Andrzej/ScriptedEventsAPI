@@ -4,6 +4,7 @@ using MEC;
 using ScriptedEventsAPI.ConditionAPI;
 using ScriptedEventsAPI.EaqoldHelpers;
 using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.OtherStructures.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Extensions;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
@@ -36,7 +37,7 @@ public class IfStatementContext(Script scr) : TreeContext
 
         if (!res.WasConditionSuccessful)
         {
-            Log.Error($"condtion {_condition} is malformed! Reason: {res.WasConditionSuccessful.Message}");
+            Log.Error($"condtion {_condition} is malformed! Reason: {res.WasConditionSuccessful.ErrorMsg}");
             yield break;
         }
 

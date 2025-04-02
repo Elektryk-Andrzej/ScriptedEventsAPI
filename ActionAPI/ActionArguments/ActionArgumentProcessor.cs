@@ -1,72 +1,74 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.Linq;
 using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Interfaces;
 using ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.OtherStructures.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
-using ScriptedEventsAPI.VariableAPI.Structures;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments;
 
 public class ActionArgumentProcessor(BaseAction action, Script scr)
 {
-    private Dictionary<Type, Func<BaseToken, BaseActionArgument, (Result, object)>> Converters => new()
+    private readonly Dictionary<Type, Func<BaseToken, BaseActionArgument, IArgEvalRes>> _converters = new()
     {
-        { typeof(TextArgument), (token, _) => (TextArgument.TryConvert(token, scr, out var value), value) },
-        { typeof(DurationArgument), (token, _) => (DurationArgument.TryConvert(token, scr, out var value), value) },
-        { typeof(PlayerVariableArgument), (token, _) => (PlayerVariableArgument.TryConvert(token, scr, out var value), value)},
-        { typeof(EnumArgument), (token, arg) => (((EnumArgument)arg).TryConvert(token, out var value), value)}
+        { typeof(TextArgument), (token, _) => TextArgument.GetConvertSolution(token, scr) },
+        { typeof(DurationArgument), (token, _) => DurationArgument.GetConvertSolution(token, scr) },
+        { typeof(PlayerVariableArgument), (token, _) => PlayerVariableArgument.GetConvertSolution(token, scr)},
+        { typeof(EnumArgument), (token, arg) => ((EnumArgument)arg).GetConvertSolution(token, scr)}
     };
 
-    public Result IsValidArgument(BaseToken token, int index, out ArgumentSkeleton skeleton) 
-    {            
+    public Result IsValidArgument(BaseToken token, int index, out ArgumentSkeleton skeleton)
+    {
+        var rs = new ResultStacker(
+            $"Argument '{token.RawRepresentation}' (index {index}) for action {action.Name} is invalid!");
+        
         skeleton = default;
         
         if (index >= action.ExpectedArguments.Length)
         {
-            return $"Action '{action.Name}' does not expect more arguments " +
-                   $"than [{action.ExpectedArguments.Length}], but tried to index [{index}].";
+            return rs.AddInternal(
+                $"Action does not expect more than {action.ExpectedArguments.Length} arguments.");
         }
 
         var arg = action.ExpectedArguments[index];
         var argType = arg.GetType();
-        if (TryConvertGeneral(token, arg, out var argValue).HasErrored(out var error))
+        
+        if (!_converters.TryGetValue(argType, out var converter))
         {
-            return error;
+            return rs.AddInternal($"No converter for {argType} found.");
+        }
+        
+        IArgEvalRes evaluator = converter(token, arg);
+        if (!evaluator.IsStatic)
+        {
+            Logger.Debug("Argument is dynamic, cannot check if fully valid.");
+            
+            skeleton = new()
+            {
+                Evaluator = evaluator,
+                ArgumentType = argType,
+                Name = arg.Name,
+            };
+            return true;
+        }
+
+        var res = evaluator.GetResult();
+        if (res.HasErrored())
+        {
+            return rs.AddExternal(res);
         }
         
         skeleton = new()
         {
-            Value = argValue,
-            Type = argType,
+            Evaluator = evaluator,
+            ArgumentType = argType,
             Name = arg.Name,
         };
 
-        return true;
-    }
-
-    public Result TryConvertGeneral(BaseToken token, BaseActionArgument arg, out object argValue)
-    {
-        argValue = null!;
-        var argType = arg.GetType();
-        
-        if (!Converters.TryGetValue(argType, out var converter))
-        {
-            return $"No converter for {argType} found.";
-        }
-            
-        var (result, resValue) = converter(token, arg);
-        if (result.HasErrored())
-        {
-            return result;
-        }
-
-        argValue = resValue;
         return true;
     }
 }

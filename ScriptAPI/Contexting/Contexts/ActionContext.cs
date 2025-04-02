@@ -5,6 +5,7 @@ using ScriptedEventsAPI.ActionAPI.ActionArguments;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.EaqoldHelpers;
 using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.OtherStructures.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
@@ -30,7 +31,7 @@ public class ActionContext(ActionToken actionToken, Script scr) : YieldingContex
             return TryAddTokenRes.Error($"{token.TokenName} ({token.RawRepresentation}) is not a valid argument, reason: {error}");
         }
         
-        Logger.Debug($"Adding argument '{skeleton.Name}' ({Action.Args.Count}) of value [{skeleton.Value}] (type {skeleton.Type}) to action '{Action.Name}'.");
+        Logger.Debug($"Adding argument '{skeleton.Name}' ({Action.Args.Count}) of value [{skeleton.Evaluator}] (type {skeleton.ArgumentType}) to action '{Action.Name}'.");
         Action.Args.Add(skeleton);
         return TryAddTokenRes.Continue();
     }

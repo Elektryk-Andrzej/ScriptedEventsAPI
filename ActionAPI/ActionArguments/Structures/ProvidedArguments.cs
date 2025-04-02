@@ -4,7 +4,6 @@ using Exiled.API.Features;
 using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.OtherStructures;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
@@ -55,8 +54,8 @@ public class ProvidedArguments(BaseAction action)
 
     public void Add(ArgumentSkeleton skeleton)
     {
-        Logger.Debug($"Registering variable {skeleton.Name} of type {skeleton.Type.Name} for action {action.Name}.");
-        Arguments.Add((skeleton.Name, skeleton.Type), skeleton.Value);
+        Logger.Debug($"Registering variable {skeleton.Name} of type {skeleton.ArgumentType.Name} for action {action.Name}.");
+        Arguments.Add((skeleton.Name, skeleton.ArgumentType), skeleton.Evaluator);
     }
 
     public int Count => Arguments.Count;

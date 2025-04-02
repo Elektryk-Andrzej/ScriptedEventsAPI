@@ -4,6 +4,7 @@ using System.Linq;
 using MEC;
 using ScriptedEventsAPI.EaqoldHelpers;
 using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.OtherStructures.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Contexting;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Extensions;

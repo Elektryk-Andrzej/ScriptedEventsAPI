@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 using ScriptedEventsAPI.OtherStructures;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
@@ -9,30 +10,45 @@ namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
 
 public class DurationArgument(string name) : BaseActionArgument(name)
 {
-    public static Result TryConvert(BaseToken token, Script scr, out Func<TimeSpan> value)
+    public static ArgEvalRes<TimeSpan> GetConvertSolution(BaseToken token, Script scr)
     {
-        value = () => TimeSpan.Zero;
+        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr, out var procValFunc) 
+            ? new(() => InternalConvert(procValFunc())) 
+            : new(InternalConvert(token.RawRepresentation));
+    }
 
-        var processedName = VariableParser.ReplaceVariables(token.RawRepresentation, scr);
-        
-        var unitIndex = Array.FindIndex(processedName.ToCharArray(), char.IsLetter);
+    private static ArgEvalRes<TimeSpan>.ConversionResult InternalConvert(string value)
+    {
+        var unitIndex = Array.FindIndex(value.ToCharArray(), char.IsLetter);
         if (unitIndex == -1)
         {
-            return "No unit provided.";
+            return new()
+            {
+                Result = "No unit provided.",
+                Value = TimeSpan.Zero
+            };
         }
         
-        var valuePart = processedName.Take(unitIndex).ToArray();
+        var valuePart = value.Take(unitIndex).ToArray();
         if (!valuePart.All(char.IsDigit))
         {
-            return $"Value parts ({string.Join("", valuePart)}) only be made of numbers.";
+            return new()
+            {
+                Result = $"Value parts ({string.Join("", valuePart)}) only be made of numbers.",
+                Value = TimeSpan.Zero
+            };
         }
         
         if (!double.TryParse(string.Join("", valuePart), out var valueAsDouble))
         {
-            return $"Value parts ({string.Join("", valuePart)}) only be made of numbers.";
+            return new()
+            {
+                Result = $"Value parts ({string.Join("", valuePart)}) only be made of numbers.",
+                Value = TimeSpan.Zero
+            };
         }
 
-        var unit = token.RawRepresentation.Substring(unitIndex);
+        var unit = value.Substring(unitIndex);
         TimeSpan? timeSpan = unit switch
         {
             "s" => TimeSpan.FromSeconds(valueAsDouble),
@@ -45,12 +61,18 @@ public class DurationArgument(string name) : BaseActionArgument(name)
 
         if (timeSpan is null)
         {
-            return $"Provided unit {unit} is not valid.";
+            return new()
+            {
+                Result = $"Provided unit {unit} is not valid.",
+                Value = TimeSpan.Zero
+            };
         }
         
-        value = () => timeSpan.Value;
-        
         Logger.Debug($"successs! TimeSpan length is {timeSpan.Value.TotalSeconds}s");
-        return true;
+        return new()
+        {
+            Result = true,
+            Value = timeSpan.Value
+        };
     }
 }

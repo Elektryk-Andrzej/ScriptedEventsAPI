@@ -1,27 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
 
-public class EnumArgument(string name, Type enumType, bool required = true) : BaseActionArgument(name, required)
+public class EnumArgument(string name, Type enumType) : BaseActionArgument(name)
 {
-    public Result TryConvert(BaseToken token, out Func<object> value) 
+    public ArgEvalRes<object> GetConvertSolution(BaseToken token, Script scr)
     {
-        value = null!;
-        
-        if (!Enum.IsDefined(enumType, token.RawRepresentation))
+        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr, out var getProcessedVariableValueFunc)
+            ? new(() => InternalConvert(getProcessedVariableValueFunc())) 
+            : new(InternalConvert(token.RawRepresentation));
+    }
+
+    private ArgEvalRes<object>.ConversionResult InternalConvert(string value)
+    {
+        if (!Enum.IsDefined(enumType, value))
         {
-            return $"Enum {enumType.Name} does not include {token.RawRepresentation} as a valid value.";
+            return new()
+            {
+                Result = $"Enum {enumType.Name} does not include '{value}' as a valid value.",
+                Value = null!
+            };
         }
 
-        var enumValue = Enum.Parse(enumType, token.RawRepresentation, true);
-        value = () => enumValue;
-        return true;
+        var enumValue = Enum.Parse(enumType, value, true);
+        return new()
+        {
+            Result = true,
+            Value = enumValue
+        };
     }
 }

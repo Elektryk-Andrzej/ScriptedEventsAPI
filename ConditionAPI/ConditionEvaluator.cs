@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ScriptedEventsAPI.ConditionAPI.ConditionElements;
-using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.OtherStructures.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.VariableAPI;
 
@@ -106,20 +106,20 @@ public readonly struct ConditionEvaluator
 
         if (elements[0] is not Operand firstOperand)
         {
-            return $"The 1st element of a condition [{elements[0]}] must be an operand! " +
-                  $"Example: (15 > 7), where 1st element `15` is an operand.";
+            return $"The 1st element of a condition [{elements[0]}] must be a value! " +
+                  $"Example: (15 > 7), where 1st element [ 15 ] is a value.";
         }
         
         if (elements[1] is not Operator @operator)
         {
             return $"The 2nd element of a condition [{elements[1]}] must be an operator! " +
-                   $"Example: (15 > 7), where 2nd element `>` is an operator.";
+                   $"Example: (15 > 7), where 2nd element [ > ] is an operator.";
         }
         
         if (elements[2] is not Operand secondOperand)
         {
-            return $"The 3rd element of a condition [{elements[2]}] must be an operand! " +
-                   $"Example: (15 > 7), where 3rd element `7` is an operand.";
+            return $"The 3rd element of a condition [{elements[2]}] must be a value! " +
+                   $"Example: (15 > 7), where 3rd element [ 7 ] is a value.";
         }
 
         clause = new()

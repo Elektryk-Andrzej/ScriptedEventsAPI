@@ -1,5 +1,4 @@
 ﻿using ScriptedEventsAPI.ActionAPI.ActionArguments.Arguments;
-using ScriptedEventsAPI.ActionAPI.ActionArguments.Structures;
 using ScriptedEventsAPI.ActionAPI.ActionResponses;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 

@@ -1,13 +1,13 @@
-﻿namespace ScriptedEventsAPI.OtherStructures;
+﻿namespace ScriptedEventsAPI.OtherStructures.ResultStructure;
 
-public readonly struct Result(bool res, string message)
+public readonly struct Result(bool res, string errorMsg)
 {
     public readonly bool Value = res;
-    public readonly string Message = message;
+    public readonly string ErrorMsg = errorMsg;
 
     public bool HasErrored(out string error)
     {
-        error = Message;
+        error = ErrorMsg;
         return !Value;
     }
     

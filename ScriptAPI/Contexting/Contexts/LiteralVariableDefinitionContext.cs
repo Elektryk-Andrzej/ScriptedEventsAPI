@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using ScriptedEventsAPI.ActionAPI.BaseActions;
 using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.OtherStructures.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
