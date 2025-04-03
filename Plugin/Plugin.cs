@@ -1,6 +1,6 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
-using ScriptedEventsAPI.ActionAPI;
+using ScriptedEventsAPI.MethodAPI;
 using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.Plugin;
@@ -12,7 +12,7 @@ public class Plugin : Plugin<Config>
     public override void OnEnabled()
     {
         base.OnEnabled();
-        ActionIndex.Initalize();
+        MethodIndex.Initalize();
         PlayerVariableIndex.Initalize();
     }
 }

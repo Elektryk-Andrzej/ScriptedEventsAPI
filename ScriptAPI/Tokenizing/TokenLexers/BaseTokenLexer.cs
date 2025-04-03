@@ -1,4 +1,4 @@
-﻿using ScriptedEventsAPI.OtherStructures.ResultStructure;
+﻿using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;

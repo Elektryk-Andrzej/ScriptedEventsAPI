@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MEC;
-using ScriptedEventsAPI.EaqoldHelpers;
+using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 
 namespace ScriptedEventsAPI.ScriptAPI.Contexting.Extensions;
@@ -14,7 +14,6 @@ public static class BaseContextExtensions
         {
             case StandardContext standardContext:
                 standardContext.Execute();
-                yield return 0;
                 break;
             case YieldingContext yieldingContext:
                 yield return Timing.WaitUntilDone(yieldingContext.Execute().Run());

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Features;
-using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;

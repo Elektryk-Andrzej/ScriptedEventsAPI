@@ -1,7 +1,7 @@
 ﻿using System;
-using ScriptedEventsAPI.ActionAPI.BaseActions;
-using ScriptedEventsAPI.OtherStructures;
-using ScriptedEventsAPI.OtherStructures.ResultStructure;
+using ScriptedEventsAPI.Helpers;
+using ScriptedEventsAPI.Helpers.ResultStructure;
+using ScriptedEventsAPI.MethodAPI.BaseMethods;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
@@ -13,8 +13,8 @@ namespace ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
 public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Script scr) : StandardContext
 {
     private LiteralVariable? _variable;
-    private ActionContext? _actionContext;
-    private TextReturningStandardAction? _action;
+    private LineMethodContext? _actionContext;
+    private TextReturningStandardMethod? _action;
     private bool _hasEqualsSignBeenVerified = false;
     
     public override TryAddTokenRes TryAddToken(BaseToken token)
@@ -38,12 +38,12 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             return TryAddTokenRes.Continue();
         }
 
-        if (token is ActionToken actionToken)
+        if (token is MethodToken actionToken)
         {
-            if (actionToken.Action is not TextReturningStandardAction resultStandardAction)
+            if (actionToken.Method is not TextReturningStandardMethod resultStandardAction)
             {
                 return TryAddTokenRes.Error(
-                    "An action you are using does not return a value, " +
+                    "An method you are using does not return a value, " +
                     "so you cannot use it to define a value of a variable.");
             }
 
@@ -72,14 +72,17 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
     {
         if (_action != null)
         {
+            Logger.Debug($"Executing '{_action.Name}' to get value");
             _action.Execute();
 
             if (_action.TextReturn == null)
             {
-                throw new Exception($"Tried to execute {GetType().Name}, but action result is null.");
+                Lg.M();
+                throw new Exception($"Tried to execute {GetType().Name}, but method result is null.");
             }
             
-            Logger.Debug($"action returned {_action.TextReturn} to set the value of the variable");
+            Lg.M();
+            Logger.Debug($"method returned {_action.TextReturn} to set the value of the variable");
 
             _variable = new()
             {
@@ -89,9 +92,12 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
         }
         else if (_variable is null)
         {
+            Lg.M();
+            Logger.Debug($"Tried to execute {GetType().Name} without a variable set.");
             throw new Exception($"Tried to execute {GetType().Name} without a variable set.");
         }
         
+        Lg.M();
         Logger.Debug($"Added variable '{_variable.Name}' to script '{scr.Name}'.");
         scr.LocalLiteralVariables.Add(_variable);
     }

@@ -18,7 +18,7 @@
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
         <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
+        <DebugType>embedded</DebugType>
         <Optimize>false</Optimize>
         <OutputPath>bin\Debug\</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -27,7 +27,7 @@
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugType>pdbonly</DebugType>
+        <DebugType>embedded</DebugType>
         <Optimize>true</Optimize>
         <OutputPath>bin\Release\</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
@@ -87,51 +87,55 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="ActionAPI\ActionArguments\ActionArgumentProcessor.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Arguments\BaseActionArgument.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Arguments\DurationArgument.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Arguments\EnumArgument.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Arguments\PlayerVariableArgument.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Arguments\TextArgument.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Interfaces\IArgEvalRes.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Structures\ArgEvalRes.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Structures\ArgumentSkeleton.cs" />
-        <Compile Include="ActionAPI\ActionArguments\Structures\ProvidedArguments.cs" />
-        <Compile Include="ActionAPI\ActionIndex.cs" />
-        <Compile Include="ActionAPI\ActionExceptions\MissingArgumentResponse.cs" />
-        <Compile Include="ActionAPI\ActionExceptions\SuccessResponse.cs" />
-        <Compile Include="ActionAPI\Actions\PrintAction.cs" />
-        <Compile Include="ActionAPI\Actions\SaveAction.cs" />
-        <Compile Include="ActionAPI\Actions\SetRoleAction.cs" />
-        <Compile Include="ActionAPI\Actions\TestPlayerVarAction.cs" />
-        <Compile Include="ActionAPI\Actions\Yielding\WaitAction.cs" />
-        <Compile Include="ActionAPI\AdditionalActionDescriptors\IPureAction.cs" />
-        <Compile Include="ActionAPI\BaseActions\BaseAction.cs" />
-        <Compile Include="ActionAPI\BaseActions\TextReturningStandardAction.cs" />
-        <Compile Include="ActionAPI\BaseActions\StandardAction.cs" />
-        <Compile Include="ActionAPI\BaseActions\YieldingAction.cs" />
+        <Compile Include="MethodAPI\Arguments\Args\OptionsArgument.cs" />
+        <Compile Include="MethodAPI\Arguments\Args\SinglePlayerArgument.cs" />
+        <Compile Include="MethodAPI\Arguments\MethodArgumentProcessor.cs" />
+        <Compile Include="MethodAPI\Arguments\Args\BaseMethodArgument.cs" />
+        <Compile Include="MethodAPI\Arguments\Args\DurationArgument.cs" />
+        <Compile Include="MethodAPI\Arguments\Args\EnumArgument.cs" />
+        <Compile Include="MethodAPI\Arguments\Args\PlayerVariableArgument.cs" />
+        <Compile Include="MethodAPI\Arguments\Args\TextArgument.cs" />
+        <Compile Include="MethodAPI\Arguments\Interfaces\IArgEvalRes.cs" />
+        <Compile Include="MethodAPI\Arguments\Structures\ArgEvalRes.cs" />
+        <Compile Include="MethodAPI\Arguments\Structures\ArgumentSkeleton.cs" />
+        <Compile Include="MethodAPI\Arguments\Structures\Option.cs" />
+        <Compile Include="MethodAPI\Arguments\Structures\ProvidedArguments.cs" />
+        <Compile Include="MethodAPI\Exceptions\DeveloperFuckupException.cs" />
+        <Compile Include="MethodAPI\MethodIndex.cs" />
+        <Compile Include="MethodAPI\Exceptions\MissingArgumentException.cs" />
+        <Compile Include="MethodAPI\Exceptions\ArgumentFetchException.cs" />
+        <Compile Include="MethodAPI\Methods\AdditionalDescriptors\IPureMethod.cs" />
+        <Compile Include="MethodAPI\Methods\GetMethod.cs" />
+        <Compile Include="MethodAPI\Methods\PrintMethod.cs" />
+        <Compile Include="MethodAPI\Methods\SaveMethod.cs" />
+        <Compile Include="MethodAPI\Methods\SetRoleMethod.cs" />
+        <Compile Include="MethodAPI\Methods\TestPlayerVarMethod.cs" />
+        <Compile Include="MethodAPI\Methods\Yielding\WaitMethod.cs" />
+        <Compile Include="MethodAPI\BaseMethods\BaseMethod.cs" />
+        <Compile Include="MethodAPI\BaseMethods\TextReturningStandardMethod.cs" />
+        <Compile Include="MethodAPI\BaseMethods\StandardMethod.cs" />
+        <Compile Include="MethodAPI\BaseMethods\YieldingMethod.cs" />
         <Compile Include="ConditionAPI\ConditionElements\Clause.cs" />
         <Compile Include="ConditionAPI\ConditionElements\Operator.cs" />
         <Compile Include="ConditionAPI\ConditionElements\OperatorType.cs" />
         <Compile Include="ConditionAPI\ConditionEvaluator.cs" />
         <Compile Include="ConditionAPI\ConditionElements\IConditionElement.cs" />
         <Compile Include="ConditionAPI\ConditionElements\Operand.cs" />
-        <Compile Include="EaqoldHelpers\Nullable.cs" />
-        <Compile Include="EaqoldHelpers\SafeCoroutines.cs" />
-        <Compile Include="OtherStructures\ResultStructure\Result.cs" />
-        <Compile Include="OtherStructures\ResultStructure\ResultStacker.cs" />
+        <Compile Include="Helpers\ResultStructure\Result.cs" />
+        <Compile Include="Helpers\ResultStructure\ResultStacker.cs" />
+        <Compile Include="Helpers\SafeCoroutines.cs" />
         <Compile Include="Plugin\Commands\RunScriptCommand.cs" />
         <Compile Include="Plugin\Config.cs" />
         <Compile Include="Plugin\Plugin.cs" />
-        <Compile Include="OtherStructures\Either.cs" />
-        <Compile Include="OtherStructures\Lg.cs" />
-        <Compile Include="OtherStructures\Logger.cs" />
+        <Compile Include="Helpers\Either.cs" />
+        <Compile Include="Helpers\Lg.cs" />
+        <Compile Include="Helpers\Logger.cs" />
         <Compile Include="ScriptAPI\Contexting\BaseContexts\BaseContext.cs" />
         <Compile Include="ScriptAPI\Contexting\BaseContexts\StandardContext.cs" />
         <Compile Include="ScriptAPI\Contexting\BaseContexts\TreeContext.cs" />
         <Compile Include="ScriptAPI\Contexting\BaseContexts\YieldingContext.cs" />
         <Compile Include="ScriptAPI\Contexting\Contexter.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\ActionContext.cs" />
+        <Compile Include="ScriptAPI\Contexting\Contexts\LineMethodContext.cs" />
         <Compile Include="ScriptAPI\Contexting\Contexts\EndIfStatementContext.cs" />
         <Compile Include="ScriptAPI\Contexting\Contexts\IfStatementContext.cs" />
         <Compile Include="ScriptAPI\Contexting\Contexts\LiteralVariableDefinitionContext.cs" />
@@ -142,7 +146,7 @@
         <Compile Include="ScriptAPI\Tokenizing\BaseTokens\BaseContextableToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\BaseTokens\BaseToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokenizer.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\TokenLexers\ActionTokenLexer.cs" />
+        <Compile Include="ScriptAPI\Tokenizing\TokenLexers\MethodTokenLexer.cs" />
         <Compile Include="ScriptAPI\Tokenizing\TokenLexers\BaseTokenLexer.cs" />
         <Compile Include="ScriptAPI\Tokenizing\TokenLexers\CommentTokenLexer.cs" />
         <Compile Include="ScriptAPI\Tokenizing\TokenLexers\ControlFlowTokenLexer.cs" />
@@ -152,7 +156,7 @@
         <Compile Include="ScriptAPI\Tokenizing\TokenLexers\PlayerVariableTokenLexer.cs" />
         <Compile Include="ScriptAPI\Tokenizing\TokenLexers\UnclassifiedValueTokenLexer.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokens\ActionToken.cs" />
+        <Compile Include="ScriptAPI\Tokenizing\Tokens\MethodToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\CommentToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\ControlFlowToken.cs" />
         <Compile Include="ScriptAPI\Tokenizing\Tokens\EndLineToken.cs" />

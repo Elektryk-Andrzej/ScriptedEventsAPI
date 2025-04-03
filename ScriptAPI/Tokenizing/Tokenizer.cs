@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ScriptedEventsAPI.OtherStructures;
+using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
@@ -104,7 +104,7 @@ public class Tokenizer(Script script)
 
         if (char.IsUpper(character))
         {
-            return new ActionTokenLexer(character, script, tokens.LastOrDefault());
+            return new MethodTokenLexer(character, script, tokens.LastOrDefault());
         }
 
         if (char.IsLower(character))

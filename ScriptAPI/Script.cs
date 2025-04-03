@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using MEC;
-using ScriptedEventsAPI.EaqoldHelpers;
-using ScriptedEventsAPI.OtherStructures;
-using ScriptedEventsAPI.OtherStructures.ResultStructure;
+using ScriptedEventsAPI.Helpers;
+using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Contexting;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Extensions;
@@ -31,7 +30,6 @@ public class Script
 
     private IEnumerator<float> InternalExecute()
     {
-        Logger.Debug("1");
         try
         {
             new Tokenizer(this).GetAllFileTokens();
@@ -40,8 +38,7 @@ public class Script
         {
             Logger.Debug(e.Message);
         }
-
-        Logger.Debug(2);
+        
         try
         {
             new Contexter(this).LinkAllTokens();
@@ -54,7 +51,7 @@ public class Script
         foreach (var context in Contexts)
         {
             Logger.Debug($"executing {context}!");
-            yield return Timing.WaitUntilDone(context.ExecuteBaseContext());
+            yield return Timing.WaitUntilDone(context.ExecuteBaseContext().Run());
         }
     }
 

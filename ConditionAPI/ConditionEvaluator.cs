@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ScriptedEventsAPI.ConditionAPI.ConditionElements;
-using ScriptedEventsAPI.OtherStructures.ResultStructure;
+using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.VariableAPI;
 

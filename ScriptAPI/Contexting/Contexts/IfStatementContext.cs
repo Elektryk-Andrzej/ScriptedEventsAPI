@@ -2,9 +2,8 @@
 using Exiled.API.Features;
 using MEC;
 using ScriptedEventsAPI.ConditionAPI;
-using ScriptedEventsAPI.EaqoldHelpers;
-using ScriptedEventsAPI.OtherStructures;
-using ScriptedEventsAPI.OtherStructures.ResultStructure;
+using ScriptedEventsAPI.Helpers;
+using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Extensions;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
