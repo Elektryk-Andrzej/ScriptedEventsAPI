@@ -2,7 +2,7 @@
 using ScriptedEventsAPI.MethodAPI.BaseMethods;
 using ScriptedEventsAPI.MethodAPI.Methods.AdditionalDescriptors;
 
-namespace ScriptedEventsAPI.MethodAPI.Methods;
+namespace ScriptedEventsAPI.MethodAPI.Methods.PureMethods;
 
 public class SaveMethod : TextReturningStandardMethod, IPureMethod
 {

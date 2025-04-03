@@ -1,4 +1,5 @@
-﻿using ScriptedEventsAPI.MethodAPI.Arguments.Args;
+﻿using ScriptedEventsAPI.MethodAPI.Arguments;
+using ScriptedEventsAPI.MethodAPI.Arguments.Args;
 using ScriptedEventsAPI.MethodAPI.Arguments.Structures;
 using ScriptedEventsAPI.ScriptAPI;
 

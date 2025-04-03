@@ -13,15 +13,15 @@ namespace ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
 public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Script scr) : StandardContext
 {
     private LiteralVariable? _variable;
-    private LineMethodContext? _actionContext;
-    private TextReturningStandardMethod? _action;
+    private LineMethodContext? _methodContext;
+    private TextReturningStandardMethod? _method;
     private bool _hasEqualsSignBeenVerified = false;
     
     public override TryAddTokenRes TryAddToken(BaseToken token)
     {
-        if (_actionContext != null)
+        if (_methodContext != null)
         {
-            return _actionContext.TryAddToken(token);
+            return _methodContext.TryAddToken(token);
         }
         
         if (!_hasEqualsSignBeenVerified)
@@ -38,17 +38,17 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             return TryAddTokenRes.Continue();
         }
 
-        if (token is MethodToken actionToken)
+        if (token is MethodToken methodToken)
         {
-            if (actionToken.Method is not TextReturningStandardMethod resultStandardAction)
+            if (methodToken.Method is not TextReturningStandardMethod resultStandardMethod)
             {
                 return TryAddTokenRes.Error(
                     "An method you are using does not return a value, " +
                     "so you cannot use it to define a value of a variable.");
             }
 
-            _actionContext = new(actionToken, scr);
-            _action = resultStandardAction;
+            _methodContext = new(methodToken, scr);
+            _method = resultStandardMethod;
             return TryAddTokenRes.Continue();
         }
         
@@ -63,31 +63,31 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
 
     public override Result VerifyCurrentState()
     {
-        return _variable is not null || _action is not null
+        return _variable is not null || _method is not null
             ? true 
             :  "Cannot initalize a variable! There is no value to set the variable to.";
     }
 
     public override void Execute()
     {
-        if (_action != null)
+        if (_method != null)
         {
-            Logger.Debug($"Executing '{_action.Name}' to get value");
-            _action.Execute();
+            Logger.Debug($"Executing '{_method.Name}' to get value");
+            _method.Execute();
 
-            if (_action.TextReturn == null)
+            if (_method.TextReturn == null)
             {
                 Lg.M();
                 throw new Exception($"Tried to execute {GetType().Name}, but method result is null.");
             }
             
             Lg.M();
-            Logger.Debug($"method returned {_action.TextReturn} to set the value of the variable");
+            Logger.Debug($"method returned {_method.TextReturn} to set the value of the variable");
 
             _variable = new()
             {
                 Name = varToken.NameWithoutBraces,
-                Value = _action.TextReturn
+                Value = _method.TextReturn
             };
         }
         else if (_variable is null)

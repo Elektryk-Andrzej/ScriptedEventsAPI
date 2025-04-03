@@ -43,26 +43,8 @@ public class ArgEvalRes<T> : IArgEvalRes
     public ArgEvalRes(Func<ResInfo> dynamicResult)
     {
         IsStatic = false;
-        GetValue = () =>
-        {
-            _dynConRes ??= dynamicResult();
-            return _dynConRes.Value!;
-        };
-        GetResult = () =>
-        {
-            _dynConRes ??= dynamicResult();
-            return _dynConRes.Result;
-        };
-    }
-
-    public static implicit operator ArgEvalRes<T>(Func<ResInfo> dynamicResult)
-    {
-        return new(dynamicResult);
-    }
-    
-    public static implicit operator ArgEvalRes<T>(ResInfo staticResult)
-    {
-        return new(staticResult);
+        GetValue = () => dynamicResult().Value;
+        GetResult = () => dynamicResult().Result;
     }
 
     public class ResInfo

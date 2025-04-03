@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Exiled.API.Features;
 using ScriptedEventsAPI.MethodAPI.Arguments.Structures;
 using ScriptedEventsAPI.ScriptAPI;

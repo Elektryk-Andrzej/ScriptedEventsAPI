@@ -32,16 +32,16 @@ public class IfStatementContext(Script scr) : TreeContext
     {
         if (_condition is null) yield break;
 
-        var res = new ConditionEvaluator(_condition, scr);
-
-        if (!res.WasConditionSuccessful)
+        var evaluator = new ConditionEvaluator(_condition, scr);
+        var res = evaluator.Evaluate(out var result);
+        if (res.HasErrored(out var error))
         {
-            Log.Error($"condtion {_condition} is malformed! Reason: {res.WasConditionSuccessful.ErrorMsg}");
+            Log.Error($"condtion {_condition} is malformed! Reason: {error}");
             yield break;
         }
 
-        Logger.Debug($"result of {_condition} was {res.Result}");
-        if (res.Result == false)
+        Logger.Debug($"result of {_condition} was {result}");
+        if (result == false)
         {
             yield break;
         }

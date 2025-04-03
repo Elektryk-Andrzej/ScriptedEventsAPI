@@ -21,6 +21,7 @@ public class MethodArgumentProcessor(BaseMethod method, Script scr)
         { typeof(EnumArgument), (token, arg) => ((EnumArgument)arg).GetConvertSolution(token, scr) },
         { typeof(SinglePlayerArgument), (token, _) => SinglePlayerArgument.GetConvertSolution(token, scr) },
         { typeof(OptionsArgument), (token, arg) => ((OptionsArgument)arg).GetConvertSolution(token, scr) },
+        { typeof(ConditionArgument), (token, arg) => ((ConditionArgument)arg).GetConvertSolution(token, scr) },
     };
 
     public Result IsValidArgument(BaseToken token, int index, out ArgumentSkeleton skeleton)

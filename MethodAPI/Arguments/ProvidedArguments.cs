@@ -5,11 +5,12 @@ using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.MethodAPI.Arguments.Args;
 using ScriptedEventsAPI.MethodAPI.Arguments.Interfaces;
+using ScriptedEventsAPI.MethodAPI.Arguments.Structures;
 using ScriptedEventsAPI.MethodAPI.BaseMethods;
 using ScriptedEventsAPI.MethodAPI.Exceptions;
 using ScriptedEventsAPI.VariableAPI;
 
-namespace ScriptedEventsAPI.MethodAPI.Arguments.Structures;
+namespace ScriptedEventsAPI.MethodAPI.Arguments;
 
 public class ProvidedArguments(BaseMethod method)
 {
@@ -40,6 +41,12 @@ public class ProvidedArguments(BaseMethod method)
         return GetValue<Player, SinglePlayerArgument>(argName);
     }
 
+    public Func<bool> GetConditionFunc(string argName)
+    {
+        GetValueWithEvaluator<bool, ConditionArgument>(argName, out var evalRes);
+        return () => evalRes.GetValue();
+    }
+
     public TEnum GetEnum<TEnum>(string argName)
     {
         var obj = GetValue<object, EnumArgument>(argName);
@@ -58,6 +65,11 @@ public class ProvidedArguments(BaseMethod method)
 
     private TValue GetValue<TValue, TArg>(string argName)
     {
+        return GetValueWithEvaluator<TValue, TArg>(argName, out _);
+    }
+    
+    private TValue GetValueWithEvaluator<TValue, TArg>(string argName, out ArgEvalRes<TValue> evalRes)
+    {
         var rs = new ResultStacker($"Fetching argument '{argName}' (value {typeof(TValue).Name}) (argtype {typeof(TArg).Name}) for method '{method.Name}' failed.");
         
         var evaluator = GetValueInternal(argName, typeof(TArg));
@@ -74,7 +86,8 @@ public class ProvidedArguments(BaseMethod method)
             throw new DeveloperFuckupException(
                 rs.AddInternal($"Argument value is not of type {typeof(TValue).Name}").ErrorMsg);
         }
-        
+
+        evalRes = argEvalRes;
         return argEvalRes.GetValue();
     }
 

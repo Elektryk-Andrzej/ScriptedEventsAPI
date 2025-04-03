@@ -1,6 +1,6 @@
 ﻿namespace ScriptedEventsAPI.Helpers.ResultStructure;
 
-public readonly struct ResultStacker(string initMsg)
+public class ResultStacker(string initMsg)
 {
     public Result AddExternal(Result other)
     {

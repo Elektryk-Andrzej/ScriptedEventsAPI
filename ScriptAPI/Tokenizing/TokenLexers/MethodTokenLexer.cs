@@ -29,18 +29,18 @@ public class MethodTokenLexer(char initChar, Script scr, BaseToken? previousToke
             return true;
         }
         
-        if (!MethodIndex.NameToActionIndex.TryGetValue(Token.RawRepresentation, out var actType))
+        if (!MethodIndex.NameToMethodIndex.TryGetValue(Token.RawRepresentation, out var type))
         {
             return $"There is no method named '{Token.RawRepresentation}'.";
         }
 
-        if (Activator.CreateInstance(actType) is not BaseMethod createdAction)
+        if (Activator.CreateInstance(type) is not BaseMethod createdMethod)
         {
             return $"Method '{Token.RawRepresentation}' couldn't be created.";
         }
 
-        createdAction.Script = scr;
-        ((MethodToken)Token).Method = createdAction;
+        createdMethod.Script = scr;
+        ((MethodToken)Token).Method = createdMethod;
         return true;
     }
 }

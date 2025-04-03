@@ -1,10 +1,11 @@
 ﻿using System;
 using ScriptedEventsAPI.MethodAPI.Arguments.Args;
 using ScriptedEventsAPI.MethodAPI.BaseMethods;
+using ScriptedEventsAPI.MethodAPI.Methods.AdditionalDescriptors;
 
-namespace ScriptedEventsAPI.MethodAPI.Methods;
+namespace ScriptedEventsAPI.MethodAPI.Methods.PureMethods;
 
-public class GetMethod : TextReturningStandardMethod
+public class GetMethod : TextReturningStandardMethod, IPureMethod
 {
     public override string Name => "Get";
     public override string Description => "Gets certain properties about the player.";
@@ -22,9 +23,8 @@ public class GetMethod : TextReturningStandardMethod
 
     public override void Execute()
     {
-        var plr = Args.GetPlayer("player");
-        var opt = Args.GetOption("property").ToLower();
-        TextReturn = opt switch
+        var plr = Args.GetPlayer("player"); 
+        TextReturn = Args.GetOption("property").ToLower() switch
         {
             "name" => plr.Nickname,
             "role" => plr.Role.Type.ToString(),

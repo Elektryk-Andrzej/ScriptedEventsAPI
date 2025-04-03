@@ -2,33 +2,37 @@
 using System.Collections.Generic;
 using ScriptedEventsAPI.ConditionAPI.ConditionElements;
 using ScriptedEventsAPI.Helpers.ResultStructure;
+using ScriptedEventsAPI.MethodAPI.Exceptions;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.ConditionAPI;
 
-public readonly struct ConditionEvaluator
+public class ConditionEvaluator(string expression, Script scr)
 {
-    public bool Result { get; }
-    public Result WasConditionSuccessful { get; }
-    private readonly Script _script;
-    
-    public ConditionEvaluator(string expression, Script scr)
+    private Clause? _clause = null;
+
+    public Result IsValid()
     {
-        _script = scr;
-        
         var elements = GetElementsFromExpression(expression);
-        var isValid = IsValidClause(elements, out var clause);
-        if (!isValid)
+        return IsValidClause(elements, out _clause);
+    }
+
+    public Result Evaluate(out bool didEvaluateTrue)
+    {
+        didEvaluateTrue = false;
+        if (_clause is null)
         {
-            Result = false;
-            WasConditionSuccessful = isValid;
-            return;
+            var resp = IsValid();
+            if (resp.HasErrored())
+            {
+                return resp;
+            }
         }
 
-        var result = EvaluateCondition(clause);
-        WasConditionSuccessful = result.wasSuccess;
-        Result = result.conditionResult;
+        var (condRes, wasSuccess) = EvaluateCondition();
+        didEvaluateTrue = condRes;
+        return wasSuccess;
     }
 
     private static List<IConditionElement> GetElementsFromExpression(string expression)
@@ -55,32 +59,37 @@ public readonly struct ConditionEvaluator
         return history;
     }
 
-    private (bool conditionResult, Result wasSuccess) EvaluateCondition(Clause clause)
+    private (bool conditionResult, Result wasSuccess) EvaluateCondition()
     {
-        var oper = clause.Operator.OperatorType;
+        if (_clause is null)
+        {
+            throw new DeveloperFuckupException($"clause is null");
+        }
+        
+        var oper = _clause.Operator.OperatorType;
         if (oper is OperatorType.And or OperatorType.Or)
         {
             throw new NotImplementedException("`and` as well as `or` operators are not supported");
         }
         
-        VariableParser.ReplaceVariables(ref clause.FirstOperand.Value, _script);
-        VariableParser.ReplaceVariables(ref clause.SecondOperand.Value, _script);
+        VariableParser.ReplaceVariables(ref _clause.FirstOperand.Value, scr);
+        VariableParser.ReplaceVariables(ref _clause.SecondOperand.Value, scr);
 
         bool result;
         if (oper is OperatorType.Equal)
         {
-            result = clause.FirstOperand.Value == clause.SecondOperand.Value;
+            result = _clause.FirstOperand.Value == _clause.SecondOperand.Value;
             return (result, true);
         }
 
-        if (!float.TryParse(clause.FirstOperand.Value, out float number1))
+        if (!float.TryParse(_clause.FirstOperand.Value, out float number1))
         {
-            return (false, $"Value '{clause.FirstOperand.Value}' is not a valid number!");
+            return (false, $"Value '{_clause.FirstOperand.Value}' is not a valid number!");
         }
         
-        if (!float.TryParse(clause.SecondOperand.Value, out float number2))
+        if (!float.TryParse(_clause.SecondOperand.Value, out float number2))
         {
-            return (false, $"Value '{clause.SecondOperand.Value}' is not a valid number!");
+            return (false, $"Value '{_clause.SecondOperand.Value}' is not a valid number!");
         }
 
         result = oper switch

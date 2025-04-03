@@ -9,36 +9,36 @@ namespace ScriptedEventsAPI.MethodAPI;
 
 public static class MethodIndex
 {
-    public static readonly Dictionary<string, Type> NameToActionIndex = new();
+    public static readonly Dictionary<string, Type> NameToMethodIndex = new();
 
     public static void Initalize()
     {
-        NameToActionIndex.Clear();
+        NameToMethodIndex.Clear();
 
-        var allApiActions = Assembly.GetExecutingAssembly().GetTypes()
+        var allApiMethods = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && typeof(BaseMethod).IsAssignableFrom(t))
             .Select(t => Activator.CreateInstance(t) as BaseMethod);
 
-        foreach (var action in allApiActions)
+        foreach (var method in allApiMethods)
         {
-            if (action is null) continue;
-            AddAction(action);
+            if (method is null) continue;
+            AddMethod(method);
         }
     }
 
-    public static void AddAction(BaseMethod method)
+    public static void AddMethod(BaseMethod method)
     {
-        if (NameToActionIndex.ContainsKey(method.Name))
+        if (NameToMethodIndex.ContainsKey(method.Name))
         {
-            Logger.Debug("method is already registered");
+            Logger.Warn($"method {method.Name} is already registered!");
             return;
         }
         
-        NameToActionIndex.Add(method.Name, method.GetType());
+        NameToMethodIndex.Add(method.Name, method.GetType());
     }
 
     public static void Clear()
     {
-        NameToActionIndex.Clear();
+        NameToMethodIndex.Clear();
     }
 }

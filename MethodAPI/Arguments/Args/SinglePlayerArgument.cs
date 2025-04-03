@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Exiled.API.Features;
 using ScriptedEventsAPI.MethodAPI.Arguments.Structures;
 using ScriptedEventsAPI.ScriptAPI;

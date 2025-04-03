@@ -87,6 +87,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="MethodAPI\Arguments\Args\ConditionArgument.cs" />
         <Compile Include="MethodAPI\Arguments\Args\OptionsArgument.cs" />
         <Compile Include="MethodAPI\Arguments\Args\SinglePlayerArgument.cs" />
         <Compile Include="MethodAPI\Arguments\MethodArgumentProcessor.cs" />
@@ -96,18 +97,20 @@
         <Compile Include="MethodAPI\Arguments\Args\PlayerVariableArgument.cs" />
         <Compile Include="MethodAPI\Arguments\Args\TextArgument.cs" />
         <Compile Include="MethodAPI\Arguments\Interfaces\IArgEvalRes.cs" />
+        <Compile Include="MethodAPI\Arguments\ProvidedArguments.cs" />
         <Compile Include="MethodAPI\Arguments\Structures\ArgEvalRes.cs" />
         <Compile Include="MethodAPI\Arguments\Structures\ArgumentSkeleton.cs" />
         <Compile Include="MethodAPI\Arguments\Structures\Option.cs" />
-        <Compile Include="MethodAPI\Arguments\Structures\ProvidedArguments.cs" />
         <Compile Include="MethodAPI\Exceptions\DeveloperFuckupException.cs" />
+        <Compile Include="MethodAPI\Exceptions\MalformedConditionException.cs" />
         <Compile Include="MethodAPI\MethodIndex.cs" />
         <Compile Include="MethodAPI\Exceptions\MissingArgumentException.cs" />
         <Compile Include="MethodAPI\Exceptions\ArgumentFetchException.cs" />
         <Compile Include="MethodAPI\Methods\AdditionalDescriptors\IPureMethod.cs" />
-        <Compile Include="MethodAPI\Methods\GetMethod.cs" />
         <Compile Include="MethodAPI\Methods\PrintMethod.cs" />
-        <Compile Include="MethodAPI\Methods\SaveMethod.cs" />
+        <Compile Include="MethodAPI\Methods\PureMethods\GetMethod.cs" />
+        <Compile Include="MethodAPI\Methods\PureMethods\PlayerAmountMethod.cs" />
+        <Compile Include="MethodAPI\Methods\PureMethods\SaveMethod.cs" />
         <Compile Include="MethodAPI\Methods\SetRoleMethod.cs" />
         <Compile Include="MethodAPI\Methods\TestPlayerVarMethod.cs" />
         <Compile Include="MethodAPI\Methods\Yielding\WaitMethod.cs" />
@@ -124,6 +127,7 @@
         <Compile Include="Helpers\ResultStructure\Result.cs" />
         <Compile Include="Helpers\ResultStructure\ResultStacker.cs" />
         <Compile Include="Helpers\SafeCoroutines.cs" />
+        <Compile Include="MethodAPI\Methods\Yielding\WaitUntilMethod.cs" />
         <Compile Include="Plugin\Commands\RunScriptCommand.cs" />
         <Compile Include="Plugin\Config.cs" />
         <Compile Include="Plugin\Plugin.cs" />
