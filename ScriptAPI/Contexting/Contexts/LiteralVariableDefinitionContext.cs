@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.MethodAPI.BaseMethods;
@@ -19,6 +20,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
     
     public override TryAddTokenRes TryAddToken(BaseToken token)
     {
+        // emulating method context
         if (_methodContext != null)
         {
             return _methodContext.TryAddToken(token);
@@ -63,9 +65,21 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
 
     public override Result VerifyCurrentState()
     {
+        var rs = new ResultStacker($"Variable '{varToken.RawRepresentation}' cannot be created.");
+        
+        if (varToken.NameWithoutBraces.Any(c => !char.IsLetter(c)))
+        {
+            return rs.AddInternal("Variable name can only contain letters.");
+        }
+
+        if (char.IsUpper(varToken.NameWithoutBraces.First()))
+        {
+            return rs.AddInternal("The first character in the name must be lowercase.");
+        }
+        
         return _variable is not null || _method is not null
-            ? true 
-            :  "Cannot initalize a variable! There is no value to set the variable to.";
+            ? true
+            :  rs.AddInternal("There is no value to be assigned.");
     }
 
     public override void Execute()

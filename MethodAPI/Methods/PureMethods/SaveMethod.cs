@@ -1,13 +1,11 @@
 ﻿using ScriptedEventsAPI.MethodAPI.Arguments.Args;
 using ScriptedEventsAPI.MethodAPI.BaseMethods;
-using ScriptedEventsAPI.MethodAPI.Methods.AdditionalDescriptors;
 
 namespace ScriptedEventsAPI.MethodAPI.Methods.PureMethods;
 
-public class SaveMethod : TextReturningStandardMethod, IPureMethod
+public class SaveMethod : TextReturningStandardMethod
 {
     public override string Name => "Save";
-    public override string Description => "Saves the provided text to a variable.";
     public override string ReturnDescription => "The provided text.";
     
     public override BaseMethodArgument[] ExpectedArguments =>

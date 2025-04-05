@@ -63,7 +63,7 @@ public class ConditionEvaluator(string expression, Script scr)
     {
         if (_clause is null)
         {
-            throw new DeveloperFuckupException($"clause is null");
+            throw new DeveloperFuckupException("clause is null");
         }
         
         var oper = _clause.Operator.OperatorType;

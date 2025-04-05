@@ -77,7 +77,7 @@ public class ProvidedArguments(BaseMethod method)
         
         if (res.HasErrored())
         {
-            Logger.Debug($"Error msg: " + res.ErrorMsg);
+            Logger.Debug("Error msg: " + res.ErrorMsg);
             throw new ArgumentFetchException(rs.AddExternal(res).ErrorMsg);
         }
 

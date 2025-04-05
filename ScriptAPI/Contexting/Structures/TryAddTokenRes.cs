@@ -4,7 +4,7 @@ public struct TryAddTokenRes()
 {
     public static TryAddTokenRes Continue()
     {
-        return new TryAddTokenRes()
+        return new TryAddTokenRes
         {
             ShouldContinueExecution = true,
             HasErrored = false,
@@ -13,7 +13,7 @@ public struct TryAddTokenRes()
 
     public static TryAddTokenRes Error(string errorMessage)
     {
-        return new TryAddTokenRes()
+        return new TryAddTokenRes
         {
             HasErrored = true,
             ShouldContinueExecution = false,
@@ -23,7 +23,7 @@ public struct TryAddTokenRes()
 
     public static TryAddTokenRes End()
     {
-        return new TryAddTokenRes()
+        return new TryAddTokenRes
         {
             ShouldContinueExecution = false,
             HasErrored = false,

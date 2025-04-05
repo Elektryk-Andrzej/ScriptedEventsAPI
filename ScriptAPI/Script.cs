@@ -66,7 +66,7 @@ public class Script
             return true;
         }
 
-        var globalPlrVar = PlayerVariableIndex.GlobalVariables
+        var globalPlrVar = PlayerVariableIndex.GlobalPlayerVariables
             .FirstOrDefault(v => v.Name == name);
         if (globalPlrVar == null)
         {

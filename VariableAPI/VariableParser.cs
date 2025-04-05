@@ -24,11 +24,9 @@ public static class VariableParser
                 Logger.Debug($"success! {name} is a valid var, setting {variable.Value} as");
                 return variable.Value;
             }
-            else
-            {
-                Logger.Debug($"error! {name} is not a valid variable");
-                return match.Value;
-            }
+
+            Logger.Debug($"error! {name} is not a valid variable");
+            return match.Value;
         });
     }
     
@@ -44,11 +42,9 @@ public static class VariableParser
                 Logger.Debug($"success! {name} is a valid var, setting {variable.Value} as");
                 return variable.Value;
             }
-            else
-            {
-                Logger.Debug($"error! {name} is not a valid variable");
-                return match.Value;
-            }
+
+            Logger.Debug($"error! {name} is not a valid variable");
+            return match.Value;
         });
     }
 

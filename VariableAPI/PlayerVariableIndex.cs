@@ -8,11 +8,11 @@ namespace ScriptedEventsAPI.VariableAPI;
 
 public static class PlayerVariableIndex
 {
-    public static readonly HashSet<PlayerVariable> GlobalVariables = [];
+    public static readonly HashSet<PlayerVariable> GlobalPlayerVariables = [];
 
     public static void Initalize()
     {
-        GlobalVariables.Clear();
+        GlobalPlayerVariables.Clear();
 
         var allApiVariables = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && t != typeof(PlayerVariable) && typeof(PlayerVariable).IsAssignableFrom(t))
@@ -21,17 +21,17 @@ public static class PlayerVariableIndex
         foreach (var variable in allApiVariables)
         {
             if (variable is null) continue;
-            AddVariable(variable);
+            AddPlayerVariable(variable);
         }
     }
 
-    public static void AddVariable(PlayerVariable variable)
+    public static void AddPlayerVariable(PlayerVariable variable)
     {
-        GlobalVariables.Add(variable);
+        GlobalPlayerVariables.Add(variable);
     }
 
     public static void Clear()
     {
-        GlobalVariables.Clear();
+        GlobalPlayerVariables.Clear();
     }
 }

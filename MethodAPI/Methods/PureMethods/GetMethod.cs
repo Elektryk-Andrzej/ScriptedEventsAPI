@@ -1,15 +1,13 @@
 ﻿using System;
 using ScriptedEventsAPI.MethodAPI.Arguments.Args;
 using ScriptedEventsAPI.MethodAPI.BaseMethods;
-using ScriptedEventsAPI.MethodAPI.Methods.AdditionalDescriptors;
 
 namespace ScriptedEventsAPI.MethodAPI.Methods.PureMethods;
 
-public class GetMethod : TextReturningStandardMethod, IPureMethod
+public class GetMethod : TextReturningStandardMethod
 {
     public override string Name => "Get";
-    public override string Description => "Gets certain properties about the player.";
-    public override string ReturnDescription => "The requested information.";
+    public override string ReturnDescription => "The requested properties about the player.";
 
     public override BaseMethodArgument[] ExpectedArguments =>
     [
@@ -32,5 +30,6 @@ public class GetMethod : TextReturningStandardMethod, IPureMethod
             "dpname" => plr.DisplayNickname,
             _ => throw new ArgumentOutOfRangeException()
         };
+        
     }
 }

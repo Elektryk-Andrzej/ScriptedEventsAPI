@@ -9,7 +9,7 @@ public class TerminationContext : StandardContext
 {
     public override TryAddTokenRes TryAddToken(BaseToken token)
     {
-        return TryAddTokenRes.Error($"There can't be anything else on the same line as the context termination line.");
+        return TryAddTokenRes.Error("There can't be anything else on the same line as the context termination line.");
     }
 
     public override Result VerifyCurrentState()

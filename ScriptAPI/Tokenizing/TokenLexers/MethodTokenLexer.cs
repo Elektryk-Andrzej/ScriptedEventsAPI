@@ -21,7 +21,7 @@ public class MethodTokenLexer(char initChar, Script scr, BaseToken? previousToke
         // if the method is not the first token and is not following an "=", it means that its not an method
         if (previousToken is not null and not { RawRepresentation: "=" })
         {
-            Token = new UnclassifiedValueToken()
+            Token = new UnclassifiedValueToken
             {
                 RawCharRepresentation = Token.RawCharRepresentation,
             };
