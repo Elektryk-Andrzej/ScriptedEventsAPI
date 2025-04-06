@@ -10,6 +10,7 @@ public static class BaseContextExtensions
 {
     public static IEnumerator<float> ExecuteBaseContext(this BaseContext context)
     {
+        Logger.Debug($"Executing context {context.GetType().Name}");
         switch (context)
         {
             case StandardContext standardContext:

@@ -52,4 +52,12 @@ public class IfStatementContext(Script scr) : TreeContext
             yield return Timing.WaitUntilDone(child.ExecuteBaseContext().Run());
         }
     }
+
+    protected override void OnReceivedControlMessage(ParentContextControlMessage msg)
+    {
+        ParentContext?.SendControlMessage(msg);
+    }
 }
+
+
+

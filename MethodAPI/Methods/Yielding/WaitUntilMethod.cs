@@ -8,7 +8,7 @@ namespace ScriptedEventsAPI.MethodAPI.Methods.Yielding;
 public class WaitUntilMethod : YieldingMethod
 {
     public override string Name => "WaitUntil";
-    public override string Description => "Waits until the given condition is true.";
+    public override string Description => "Halts the execution of the script until the given condition is true.";
 
     public override BaseMethodArgument[] ExpectedArguments =>
     [

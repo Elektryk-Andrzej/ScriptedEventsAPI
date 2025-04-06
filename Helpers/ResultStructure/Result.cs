@@ -20,6 +20,11 @@ public readonly struct Result(bool wasSuccess, string errorMsg)
     {
         return result.WasSuccess;
     }
+    
+    public static implicit operator string(Result result)
+    {
+        return result.ErrorMsg;
+    }
 
     public static implicit operator Result(bool res)
     {

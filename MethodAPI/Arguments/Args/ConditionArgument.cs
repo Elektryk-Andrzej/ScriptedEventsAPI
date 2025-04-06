@@ -32,7 +32,7 @@ public class ConditionArgument(string name) : BaseMethodArgument(name)
 
     private ArgEvalRes<bool>.ResInfo DynamicSolver()
     {
-        Logger.Debug($"evaluating condition");
+        Logger.Debug("evaluating condition");
         var res = _evaluator.Evaluate(out var condVal);
         if (res.HasErrored(out var error))
         {

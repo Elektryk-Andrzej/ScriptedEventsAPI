@@ -67,6 +67,7 @@ public class Contexter(Script script)
         {
             Logger.Debug($"Adding finished context {_currentContext} to tree context {currentTree}");
             currentTree.Children.Add(_currentContext);
+            _currentContext.ParentContext = currentTree;
         }
         else
         {
