@@ -16,8 +16,8 @@ namespace ScriptedEventsAPI.ScriptAPI;
 
 public class Script
 {
-    public required string Name { get; set; }
-    public string Content { get; set; } = string.Empty;
+    public required string Name { get; init; }
+    public string Content { get; init; } = string.Empty;
     public List<BaseToken> Tokens = [];
     public List<BaseContext> Contexts = [];
     public readonly HashSet<LiteralVariable> LocalLiteralVariables = [];
@@ -41,7 +41,7 @@ public class Script
         
         try
         {
-            new Contexter(this).LinkAllTokens();
+            Contexts = new Contexter(this).LinkAllTokens(Tokens);
         }
         catch (Exception e)
         {

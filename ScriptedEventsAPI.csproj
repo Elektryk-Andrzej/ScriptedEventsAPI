@@ -110,6 +110,7 @@
         <Compile Include="MethodAPI\Exceptions\MalformedConditionException.cs" />
         <Compile Include="MethodAPI\Exceptions\MissingArgumentException.cs" />
         <Compile Include="MethodAPI\MethodIndex.cs" />
+        <Compile Include="MethodAPI\Methods\BroadcastMethod.cs" />
         <Compile Include="MethodAPI\Methods\PrintMethod.cs" />
         <Compile Include="MethodAPI\Methods\PureMethods\GetMethod.cs" />
         <Compile Include="MethodAPI\Methods\PureMethods\PlayerAmountMethod.cs" />
@@ -126,11 +127,10 @@
         <Compile Include="ConditionAPI\ConditionElements\Operand.cs" />
         <Compile Include="Helpers\ResultStructure\Result.cs" />
         <Compile Include="Helpers\ResultStructure\ResultStacker.cs" />
-        <Compile Include="Helpers\SafeCoroutines.cs" />
+        <Compile Include="Helpers\BetterCoros.cs" />
         <Compile Include="Plugin\Commands\RunScriptCommand.cs" />
         <Compile Include="Plugin\Config.cs" />
         <Compile Include="Plugin\Plugin.cs" />
-        <Compile Include="Helpers\Either.cs" />
         <Compile Include="Helpers\Lg.cs" />
         <Compile Include="Helpers\Logger.cs" />
         <Compile Include="ScriptAPI\Contexting\BaseContexts\BaseContext.cs" />
@@ -138,7 +138,7 @@
         <Compile Include="ScriptAPI\Contexting\BaseContexts\TreeContext.cs" />
         <Compile Include="ScriptAPI\Contexting\BaseContexts\YieldingContext.cs" />
         <Compile Include="ScriptAPI\Contexting\Contexter.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\LineMethodContext.cs" />
+        <Compile Include="ScriptAPI\Contexting\Contexts\MethodContext.cs" />
         <Compile Include="ScriptAPI\Contexting\Contexts\EndIfStatementContext.cs" />
         <Compile Include="ScriptAPI\Contexting\Contexts\IfStatementContext.cs" />
         <Compile Include="ScriptAPI\Contexting\Contexts\LiteralVariableDefinitionContext.cs" />

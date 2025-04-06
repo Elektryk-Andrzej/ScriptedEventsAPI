@@ -38,7 +38,7 @@ public class ConditionEvaluator(string expression, Script scr)
     private static List<IConditionElement> GetElementsFromExpression(string expression)
     {
         List<IConditionElement> history = [];
-        foreach (string part in expression.Split([' '], StringSplitOptions.RemoveEmptyEntries))
+        foreach (string part in VariableParser.SplitWithCharIgnoringVariables(expression, char.IsWhiteSpace))
         {
             var oper = GetOperator(part);
             if (oper != OperatorType.Invalid)
@@ -72,24 +72,24 @@ public class ConditionEvaluator(string expression, Script scr)
             throw new NotImplementedException("`and` as well as `or` operators are not supported");
         }
         
-        VariableParser.ReplaceVariables(ref _clause.FirstOperand.Value, scr);
-        VariableParser.ReplaceVariables(ref _clause.SecondOperand.Value, scr);
+        var firstOperand = VariableParser.ReplaceVariablesInContaminatedString(_clause.FirstOperand.Value, scr);
+        var secondOperand = VariableParser.ReplaceVariablesInContaminatedString(_clause.SecondOperand.Value, scr);
 
         bool result;
         if (oper is OperatorType.Equal)
         {
-            result = _clause.FirstOperand.Value == _clause.SecondOperand.Value;
+            result = firstOperand == secondOperand;
             return (result, true);
         }
 
-        if (!float.TryParse(_clause.FirstOperand.Value, out float number1))
+        if (!float.TryParse(firstOperand, out float number1))
         {
-            return (false, $"Value '{_clause.FirstOperand.Value}' is not a valid number!");
+            return (false, $"Value '{firstOperand}' is not a valid number!");
         }
         
-        if (!float.TryParse(_clause.SecondOperand.Value, out float number2))
+        if (!float.TryParse(secondOperand, out float number2))
         {
-            return (false, $"Value '{_clause.SecondOperand.Value}' is not a valid number!");
+            return (false, $"Value '{secondOperand}' is not a valid number!");
         }
 
         result = oper switch

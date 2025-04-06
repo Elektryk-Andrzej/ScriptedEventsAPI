@@ -17,11 +17,14 @@ public abstract class BaseTokenLexer
         }
     }
 
-    protected BaseTokenLexer(char initChar)
+    protected BaseTokenLexer(char? initChar)
     {
         // ReSharper disable once VirtualMemberCallInConstructor
         // AddChar is available for all
-        Token.AddChar(initChar);
+        if (initChar.HasValue)
+        {
+            Token.AddChar(initChar.Value);
+        }
     }
 
     protected BaseTokenLexer()

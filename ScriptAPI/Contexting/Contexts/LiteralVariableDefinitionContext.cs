@@ -14,7 +14,7 @@ namespace ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
 public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Script scr) : StandardContext
 {
     private LiteralVariable? _variable;
-    private LineMethodContext? _methodContext;
+    private MethodContext? _methodContext;
     private TextReturningStandardMethod? _method;
     private bool _hasEqualsSignBeenVerified = false;
     
@@ -57,7 +57,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
         _variable = new()
         {
             Name = varToken.NameWithoutBraces,
-            Value = token.RawRepresentation,
+            Value = () => token.RawRepresentation,
         };
         
         return TryAddTokenRes.End();
@@ -92,7 +92,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             if (_method.TextReturn == null)
             {
                 Lg.M();
-                throw new Exception($"Tried to execute {GetType().Name}, but method result is null.");
+                throw new Exception($"Method {_method.Name} hasnt returned a value.");
             }
             
             Lg.M();
@@ -101,7 +101,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             _variable = new()
             {
                 Name = varToken.NameWithoutBraces,
-                Value = _method.TextReturn
+                Value = () => _method.TextReturn
             };
         }
         else if (_variable is null)

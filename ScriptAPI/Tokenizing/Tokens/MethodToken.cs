@@ -11,7 +11,7 @@ public class MethodToken : BaseContextableToken
     public override BaseContext? GetResultingContext()
     {
         return Method is not null
-            ? new LineMethodContext(this, Method.Script) 
+            ? new MethodContext(this, Method.Script) 
             : null;
     }
 }

@@ -1,7 +1,9 @@
-﻿namespace ScriptedEventsAPI.VariableAPI.Structures;
+﻿using System;
+
+namespace ScriptedEventsAPI.VariableAPI.Structures;
 
 public class LiteralVariable
 {
     public required string Name { get; init; }
-    public required string Value { get; init; }
+    public required Func<string> Value { get; init; }
 }

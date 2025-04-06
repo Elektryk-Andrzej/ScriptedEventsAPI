@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MEC;
+using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.MethodAPI.Arguments.Args;
 using ScriptedEventsAPI.MethodAPI.BaseMethods;
 
@@ -18,6 +18,6 @@ public class WaitUntilMethod : YieldingMethod
     public override IEnumerator<float> Execute()
     {
         var condFunc = Args.GetConditionFunc("condition");
-        yield return Timing.WaitUntilTrue(condFunc);
+        return BetterCoros.SlowWaitUntilTrue(condFunc);
     }
 }

@@ -22,12 +22,12 @@ public class Tokenizer(Script script)
 
     public List<BaseToken> GetTokensFromLine(string lineContent)
     {
-        return InternalGetTokensFromFileLine(lineContent.ToCharArray());
+        return GetTokensFromLine(lineContent.ToCharArray());
     }
     
-    public List<BaseToken> InternalGetTokensFromFileLine(char[] lineContent)
+    public List<BaseToken> GetTokensFromLine(char[] lineContent, BaseTokenLexer? initialLexer = null)
     {
-        BaseTokenLexer? currentTokenLexer = null;
+        BaseTokenLexer? currentTokenLexer = initialLexer;
         List<BaseToken> tokens = [];
 
         foreach (var currentChar in lineContent)

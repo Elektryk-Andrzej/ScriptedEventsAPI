@@ -23,7 +23,7 @@ public class ProvidedArguments(BaseMethod method)
     
     public string GetText(string argName)
     {
-        return VariableParser.ReplaceVariables(GetValue<string, TextArgument>(argName), method.Script);
+        return VariableParser.ReplaceVariablesInContaminatedString(GetValue<string, TextArgument>(argName), method.Script);
     }
     
     public string GetTextUnprocessed(string argName)

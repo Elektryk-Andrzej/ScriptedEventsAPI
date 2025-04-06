@@ -80,10 +80,10 @@ public class Contexter(Script script)
         }
     }
 
-    public void LinkAllTokens()
+    public List<BaseContext> LinkAllTokens(List<BaseToken> tokens)
     {
         var isFirstContextOfLine = true;
-        foreach (var token in script.Tokens)
+        foreach (var token in tokens)
         {
             Logger.Debug($"Checking token {token}");
             if (token is EndLineToken)
@@ -124,12 +124,13 @@ public class Contexter(Script script)
             _currentContext = newCtx;
         }
 
-        if (_currentContext is not null)
+        if (_currentContext is null)
         {
-            Log.Info($"Context {_currentContext.Name} ended");
-            _contexts.Add(_currentContext);
+            return _contexts;
         }
         
-        script.Contexts = new List<BaseContext>(_contexts);
+        Log.Info($"Context {_currentContext.Name} ended");
+        _contexts.Add(_currentContext);
+        return _contexts;
     }
 }

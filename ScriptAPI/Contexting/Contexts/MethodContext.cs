@@ -12,7 +12,7 @@ using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
 
-public class LineMethodContext(MethodToken methodToken, Script scr) : YieldingContext
+public class MethodContext(MethodToken methodToken, Script scr) : YieldingContext
 {
     public readonly BaseMethod Method = methodToken.Method!;
     public readonly MethodArgumentProcessor Processor = new(methodToken.Method!, scr);

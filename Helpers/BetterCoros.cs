@@ -5,7 +5,7 @@ using MEC;
 
 namespace ScriptedEventsAPI.Helpers;
 
-public static class SafeCoroutines
+public static class BetterCoros
 {
     public static CoroutineHandle Run(this IEnumerator<float> coro)
     {
@@ -35,6 +35,19 @@ public static class SafeCoroutines
             }
             
             yield return routine.Current;
+        }
+    }
+    
+    public static IEnumerator<float> SlowWaitUntilTrue(Func<bool> condition)
+    {
+        while (true)
+        {
+            if (condition())
+                break;
+            
+            yield return Timing.WaitForOneFrame;
+            yield return Timing.WaitForOneFrame;
+            yield return Timing.WaitForOneFrame;
         }
     }
 }

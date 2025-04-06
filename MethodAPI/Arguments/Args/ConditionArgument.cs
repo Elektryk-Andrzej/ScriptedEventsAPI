@@ -1,5 +1,7 @@
 ﻿using ScriptedEventsAPI.ConditionAPI;
+using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.MethodAPI.Arguments.Structures;
+using ScriptedEventsAPI.MethodAPI.Exceptions;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
@@ -30,7 +32,13 @@ public class ConditionArgument(string name) : BaseMethodArgument(name)
 
     private ArgEvalRes<bool>.ResInfo DynamicSolver()
     {
+        Logger.Debug($"evaluating condition");
         var res = _evaluator.Evaluate(out var condVal);
+        if (res.HasErrored(out var error))
+        {
+            throw new DeveloperFuckupException(error);
+        }
+        
         return new()
         {
             Result = res,
