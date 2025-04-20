@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.Contracts;
 using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.Structures;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 

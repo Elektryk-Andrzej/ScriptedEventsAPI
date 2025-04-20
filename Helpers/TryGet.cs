@@ -4,10 +4,10 @@ using ScriptedEventsAPI.MethodAPI.Exceptions;
 
 namespace ScriptedEventsAPI.Helpers;
 
-public class TryGet<TValue>(TValue? value, string errorMsg) where TValue : class?
+public class TryGet<TValue>(TValue? value, string errorMsg)
 {
     public TValue? Value => value;
-    public bool WasSuccess => value is not null;
+    public bool WasSuccess => string.IsNullOrEmpty(errorMsg);
     public string ErrorMsg => errorMsg;
 
     [Pure]
@@ -46,7 +46,7 @@ public class TryGet<TValue>(TValue? value, string errorMsg) where TValue : class
     [Pure]
     public static implicit operator TryGet<TValue>(Result res)
     {
-        if (res.HasErrored(out var msg)) return new TryGet<TValue>(null, msg);
+        if (res.HasErrored(out var msg)) return new TryGet<TValue>(default, msg);
 
         throw new DeveloperFuckupException("implicit operator TryGet<TValue>(Result res) called when not errored");
     }
@@ -54,6 +54,6 @@ public class TryGet<TValue>(TValue? value, string errorMsg) where TValue : class
     [Pure]
     public static implicit operator TryGet<TValue>(string msg)
     {
-        return new TryGet<TValue>(null, msg);
+        return new TryGet<TValue>(default, msg);
     }
 }

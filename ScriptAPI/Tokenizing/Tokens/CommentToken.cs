@@ -3,7 +3,6 @@ using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.Structures;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 

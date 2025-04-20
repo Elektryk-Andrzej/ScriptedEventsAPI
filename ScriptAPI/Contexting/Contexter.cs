@@ -70,6 +70,7 @@ public class Contexter(Script script)
 
     private TryGet<BaseContext?> HandleLine(ScriptLine line)
     {
+        Logger.Debug($"Handling line {line.LineNumber}:");
         var rs = new ResultStacker($"Line {line.LineNumber} cannot execute");
 
         var firstToken = line.Tokens.FirstOrDefault();
@@ -86,7 +87,8 @@ public class Contexter(Script script)
         }
 
         var res = contextable.TryGetResultingContext();
-        if (res.HasErrored(out var contextError)) return rs.AddExt(contextError);
+        if (res.HasErrored(out var contextError))
+            return rs.AddExt(contextError);
 
         var context = res.Value!;
 

@@ -1,7 +1,6 @@
-﻿using ScriptedEventsAPI.ConditionAPI;
-using ScriptedEventsAPI.Helpers;
+﻿using ScriptedEventsAPI.Helpers;
+using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.MethodAPI.Arguments.Structures;
-using ScriptedEventsAPI.MethodAPI.Exceptions;
 using ScriptedEventsAPI.ScriptAPI;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
@@ -10,31 +9,24 @@ namespace ScriptedEventsAPI.MethodAPI.Arguments.Args;
 
 public class ConditionArgument(string name) : BaseMethodArgument(name)
 {
-    private ConditionEvaluator _evaluator = null!;
-
-    public ArgEvalRes<bool> GetConvertSolution(BaseToken token, Script scr)
+    public static ArgEvalRes<bool> GetConvertSolution(BaseToken token, Script scr)
     {
-        if (token is not ParenthesesToken)
+        if (token is not ParenthesesToken parentheses)
             return new(
                 $"Condition must be expressed in parantheses, not '{token.RawRepresentation}'."
             );
 
-        _evaluator = new ConditionEvaluator(token.RawRepresentation, scr);
-        if (_evaluator.IsValid().HasErrored(out var error)) return new(error);
-
-        return new(DynamicSolver);
+        return new(DynamicSolver(parentheses.ValueWithoutBraces, scr));
     }
 
-    private ArgEvalRes<bool>.ResInfo DynamicSolver()
+    private static ArgEvalRes<bool>.ResInfo DynamicSolver(string expression, Script scr)
     {
-        Logger.Debug("evaluating condition");
-        var res = _evaluator.Evaluate(out var condVal);
-        if (res.HasErrored(out var error)) throw new DeveloperFuckupException(error);
-
-        return new()
+        Logger.Debug($"evaluating expression '{expression}'");
+        if (!Condition.TryEval(expression, scr).HasErrored(out var errorMsg, out var result))
         {
-            Result = res,
-            Value = condVal
-        };
+            return result;
+        }
+
+        return new ResultStacker($"Condition argument '{expression}' is invalid.").AddInt(errorMsg).ErrorMsg;
     }
 }

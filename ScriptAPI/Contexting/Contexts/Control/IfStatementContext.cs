@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Exiled.API.Features;
 using MEC;
-using ScriptedEventsAPI.ConditionAPI;
 using ScriptedEventsAPI.Helpers;
+using ScriptedEventsAPI.Helpers.Flee.PublicTypes;
 using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Extensions;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
+using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.ScriptAPI.Contexting.Contexts.Control;
 
@@ -37,15 +37,14 @@ public class IfStatementContext(Script scr) : TreeContext
             yield break;
         }
 
-        var evaluator = new ConditionEvaluator(_condition, scr);
-        if (evaluator.Evaluate(out var result).HasErrored(out var error))
+        if (Condition.TryEval(_condition, scr).HasErrored(out var error, out var resul))
         {
-            Log.Error($"condtion {_condition} is malformed! Reason: {error}");
+            Logger.Error($"Error while evaluating condition: {error}");
             yield break;
         }
-
-        Logger.Debug($"result of {_condition} was {result}");
-        if (result == false)
+        
+        Logger.Debug($"result of {_condition} was {resul}");
+        if (resul == false)
         {
             yield break;
         }

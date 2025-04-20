@@ -22,7 +22,7 @@ public class MethodArgumentProcessor(BaseMethod method, Script scr)
         { typeof(EnumArgument), (token, arg) => ((EnumArgument)arg).GetConvertSolution(token, scr) },
         { typeof(SinglePlayerArgument), (token, _) => SinglePlayerArgument.GetConvertSolution(token, scr) },
         { typeof(OptionsArgument), (token, arg) => ((OptionsArgument)arg).GetConvertSolution(token, scr) },
-        { typeof(ConditionArgument), (token, arg) => ((ConditionArgument)arg).GetConvertSolution(token, scr) },
+        { typeof(ConditionArgument), (token, arg) => ConditionArgument.GetConvertSolution(token, scr) },
         { typeof(AmountArgument), (token, arg) => ((AmountArgument)arg).GetConvertSolution(token, scr) },
         { typeof(NumberArgument), (token, _) => NumberArgument.GetConvertSolution(token, scr) },
     };

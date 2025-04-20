@@ -1,5 +1,4 @@
-﻿using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.Helpers.ResultStructure;
+﻿using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Structures;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;

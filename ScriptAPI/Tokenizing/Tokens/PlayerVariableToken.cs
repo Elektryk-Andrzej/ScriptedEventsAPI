@@ -1,6 +1,5 @@
 ﻿using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.Structures;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
