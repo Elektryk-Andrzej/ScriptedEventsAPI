@@ -1,7 +1,7 @@
 ﻿namespace ScriptedEventsAPI.MethodAPI.BaseMethods;
 
 /// <summary>
-/// Represents a standard SER method.
+///     Represents a standard SER method.
 /// </summary>
 public abstract class StandardMethod : BaseMethod
 {

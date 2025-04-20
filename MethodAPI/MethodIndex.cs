@@ -33,7 +33,7 @@ public static class MethodIndex
             Logger.Warn($"method {method.Name} is already registered!");
             return;
         }
-        
+
         NameToMethodIndex.Add(method.Name, method.GetType());
     }
 

@@ -12,32 +12,27 @@ using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
 
-public class MethodContext(MethodToken methodToken, Script scr) : YieldingContext
+public class MethodContext(MethodToken methodToken) : YieldingContext
 {
-    public readonly BaseMethod Method = methodToken.Method!;
-    public readonly MethodArgumentProcessor Processor = new(methodToken.Method!, scr);
+    public readonly BaseMethod Method = methodToken.Method;
+    public readonly MethodArgumentProcessor Processor = new(methodToken.Method, methodToken.Method.Script);
 
     public override TryAddTokenRes TryAddToken(BaseToken token)
     {
-        if (token is EndLineToken)
-        {
-            return TryAddTokenRes.End();
-        }
-        
         Logger.Debug($"Checking if {token} is a valid argument for method {Method.Name}.");
         if (Processor.IsValidArgument(token, Method.Args.Count, out var skeleton).HasErrored(out var error))
-        {
-            return TryAddTokenRes.Error($"{token.TokenName} ({token.RawRepresentation}) is not a valid argument, reason: {error}");
-        }
-        
-        Logger.Debug($"Adding argument '{skeleton.Name}' (index {Method.Args.Count}) (type {skeleton.ArgumentType.Name}) to method '{Method.Name}'.");
+            return TryAddTokenRes.Error(
+                $"{token.TokenName} ({token.RawRepresentation}) is not a valid argument, reason: {error}");
+
+        Logger.Debug(
+            $"Adding argument '{skeleton.Name}' (index {Method.Args.Count}) (type {skeleton.ArgumentType.Name}) to method '{Method.Name}'.");
         Method.Args.Add(skeleton);
         return TryAddTokenRes.Continue();
     }
 
     public override Result VerifyCurrentState()
     {
-        var requiredArgs = Method.ExpectedArguments.Count(arg => arg.Required);
+        var requiredArgs = Method.ExpectedArguments.Count(arg => arg.RequiredInfo.IsRequired);
         var providedArgs = Method.Args.Count;
 
         return providedArgs >= requiredArgs

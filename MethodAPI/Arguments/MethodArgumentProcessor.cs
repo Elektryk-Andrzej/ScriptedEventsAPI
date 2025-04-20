@@ -13,6 +13,7 @@ namespace ScriptedEventsAPI.MethodAPI.Arguments;
 
 public class MethodArgumentProcessor(BaseMethod method, Script scr)
 {
+    // i'd've done that using OOP, but this .net version aint advanced enough for that sadly
     private readonly Dictionary<Type, Func<BaseToken, BaseMethodArgument, IArgEvalRes>> _converters = new()
     {
         { typeof(TextArgument), (token, _) => TextArgument.GetConvertSolution(token, scr) },
@@ -22,40 +23,39 @@ public class MethodArgumentProcessor(BaseMethod method, Script scr)
         { typeof(SinglePlayerArgument), (token, _) => SinglePlayerArgument.GetConvertSolution(token, scr) },
         { typeof(OptionsArgument), (token, arg) => ((OptionsArgument)arg).GetConvertSolution(token, scr) },
         { typeof(ConditionArgument), (token, arg) => ((ConditionArgument)arg).GetConvertSolution(token, scr) },
+        { typeof(AmountArgument), (token, arg) => ((AmountArgument)arg).GetConvertSolution(token, scr) },
+        { typeof(NumberArgument), (token, _) => NumberArgument.GetConvertSolution(token, scr) },
     };
 
     public Result IsValidArgument(BaseToken token, int index, out ArgumentSkeleton skeleton)
     {
         var rs = new ResultStacker(
             $"Argument '{token.RawRepresentation}' (index {index}) for method {method.Name} is invalid!");
-        
+
         skeleton = default;
-        
+
         if (index >= method.ExpectedArguments.Length)
-        {
-            return rs.AddInternal(
+            return rs.AddInt(
                 $"Method does not expect more than {method.ExpectedArguments.Length} arguments.");
-        }
 
         var arg = method.ExpectedArguments[index];
         var argType = arg.GetType();
-        
+
         if (!_converters.TryGetValue(argType, out var converter))
-        {
-            return rs.AddInternal($"No converter for {argType} found.");
-        }
-        
-        IArgEvalRes evaluator = converter(token, arg);
+            return rs.AddInt($"No converter for {argType} found.");
+
+        var evaluator = converter(token, arg);
         if (!evaluator.IsStatic)
         {
             Logger.Debug("Argument is dynamic, cannot check if fully valid.");
-            
+
             skeleton = new()
             {
                 Evaluator = evaluator,
                 ArgumentType = argType,
-                Name = arg.Name,
+                Name = arg.Name
             };
+            
             return true;
         }
 
@@ -63,14 +63,14 @@ public class MethodArgumentProcessor(BaseMethod method, Script scr)
         if (res.HasErrored())
         {
             Logger.Debug($"value of resMsg: {res.ErrorMsg}");
-            return rs.AddExternal(res);
+            return rs.AddExt(res);
         }
-        
+
         skeleton = new()
         {
             Evaluator = evaluator,
             ArgumentType = argType,
-            Name = arg.Name,
+            Name = arg.Name
         };
 
         return true;

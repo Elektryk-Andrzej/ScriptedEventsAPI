@@ -7,7 +7,7 @@ public class SaveMethod : TextReturningStandardMethod
 {
     public override string Name => "Save";
     public override string ReturnDescription => "The provided text.";
-    
+
     public override BaseMethodArgument[] ExpectedArguments =>
     [
         new TextArgument("text")

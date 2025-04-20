@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace ScriptedEventsAPI.VariableAPI;
 
 /// <summary>
-/// Used when a value cannot be expressed with text, like a list, struct etc.
-/// This doesn't include players, as there are player variables.
+///     Used when a value cannot be expressed with text, like a list, struct etc.
+///     This doesn't include players, as there are player variables.
 /// </summary>
 public static class ObjectReferenceSystem
 {
@@ -22,12 +22,9 @@ public static class ObjectReferenceSystem
     public static bool TryRetreiveObject(string key, out object obj)
     {
         obj = null!;
-        
-        if (!StoredObjects.TryGetValue(key, out var storedObject))
-        {
-            return false;
-        }
-        
+
+        if (!StoredObjects.TryGetValue(key, out var storedObject)) return false;
+
         obj = storedObject.value;
         return true;
     }

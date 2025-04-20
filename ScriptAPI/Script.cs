@@ -8,7 +8,7 @@ using ScriptedEventsAPI.ScriptAPI.Contexting;
 using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 using ScriptedEventsAPI.ScriptAPI.Contexting.Extensions;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.Structures;
 using ScriptedEventsAPI.VariableAPI;
 using ScriptedEventsAPI.VariableAPI.Structures;
 
@@ -16,16 +16,44 @@ namespace ScriptedEventsAPI.ScriptAPI;
 
 public class Script
 {
+    private readonly HashSet<LiteralVariable> _localLiteralVariables = [];
+    private readonly HashSet<PlayerVariable> _localPlayerVariables = [];
+    private CoroutineHandle _coroutine;
+    public List<BaseContext> Contexts = [];
+    public List<ScriptLine> Tokens = [];
     public required string Name { get; init; }
     public string Content { get; init; } = string.Empty;
-    public List<BaseToken> Tokens = [];
-    public List<BaseContext> Contexts = [];
-    public readonly HashSet<LiteralVariable> LocalLiteralVariables = [];
-    public readonly HashSet<PlayerVariable> LocalPlayerVariables = [];
+
+    public void AddLocalLiteralVariable(LiteralVariable variable)
+    {
+        RemoveLocalLiteralVariable(variable);
+        _localLiteralVariables.Add(variable);
+    }
+
+    public void RemoveLocalLiteralVariable(LiteralVariable variable)
+    {
+        _localLiteralVariables.RemoveWhere(scrVar => scrVar.Name == variable.Name);
+    }
+
+    public void AddLocalPlayerVariable(PlayerVariable variable)
+    {
+        RemoveLocalPlayerVariable(variable);
+        _localPlayerVariables.Add(variable);
+    }
+
+    public void RemoveLocalPlayerVariable(PlayerVariable variable)
+    {
+        _localPlayerVariables.RemoveWhere(scrVar => scrVar.Name == variable.Name);
+    }
 
     public void Execute()
     {
-        InternalExecute().Run();
+        _coroutine = InternalExecute().Run(_ => _coroutine.Kill());
+    }
+
+    public void Stop()
+    {
+        _coroutine.Kill();
     }
 
     private IEnumerator<float> InternalExecute()
@@ -36,18 +64,27 @@ public class Script
         }
         catch (Exception e)
         {
-            Logger.Debug(e.Message);
+            Logger.Error(e);
+            yield break;
         }
-        
+
         try
         {
-            Contexts = new Contexter(this).LinkAllTokens(Tokens);
+            if (new Contexter(this).LinkAllTokens(Tokens)
+                .HasErrored(out var err, out var val))
+            {
+                Logger.Error(err);
+                yield break;
+            }
+
+            Contexts = val!;
         }
         catch (Exception e)
         {
-            Logger.Debug(e.Message);
+            Logger.Error(e);
+            yield break;
         }
-        
+
         foreach (var context in Contexts)
         {
             Logger.Debug($"executing {context}!");
@@ -57,9 +94,9 @@ public class Script
 
     public Result TryGetPlayerVariable(string name, out PlayerVariable variable)
     {
-        var localPlrVar = LocalPlayerVariables.FirstOrDefault(
+        var localPlrVar = _localPlayerVariables.FirstOrDefault(
             v => v.Name == name);
-        
+
         if (localPlrVar != null)
         {
             variable = localPlrVar;
@@ -77,18 +114,17 @@ public class Script
         variable = globalPlrVar;
         return true;
     }
-    
+
     public Result TryGetLiteralVariable(string name, out LiteralVariable variable)
     {
-        var localPlrVar = LocalLiteralVariables.FirstOrDefault(
-            v => v.Name == name);
-        
+        var localPlrVar = _localLiteralVariables.FirstOrDefault(v => v.Name == name);
+
         if (localPlrVar != null)
         {
             variable = localPlrVar;
             return true;
         }
-        
+
         variable = null!;
         return $"There is no literal variable named '{name}'.";
     }

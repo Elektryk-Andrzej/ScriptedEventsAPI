@@ -12,7 +12,7 @@ public class OptionsArgument(string name, params Option[] options) : BaseMethodA
     public ArgEvalRes<string> GetConvertSolution(BaseToken token, Script scr)
     {
         return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr, out var replacedVariablesFunc)
-            ? new(() => InternalConvert(replacedVariablesFunc())) 
+            ? new(() => InternalConvert(replacedVariablesFunc()))
             : new(InternalConvert(token.RawRepresentation));
     }
 
@@ -20,19 +20,17 @@ public class OptionsArgument(string name, params Option[] options) : BaseMethodA
     {
         var option = options.FirstOrDefault(opt => opt.Value.Equals(value, StringComparison.CurrentCultureIgnoreCase));
         if (option == null)
-        {
             return new()
             {
                 Result = $"Value '{value}' does not match any of the following options: " +
                          $"{string.Join(", ", options.Select(o => o.Value))}",
                 Value = null!
             };
-        }
 
         return new()
         {
             Result = true,
-            Value = option.Value,
+            Value = option.Value
         };
     }
 }

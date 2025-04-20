@@ -21,7 +21,7 @@ public class GetMethod : TextReturningStandardMethod
 
     public override void Execute()
     {
-        var plr = Args.GetPlayer("player"); 
+        var plr = Args.GetPlayer("player");
         TextReturn = Args.GetOption("property").ToLower() switch
         {
             "name" => plr.Nickname,
@@ -30,6 +30,5 @@ public class GetMethod : TextReturningStandardMethod
             "dpname" => plr.DisplayNickname,
             _ => throw new ArgumentOutOfRangeException()
         };
-        
     }
 }

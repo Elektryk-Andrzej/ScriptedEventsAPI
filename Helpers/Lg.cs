@@ -3,45 +3,46 @@ using System.IO;
 using Exiled.API.Features;
 
 namespace ScriptedEventsAPI.Helpers;
+
 public static class Lg
 {
     /// <summary>
-    /// Debug
+    ///     Debug
     /// </summary>
     /// <param name="str"></param>
     public static void D(string str)
     {
         Log.Debug($"{GetTrace()}\n<color=yellow>|\t {str}</color>");
     }
-    
+
     /// <summary>
-    /// Info
+    ///     Info
     /// </summary>
     /// <param name="str"></param>
     public static void I(string str)
     {
         Log.Info($"{GetTrace()}\n<color=yellow>|\t {str}</color>");
     }
-    
+
     /// <summary>
-    /// Error
+    ///     Error
     /// </summary>
     /// <param name="str"></param>
     public static void E(string str)
     {
         Log.Error($"{GetTrace()}\n<color=yellow>|\t {str}</color>");
     }
-    
+
     /// <summary>
-    /// Mark
+    ///     Mark
     /// </summary>
     public static void M(string str = "")
     {
         Logger.Debug($"{GetTrace()}" + (string.IsNullOrEmpty(str) ? "" : $" -> {str}"));
     }
-    
+
     /// <summary>
-    /// Mark
+    ///     Mark
     /// </summary>
     public static void Dm(string str = "")
     {

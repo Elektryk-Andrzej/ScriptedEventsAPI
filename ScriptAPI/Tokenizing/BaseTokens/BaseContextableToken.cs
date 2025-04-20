@@ -1,8 +1,11 @@
-﻿using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
+﻿using System.Diagnostics.Contracts;
+using ScriptedEventsAPI.Helpers;
+using ScriptedEventsAPI.ScriptAPI.Contexting.BaseContexts;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
 
-public abstract class BaseContextableToken : BaseToken
+public abstract class BaseContextableToken(Script scr) : BaseToken(scr)
 {
-    public abstract BaseContext? GetResultingContext();
+    [Pure]
+    public abstract TryGet<BaseContext> TryGetResultingContext();
 }

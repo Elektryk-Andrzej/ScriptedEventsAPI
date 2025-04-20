@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using Exiled.API.Features;
 using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.BaseTokens;
-using ScriptedEventsAPI.ScriptAPI.Tokenizing.TokenLexers;
+using ScriptedEventsAPI.ScriptAPI.Tokenizing.Structures;
 using ScriptedEventsAPI.ScriptAPI.Tokenizing.Tokens;
 
 namespace ScriptedEventsAPI.ScriptAPI.Tokenizing;
@@ -11,107 +11,106 @@ public class Tokenizer(Script script)
 {
     public void GetAllFileTokens()
     {
-        List<BaseToken> tokens = [];
-        foreach (var line in script.Content.Split('\n'))
+        List<ScriptLine> tokens = [];
+        for (var index = 0; index < script.Content.Split('\n').Length; index++)
         {
-            tokens.AddRange(GetTokensFromLine(line));
+            var line = script.Content.Split('\n')[index];
+            tokens.Add(GetTokensFromLine(line, index + 1));
         }
-        
+
         script.Tokens = tokens;
     }
 
-    public List<BaseToken> GetTokensFromLine(string lineContent)
+    public ScriptLine GetTokensFromLine(string lineContent, int lineNum)
     {
-        return GetTokensFromLine(lineContent.ToCharArray());
+        return GetTokensFromLine(lineContent.ToCharArray(), lineNum);
     }
-    
-    public List<BaseToken> GetTokensFromLine(char[] lineContent, BaseTokenLexer? initialLexer = null)
+
+    public ScriptLine GetTokensFromLine(char[] lineContent, int lineNum, BaseToken? initialLexer = null)
     {
-        BaseTokenLexer? currentTokenLexer = initialLexer;
+        var currentToken = initialLexer;
         List<BaseToken> tokens = [];
 
         foreach (var currentChar in lineContent)
         {
-            if (currentTokenLexer is null)
+            if (currentToken is null)
             {
-                currentTokenLexer = GetLexer(currentChar, tokens);
-                if (currentTokenLexer is not null)
+                currentToken = GetLexer(currentChar);
+
+                if (currentToken is not null)
                 {
-                    Logger.Debug($"Set new token lexer to: {currentTokenLexer}");
+                    Logger.Debug($"Set new token lexer to: {currentToken}");
+                    currentToken.AddChar(currentChar);
                 }
-                
+
                 continue;
             }
             
-            currentTokenLexer.TryAddChar(currentChar, out bool shouldContinueExecution); // should also return error
-            if (shouldContinueExecution)
+            if (!currentToken.EndParsingOnChar(currentChar))
             {
+                currentToken.AddChar(currentChar);
                 continue;
+            }
+            
+            if (!char.IsWhiteSpace(currentChar))
+            {
+                Log.Warn($"Expected whitespace after {currentToken}, got character '{currentChar}' instead; converting to unclassified value");
+                currentToken = new UnclassifiedValueToken(script, currentToken.RawRepresentation);
             }
 
-            if (currentTokenLexer.IsValid().HasErrored(out var error))
-            {
-                Logger.Debug($"Error! Token lexer has errored! error: '{error}' | lexer: {currentTokenLexer} | rep: '{currentTokenLexer.Token.RawRepresentation}'");
-                currentTokenLexer = null;
-                continue;
-            }
-            
-            Logger.Debug($"Token lexer {currentTokenLexer} has stopped on char {currentChar}");
-            tokens.Add(currentTokenLexer.Token);
-            currentTokenLexer = null;
+            AddToken();
         }
 
-        if (currentTokenLexer is not null)
+        if (currentToken is not null)
         {
-            // todo: fix this awful solution
-            if (currentTokenLexer.IsValid())
-            {
-                tokens.Add(currentTokenLexer.Token);
-            }
-            else
-            {
-                var coarsedToken = new UnclassifiedValueToken();
-                coarsedToken.RawCharRepresentation.AddRange(currentTokenLexer.Token.RawRepresentation);
-                tokens.Add(coarsedToken);
-            }
+            AddToken();
         }
 
-        tokens.Add(new EndLineToken());
-        return tokens;
+        return new()
+        {
+            LineNumber = lineNum,
+            Script = script,
+            Tokens = tokens
+        };
+
+        void AddToken()
+        {
+            if (currentToken.IsValidSyntax().HasErrored(out var msg))
+            {
+                Log.Error($"Token {currentToken} has failed: '{msg}'; converting to unclassified value");
+                currentToken = new UnclassifiedValueToken(script, currentToken.RawRepresentation);
+            }
+
+            Logger.Debug($"Token lexer {currentToken} has stopped");
+            tokens.Add(currentToken);
+            currentToken = null;
+        }
     }
-    
-    private BaseTokenLexer? GetLexer(char character, List<BaseToken> tokens)
+
+    // if C# allowed for static override this wouldve been unnecessary
+    private BaseToken? GetLexer(char character)
     {
-        // whitespaces are ignored when no tokenizer is engaged
-        if (char.IsWhiteSpace(character))
-        {
-            return null;
-        }
-        
+        // whitespaces are ignored
+        if (char.IsWhiteSpace(character)) return null;
+
         switch (character)
         {
             case '#':
-                return new CommentTokenLexer();
+                return new CommentToken(script);
             case '!':
-                return new FlagTokenLexer();
+                return new FlagToken(script);
             case '@':
-                return new PlayerVariableTokenLexer();
+                return new PlayerVariableToken(script);
             case '{':
-                return new LiteralVariableTokenLexer(script);
+                return new LiteralVariableToken(script);
             case '(':
-                return new ParenthesesTokenLexer();
+                return new ParenthesesToken(script);
         }
 
-        if (char.IsUpper(character))
-        {
-            return new MethodTokenLexer(character, script, tokens.LastOrDefault());
-        }
+        if (char.IsUpper(character)) return new MethodToken(script);
 
-        if (char.IsLower(character))
-        {
-            return new ControlFlowTokenLexer(character, script);
-        }
-            
-        return new UnclassifiedValueTokenLexer(character);
-    } 
+        if (char.IsLower(character)) return new KeywordToken(script);
+
+        return new UnclassifiedValueToken(script);
+    }
 }

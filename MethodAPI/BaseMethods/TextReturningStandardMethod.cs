@@ -1,7 +1,7 @@
 ﻿namespace ScriptedEventsAPI.MethodAPI.BaseMethods;
 
 /// <summary>
-/// Represents a standard method that returns a text value
+///     Represents a standard method that returns a text value
 /// </summary>
 public abstract class TextReturningStandardMethod : StandardMethod
 {

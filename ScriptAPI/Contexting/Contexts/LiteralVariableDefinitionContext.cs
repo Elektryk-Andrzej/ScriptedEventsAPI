@@ -13,73 +13,66 @@ namespace ScriptedEventsAPI.ScriptAPI.Contexting.Contexts;
 
 public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Script scr) : StandardContext
 {
-    private LiteralVariable? _variable;
-    private MethodContext? _methodContext;
-    private TextReturningStandardMethod? _method;
     private bool _hasEqualsSignBeenVerified = false;
-    
+    private TextReturningStandardMethod? _method;
+    private MethodContext? _methodContext;
+    private LiteralVariable? _variable;
+
     public override TryAddTokenRes TryAddToken(BaseToken token)
     {
         // emulating method context
-        if (_methodContext != null)
-        {
-            return _methodContext.TryAddToken(token);
-        }
-        
+        if (_methodContext != null) return _methodContext.TryAddToken(token);
+
         if (!_hasEqualsSignBeenVerified)
         {
-            if (token is not VariableDefinitionToken)
-            {
+            if (token.RawRepresentation != "=")
                 return TryAddTokenRes.Error(
                     "When a line starts with a variable, the only possibility is setting said variable to a value, " +
                     "which requires a `=` sign after said variable, which is missing/malformed. " +
                     "Example: {test} = Save (Hello, World!)");
-            }
-            
+
             _hasEqualsSignBeenVerified = true;
             return TryAddTokenRes.Continue();
         }
 
         if (token is MethodToken methodToken)
         {
-            if (methodToken.Method is not TextReturningStandardMethod resultStandardMethod)
-            {
-                return TryAddTokenRes.Error(
-                    "An method you are using does not return a value, " +
-                    "so you cannot use it to define a value of a variable.");
-            }
+            if (methodToken.TryGetResultingContext().HasErrored(out var err, out var context))
+                return TryAddTokenRes.Error(err);
 
-            _methodContext = new(methodToken, scr);
-            _method = resultStandardMethod;
+            _methodContext = (MethodContext)context!;
+
+            if (_methodContext.Method is not TextReturningStandardMethod textMethod)
+                return TryAddTokenRes.Error(
+                    $"Method {methodToken.Method.Name} does not return a value, " +
+                    "so you cannot use it to define a value of a variable.");
+
+            _method = textMethod;
             return TryAddTokenRes.Continue();
         }
-        
+
         _variable = new()
         {
             Name = varToken.NameWithoutBraces,
-            Value = () => token.RawRepresentation,
+            Value = () => token.RawRepresentation
         };
-        
+
         return TryAddTokenRes.End();
     }
 
     public override Result VerifyCurrentState()
     {
         var rs = new ResultStacker($"Variable '{varToken.RawRepresentation}' cannot be created.");
-        
+
         if (varToken.NameWithoutBraces.Any(c => !char.IsLetter(c)))
-        {
-            return rs.AddInternal("Variable name can only contain letters.");
-        }
+            return rs.AddInt("Variable name can only contain letters.");
 
         if (char.IsUpper(varToken.NameWithoutBraces.First()))
-        {
-            return rs.AddInternal("The first character in the name must be lowercase.");
-        }
-        
+            return rs.AddInt("The first character in the name must be lowercase.");
+
         return _variable is not null || _method is not null
             ? true
-            :  rs.AddInternal("There is no value to be assigned.");
+            : rs.AddInt("There is no value to be assigned.");
     }
 
     public override void Execute()
@@ -94,7 +87,7 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
                 Lg.M();
                 throw new Exception($"Method {_method.Name} hasnt returned a value.");
             }
-            
+
             Lg.M();
             Logger.Debug($"method returned {_method.TextReturn} to set the value of the variable");
 
@@ -110,9 +103,9 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             Logger.Debug($"Tried to execute {GetType().Name} without a variable set.");
             throw new Exception($"Tried to execute {GetType().Name} without a variable set.");
         }
-        
+
         Lg.M();
         Logger.Debug($"Added variable '{_variable.Name}' to script '{scr.Name}'.");
-        scr.LocalLiteralVariables.Add(_variable);
+        scr.AddLocalLiteralVariable(_variable);
     }
 }

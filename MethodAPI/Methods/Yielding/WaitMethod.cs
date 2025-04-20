@@ -14,7 +14,7 @@ public class WaitMethod : YieldingMethod
     [
         new DurationArgument("duration")
     ];
-    
+
     public override IEnumerator<float> Execute()
     {
         var dur = Args.GetDuration("duration");

@@ -17,7 +17,7 @@ public class RunScriptCommand : ICommand
             Name = Path.GetFileNameWithoutExtension(arguments.First().Replace("\"", "")),
             Content = File.ReadAllText(arguments.First(), Encoding.UTF8)
         }.Execute();
-        
+
         response = string.Empty;
         return true;
     }

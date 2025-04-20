@@ -2,12 +2,17 @@
 
 public class TryAddContextRes
 {
+    public string ErrorMessage = "<error message not provideded!>";
+    public required bool HasErrored;
+
+    public required bool ShouldContinueExecution;
+
     public static TryAddTokenRes Continue()
     {
         return new TryAddTokenRes
         {
             ShouldContinueExecution = true,
-            HasErrored = false,
+            HasErrored = false
         };
     }
 
@@ -17,7 +22,7 @@ public class TryAddContextRes
         {
             HasErrored = true,
             ShouldContinueExecution = false,
-            ErrorMessage = errorMessage,
+            ErrorMessage = errorMessage
         };
     }
 
@@ -26,11 +31,7 @@ public class TryAddContextRes
         return new TryAddTokenRes
         {
             ShouldContinueExecution = false,
-            HasErrored = false,
+            HasErrored = false
         };
     }
-    
-    public required bool ShouldContinueExecution;
-    public required bool HasErrored;
-    public string ErrorMessage = "<error message not provideded!>";
 }

@@ -14,14 +14,11 @@ public class SetRoleMethod : StandardMethod
         new PlayerVariableArgument("players"),
         new EnumArgument("newRole", typeof(RoleTypeId))
     ];
-    
+
     public override void Execute()
     {
         var players = Args.GetPlayers("players");
         var newRole = Args.GetEnum<RoleTypeId>("newRole");
-        foreach (var player in players)
-        {
-            player.Role.Set(newRole);
-        }
+        foreach (var player in players) player.Role.Set(newRole);
     }
 }

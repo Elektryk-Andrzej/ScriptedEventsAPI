@@ -7,7 +7,7 @@ public struct TryAddTokenRes()
         return new TryAddTokenRes
         {
             ShouldContinueExecution = true,
-            HasErrored = false,
+            HasErrored = false
         };
     }
 
@@ -17,7 +17,7 @@ public struct TryAddTokenRes()
         {
             HasErrored = true,
             ShouldContinueExecution = false,
-            ErrorMessage = errorMessage,
+            ErrorMessage = errorMessage
         };
     }
 
@@ -26,10 +26,10 @@ public struct TryAddTokenRes()
         return new TryAddTokenRes
         {
             ShouldContinueExecution = false,
-            HasErrored = false,
+            HasErrored = false
         };
     }
-    
+
     public required bool ShouldContinueExecution;
     public required bool HasErrored;
     public string ErrorMessage = "<error message not provideded!>";

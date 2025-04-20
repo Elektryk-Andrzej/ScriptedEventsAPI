@@ -12,8 +12,8 @@ public class DurationArgument(string name) : BaseMethodArgument(name)
 {
     public static ArgEvalRes<TimeSpan> GetConvertSolution(BaseToken token, Script scr)
     {
-        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr, out var procValFunc) 
-            ? new(() => InternalConvert(procValFunc())) 
+        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr, out var procValFunc)
+            ? new(() => InternalConvert(procValFunc()))
             : new(InternalConvert(token.RawRepresentation));
     }
 
@@ -21,32 +21,26 @@ public class DurationArgument(string name) : BaseMethodArgument(name)
     {
         var unitIndex = Array.FindIndex(value.ToCharArray(), char.IsLetter);
         if (unitIndex == -1)
-        {
             return new()
             {
                 Result = "No unit provided.",
                 Value = TimeSpan.Zero
             };
-        }
-        
+
         var valuePart = value.Take(unitIndex).ToArray();
         if (!valuePart.All(char.IsDigit))
-        {
             return new()
             {
                 Result = $"Value parts ({string.Join("", valuePart)}) only be made of numbers.",
                 Value = TimeSpan.Zero
             };
-        }
-        
+
         if (!double.TryParse(string.Join("", valuePart), out var valueAsDouble))
-        {
             return new()
             {
                 Result = $"Value parts ({string.Join("", valuePart)}) only be made of numbers.",
                 Value = TimeSpan.Zero
             };
-        }
 
         var unit = value.Substring(unitIndex);
         TimeSpan? timeSpan = unit switch
@@ -60,14 +54,12 @@ public class DurationArgument(string name) : BaseMethodArgument(name)
         };
 
         if (timeSpan is null)
-        {
             return new()
             {
                 Result = $"Provided unit {unit} is not valid.",
                 Value = TimeSpan.Zero
             };
-        }
-        
+
         Logger.Debug($"successs! TimeSpan length is {timeSpan.Value.TotalSeconds}s");
         return new()
         {

@@ -12,18 +12,15 @@ public class BroadcastMethod : StandardMethod
     [
         new PlayerVariableArgument("players"),
         new DurationArgument("duration"),
-        new TextArgument("message"),
+        new TextArgument("message")
     ];
-    
+
     public override void Execute()
     {
         var players = Args.GetPlayers("players");
         var duration = Args.GetDuration("duration");
         var message = Args.GetText("message");
-        
-        foreach (var player in players)
-        {
-            player.Broadcast((ushort)duration.Seconds, message);
-        }
+
+        foreach (var player in players) player.Broadcast((ushort)duration.Seconds, message);
     }
 }

@@ -9,5 +9,5 @@ public enum OperatorType
     BiggerThan,
     BiggerThanOrEqual,
     SmallerThan,
-    SmallerThanOrEqual,
+    SmallerThanOrEqual
 }

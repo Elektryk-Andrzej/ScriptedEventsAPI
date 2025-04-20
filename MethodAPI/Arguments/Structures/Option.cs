@@ -2,5 +2,8 @@
 
 public record Option(string Value, string Description = "")
 {
-    public static implicit operator Option(string value) => new(value);
+    public static implicit operator Option(string value)
+    {
+        return new Option(value);
+    }
 }

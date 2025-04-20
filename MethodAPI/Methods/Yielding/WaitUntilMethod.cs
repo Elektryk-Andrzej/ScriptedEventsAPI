@@ -14,7 +14,7 @@ public class WaitUntilMethod : YieldingMethod
     [
         new ConditionArgument("condition")
     ];
-    
+
     public override IEnumerator<float> Execute()
     {
         var condFunc = Args.GetConditionFunc("condition");

@@ -12,11 +12,9 @@ public class PlayerVariableArgument(string name) : BaseMethodArgument(name)
     public static ArgEvalRes<List<Player>> GetConvertSolution(BaseToken token, Script scr)
     {
         if (token is not PlayerVariableToken playerVariableToken)
-        {
             return new(
                 $"Value '{token.RawRepresentation}' is not a player variable."
             );
-        }
 
         return new(() => DynamicSolver(playerVariableToken, scr));
     }
@@ -25,14 +23,12 @@ public class PlayerVariableArgument(string name) : BaseMethodArgument(name)
     {
         var res = scr.TryGetPlayerVariable(token.NameWithoutPrefix, out var variable);
         if (res.HasErrored())
-        {
             return new()
             {
                 Result = res,
                 Value = null!
             };
-        }
-        
+
         return new()
         {
             Result = true,

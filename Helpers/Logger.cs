@@ -6,11 +6,16 @@ public static class Logger
 {
     public static void Debug<T>(T obj)
     {
-        Log.Info($"Debug: {obj!.ToString()}");
+        //Log.Info($"Debug: {obj!.ToString()}");
     }
-    
+
     public static void Warn<T>(T obj)
     {
-        Log.Warn($"Warn: {obj!.ToString()}");
+        Log.Warn($"{obj!.ToString()}");
+    }
+
+    public static void Error<T>(T obj)
+    {
+        Log.Error($"{obj!.ToString()}");
     }
 }
