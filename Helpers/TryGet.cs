@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.MethodAPI.Exceptions;
+using ScriptedEventsAPI.MethodSystem.Exceptions;
 
 namespace ScriptedEventsAPI.Helpers;
 
@@ -18,10 +18,10 @@ public class TryGet<TValue>(TValue? value, string errorMsg)
     }
 
     [Pure]
-    public bool HasErrored(out string error, out TValue? val)
+    public bool HasErrored(out string error, out TValue val)
     {
         error = ErrorMsg;
-        val = Value;
+        val = Value!;
         return !WasSuccess;
     }
 

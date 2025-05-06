@@ -39,43 +39,49 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="Assembly-CSharp">
-            <HintPath>..\..\Desktop\EXILED REF\Assembly-CSharp-Publicized.dll</HintPath>
+          <HintPath>..\..\Desktop\EXILED REF\Assembly-CSharp-Publicized.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass">
             <HintPath>..\..\Desktop\EXILED REF\Assembly-CSharp-firstpass.dll</HintPath>
         </Reference>
         <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\CommandSystem.Core.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\CommandSystem.Core.dll</HintPath>
         </Reference>
         <Reference Include="Exiled.API, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.API.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.API.dll</HintPath>
         </Reference>
         <Reference Include="Exiled.CreditTags, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.CreditTags.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.CreditTags.dll</HintPath>
         </Reference>
         <Reference Include="Exiled.CustomItems, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.CustomItems.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.CustomItems.dll</HintPath>
         </Reference>
         <Reference Include="Exiled.CustomRoles, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.CustomRoles.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.CustomRoles.dll</HintPath>
         </Reference>
         <Reference Include="Exiled.Events, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.Events.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.Events.dll</HintPath>
         </Reference>
         <Reference Include="Exiled.Loader, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.Loader.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.Loader.dll</HintPath>
         </Reference>
         <Reference Include="Exiled.Permissions, Version=9.5.1.0, Culture=neutral, processorArchitecture=Amd64">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.Permissions.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\Exiled.Permissions.dll</HintPath>
+        </Reference>
+        <Reference Include="JetBrains.Annotations, Version=4242.42.42.42, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+          <HintPath>packages\JetBrains.Annotations.2024.3.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+        </Reference>
+        <Reference Include="NCalc, Version=1.3.8.0, Culture=neutral, PublicKeyToken=973cde3f1cafed03, processorArchitecture=MSIL">
+          <HintPath>packages\ncalc.1.3.8\lib\NCalc.dll</HintPath>
         </Reference>
         <Reference Include="NorthwoodLib, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\NorthwoodLib.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\NorthwoodLib.dll</HintPath>
         </Reference>
         <Reference Include="PluginAPI, Version=13.1.5.0, Culture=neutral, processorArchitecture=Amd64">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\PluginAPI.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\PluginAPI.dll</HintPath>
         </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Core"/>
@@ -83,219 +89,123 @@
             <HintPath>..\..\Desktop\EXILED REF\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
         <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
-            <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\YamlDotNet.dll</HintPath>
+          <HintPath>packages\ExMod.Exiled.9.5.1\lib\net48\YamlDotNet.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Helpers\Condition.cs" />
-        <Compile Include="Helpers\Flee\CalcEngine\InternalTypes\DependencyManager.cs"/>
-        <Compile Include="Helpers\Flee\CalcEngine\InternalTypes\IdentifierAnalyzer.cs"/>
-        <Compile Include="Helpers\Flee\CalcEngine\InternalTypes\Miscellaneous.cs"/>
-        <Compile Include="Helpers\Flee\CalcEngine\PublicTypes\BatchLoader.cs"/>
-        <Compile Include="Helpers\Flee\CalcEngine\PublicTypes\CalculationEngine.cs"/>
-        <Compile Include="Helpers\Flee\CalcEngine\PublicTypes\Exceptions.cs"/>
-        <Compile Include="Helpers\Flee\CalcEngine\PublicTypes\SimpleCalcEngine.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Arithmetic.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Base\Binary.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Base\ExpressionElement.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Base\Literals\Integral.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Base\Literals\LiteralElement.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Base\Literals\Real.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Base\Member.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Base\Unary.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Cast.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Compare.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Conditional.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\In.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Boolean.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Char.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\DateTime.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Integral\Int32.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Integral\Int64.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Integral\UInt32.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Integral\UInt64.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Null.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Real\Decimal.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Real\Double.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\Real\Single.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\String.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Literals\TimeSpan.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\LogicalBitwise\AndOr.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\LogicalBitwise\Not.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\LogicalBitwise\Xor.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\MemberElements\ArgumentList.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\MemberElements\FunctionCall.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\MemberElements\Identifier.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\MemberElements\Indexer.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\MemberElements\InvocationList.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\MemberElements\Miscellaneous.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Negate.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Root.cs"/>
-        <Compile Include="Helpers\Flee\ExpressionElements\Shift.cs"/>
-        <Compile Include="Helpers\Flee\InternalTypes\BranchManager.cs"/>
-        <Compile Include="Helpers\Flee\InternalTypes\Expression.cs"/>
-        <Compile Include="Helpers\Flee\InternalTypes\FleeILGenerator.cs"/>
-        <Compile Include="Helpers\Flee\InternalTypes\ImplicitConversions.cs"/>
-        <Compile Include="Helpers\Flee\InternalTypes\Miscellaneous.cs"/>
-        <Compile Include="Helpers\Flee\InternalTypes\Utility.cs"/>
-        <Compile Include="Helpers\Flee\InternalTypes\VariableTypes.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\AlternativeElement.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\Analyzer.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\Automaton.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\CharacterSetElement.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\CombineElement.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\CustomExpressionAnalyzer.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\CustomTokenPatterns.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\Element.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ExpressionAnalyzer.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ExpressionConstants.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ExpressionParser.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ExpressionTokenizer.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\LookAheadReader.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\LookAheadSet.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\Matcher.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\Node.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ParseException.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\Parser.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ParserCreationException.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ParserLogException.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\Production.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ProductionPattern.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ProductionPatternAlternative.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ProductionPatternElement.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\ReaderBuffer.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\RecursiveDescentParser.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\RegExp.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\RegExpException.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\RepeatElement.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\StackParser.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\StringElement.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\Token.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\Tokenizer.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\TokenMatch.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\TokenNFA.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\TokenPattern.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\TokenRegExpParser.cs"/>
-        <Compile Include="Helpers\Flee\Parsing\TokenStringDFA.cs"/>
-        <Compile Include="Helpers\Flee\PublicTypes\Exceptions.cs"/>
-        <Compile Include="Helpers\Flee\PublicTypes\ExpressionContext.cs"/>
-        <Compile Include="Helpers\Flee\PublicTypes\ExpressionImports.cs"/>
-        <Compile Include="Helpers\Flee\PublicTypes\ExpressionOptions.cs"/>
-        <Compile Include="Helpers\Flee\PublicTypes\ExpressionParserOptions.cs"/>
-        <Compile Include="Helpers\Flee\PublicTypes\ImportTypes.cs"/>
-        <Compile Include="Helpers\Flee\PublicTypes\Miscellaneous.cs"/>
-        <Compile Include="Helpers\Flee\PublicTypes\VariableCollection.cs"/>
-        <Compile Include="Helpers\Flee\Resources\CompileErrors.Designer.cs"/>
-        <Compile Include="Helpers\Flee\Resources\ElementNames.Designer.cs"/>
-        <Compile Include="Helpers\Flee\Resources\FleeResourceManager.cs"/>
-        <Compile Include="Helpers\Flee\Resources\GeneralErrors.Designer.cs"/>
-        <Compile Include="Helpers\Flee\Resources\ResourceKeys.cs"/>
-        <Compile Include="Helpers\TryGet.cs"/>
-        <Compile Include="MethodAPI\Arguments\Args\AmountArgument.cs"/>
-        <Compile Include="MethodAPI\Arguments\Args\BaseMethodArgument.cs"/>
-        <Compile Include="MethodAPI\Arguments\Args\ConditionArgument.cs"/>
-        <Compile Include="MethodAPI\Arguments\Args\DurationArgument.cs"/>
-        <Compile Include="MethodAPI\Arguments\Args\EnumArgument.cs"/>
-        <Compile Include="MethodAPI\Arguments\Args\NumberArgument.cs" />
-        <Compile Include="MethodAPI\Arguments\Args\OptionsArgument.cs"/>
-        <Compile Include="MethodAPI\Arguments\Args\PlayerVariableArgument.cs"/>
-        <Compile Include="MethodAPI\Arguments\Args\SinglePlayerArgument.cs"/>
-        <Compile Include="MethodAPI\Arguments\Args\TextArgument.cs"/>
-        <Compile Include="MethodAPI\Arguments\Interfaces\IArgEvalRes.cs"/>
-        <Compile Include="MethodAPI\Arguments\MethodArgumentProcessor.cs"/>
-        <Compile Include="MethodAPI\Arguments\ProvidedArguments.cs"/>
-        <Compile Include="MethodAPI\Arguments\Structures\ArgEvalRes.cs"/>
-        <Compile Include="MethodAPI\Arguments\Structures\ArgumentSkeleton.cs"/>
-        <Compile Include="MethodAPI\Arguments\Structures\Option.cs"/>
-        <Compile Include="MethodAPI\Arguments\Structures\RequiredArgumentInfo.cs" />
-        <Compile Include="MethodAPI\BaseMethods\BaseMethod.cs"/>
-        <Compile Include="MethodAPI\BaseMethods\StandardMethod.cs"/>
-        <Compile Include="MethodAPI\BaseMethods\TextReturningStandardMethod.cs"/>
-        <Compile Include="MethodAPI\BaseMethods\YieldingMethod.cs"/>
-        <Compile Include="MethodAPI\Exceptions\ArgumentFetchException.cs"/>
-        <Compile Include="MethodAPI\Exceptions\DeveloperFuckupException.cs"/>
-        <Compile Include="MethodAPI\Exceptions\MalformedConditionException.cs"/>
-        <Compile Include="MethodAPI\Exceptions\MissingArgumentException.cs"/>
-        <Compile Include="MethodAPI\MethodDescriptors\IAdditionalDescription.cs" />
-        <Compile Include="MethodAPI\MethodDescriptors\IPureMethod.cs"/>
-        <Compile Include="MethodAPI\MethodIndex.cs"/>
-        <Compile Include="MethodAPI\Methods\ExplodeMethod.cs" />
-        <Compile Include="MethodAPI\Methods\GiveItemMethod.cs"/>
-        <Compile Include="MethodAPI\Methods\BroadcastMethod.cs"/>
-        <Compile Include="MethodAPI\Methods\PrintMethod.cs"/>
-        <Compile Include="MethodAPI\Methods\PureMethods\EvaluateMethod.cs"/>
-        <Compile Include="MethodAPI\Methods\PureMethods\GetMethod.cs"/>
-        <Compile Include="MethodAPI\Methods\PureMethods\PlayerAmountMethod.cs"/>
-        <Compile Include="MethodAPI\Methods\PureMethods\SaveMethod.cs"/>
-        <Compile Include="MethodAPI\Methods\RandomMethod.cs" />
-        <Compile Include="MethodAPI\Methods\SetHealthMethod.cs" />
-        <Compile Include="MethodAPI\Methods\SetRoleMethod.cs"/>
-        <Compile Include="MethodAPI\Methods\Yielding\WaitMethod.cs"/>
-        <Compile Include="MethodAPI\Methods\Yielding\WaitUntilMethod.cs"/>
+        <Compile Include="Helpers\TryGet.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\AmountArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\BaseMethodArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\BoolArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\ConditionArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\DoorArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\DurationArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\EnumArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\NumberArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\OptionsArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\PlayersArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\ReferenceArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\SinglePlayerArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Arguments\TextArgument.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Interfaces\IArgEvalRes.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\MethodArgumentProcessor.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\ProvidedArguments.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Structures\ArgEvalRes.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Structures\ArgumentSkeleton.cs" />
+        <Compile Include="MethodSystem\ArgumentSystem\Structures\Option.cs" />
+        <Compile Include="MethodSystem\BaseMethods\BaseMethod.cs" />
+        <Compile Include="MethodSystem\BaseMethods\PlayerReturningStandardMethod.cs" />
+        <Compile Include="MethodSystem\BaseMethods\StandardMethod.cs" />
+        <Compile Include="MethodSystem\BaseMethods\TextReturningStandardMethod.cs" />
+        <Compile Include="MethodSystem\BaseMethods\YieldingMethod.cs" />
+        <Compile Include="MethodSystem\Exceptions\ArgumentFetchException.cs" />
+        <Compile Include="MethodSystem\Exceptions\DeveloperFuckupException.cs" />
+        <Compile Include="MethodSystem\Exceptions\MalformedConditionException.cs" />
+        <Compile Include="MethodSystem\Exceptions\MissingArgumentException.cs" />
+        <Compile Include="MethodSystem\MethodDescriptors\IAdditionalDescription.cs" />
+        <Compile Include="MethodSystem\MethodDescriptors\IPureMethod.cs" />
+        <Compile Include="MethodSystem\MethodIndex.cs" />
+        <Compile Include="MethodSystem\Methods\BackendMethods\Print.cs" />
+        <Compile Include="MethodSystem\Methods\BroadcastMethods\Broadcast.cs" />
+        <Compile Include="MethodSystem\Methods\DoorMethods\CloseDoor.cs" />
+        <Compile Include="MethodSystem\Methods\DoorMethods\DoorInfo.cs" />
+        <Compile Include="MethodSystem\Methods\DoorMethods\GetRandomDoor.cs" />
+        <Compile Include="MethodSystem\Methods\DoorMethods\LockDoor.cs" />
+        <Compile Include="MethodSystem\Methods\DoorMethods\OpenDoor.cs" />
+        <Compile Include="MethodSystem\Methods\DoorMethods\UnlockDoor.cs" />
+        <Compile Include="MethodSystem\Methods\ItemMethods\GiveItem.cs" />
+        <Compile Include="MethodSystem\Methods\MiscellaneousMethods\RandomNum.cs" />
+        <Compile Include="MethodSystem\Methods\PlayerMethods\AmountOf.cs" />
+        <Compile Include="MethodSystem\Methods\PlayerMethods\Explode.cs" />
+        <Compile Include="MethodSystem\Methods\PlayerMethods\Get.cs" />
+        <Compile Include="MethodSystem\Methods\PlayerMethods\GetAllPlayers.cs" />
+        <Compile Include="MethodSystem\Methods\PlayerMethods\SetHealth.cs" />
+        <Compile Include="MethodSystem\Methods\PlayerMethods\SetRole.cs" />
+        <Compile Include="MethodSystem\Methods\VariableMethods\Eval.cs" />
+        <Compile Include="MethodSystem\Methods\VariableMethods\Save.cs" />
+        <Compile Include="MethodSystem\Methods\YieldingMethods\Wait.cs" />
+        <Compile Include="MethodSystem\Methods\YieldingMethods\WaitUntil.cs" />
         <Compile Include="Helpers\ResultStructure\Result.cs" />
         <Compile Include="Helpers\ResultStructure\ResultStacker.cs" />
         <Compile Include="Helpers\BetterCoros.cs" />
         <Compile Include="Plugin\Commands\RunScriptCommand.cs" />
+        <Compile Include="Plugin\Commands\StopAllCommand.cs" />
         <Compile Include="Plugin\Config.cs" />
+        <Compile Include="Plugin\FileSystem.cs" />
         <Compile Include="Plugin\Plugin.cs" />
         <Compile Include="Helpers\Lg.cs" />
         <Compile Include="Helpers\Logger.cs" />
-        <Compile Include="ScriptAPI\Contexting\BaseContexts\BaseContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\BaseContexts\StandardContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\BaseContexts\TreeContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\BaseContexts\YieldingContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexter.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\Control\EndTreeContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\Control\IfStatementContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\Control\StopScriptContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\Loops\ForLoopContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\Loops\LoopContinueContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\Loops\RepeatLoopContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\MethodContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\LiteralVariableDefinitionContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\NoopContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Contexts\PlayerVariableDefinitionContext.cs" />
-        <Compile Include="ScriptAPI\Contexting\Extensions\BaseContextExtensions.cs" />
-        <Compile Include="ScriptAPI\Contexting\Structures\ParentContextControlMessage.cs" />
-        <Compile Include="ScriptAPI\Contexting\Structures\TryAddContextRes.cs" />
-        <Compile Include="ScriptAPI\Contexting\Structures\TryAddTokenRes.cs" />
-        <Compile Include="ScriptAPI\Exceptions\InvalidValueException.cs" />
-        <Compile Include="ScriptAPI\Exceptions\InvalidVariableException.cs" />
-        <Compile Include="ScriptAPI\Script.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\BaseTokens\BaseContextableToken.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\BaseTokens\BaseToken.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\TokenExtensions.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Structures\EndTokenParsingRes.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Structures\IUseBrackets.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Structures\ScriptLine.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokenizer.cs" />
+        <Compile Include="Plugin\ScriptFlags\SerScriptFlag.cs" />
+        <Compile Include="Plugin\ScriptFlags\ScriptFlagHandler.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\BaseContexts\BaseContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\BaseContexts\StandardContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\BaseContexts\TreeContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\BaseContexts\YieldingContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexter.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\Control\EndTreeContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\Control\IfStatementContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\Control\StopScriptContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\Loops\ForeverLoopContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\Loops\ForLoopContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\Loops\LoopContinueContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\Loops\RepeatLoopContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\MethodContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\NoOperationContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\VariableDefinition\LiteralVariableDefinitionContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Contexts\VariableDefinition\PlayerVariableDefinitionContext.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Extensions\BaseContextExtensions.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Structures\ParentContextControlMessage.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Structures\TryAddContextRes.cs" />
+        <Compile Include="ScriptSystem\ContextSystem\Structures\TryAddTokenRes.cs" />
+        <Compile Include="ScriptSystem\Exceptions\InvalidValueException.cs" />
+        <Compile Include="ScriptSystem\Exceptions\InvalidVariableException.cs" />
+        <Compile Include="ScriptSystem\Script.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\BaseTokens\BaseContextableToken.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\BaseTokens\BaseToken.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\TokenExtensions.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Structures\EndTokenParsingRes.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Structures\IUseBrackets.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Structures\ScriptLine.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Tokenizer.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokens\MethodToken.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokens\CommentToken.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokens\KeywordToken.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokens\FlagToken.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokens\LiteralVariableToken.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokens\ParenthesesToken.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokens\PlayerVariableToken.cs" />
-        <Compile Include="ScriptAPI\Tokenizing\Tokens\UnclassifiedValueToken.cs" />
-        <Compile Include="VariableAPI\ObjectReferenceSystem.cs" />
-        <Compile Include="VariableAPI\Structures\LiteralVariable.cs" />
-        <Compile Include="VariableAPI\Structures\PlayerVariable.cs" />
-        <Compile Include="VariableAPI\PlayerVariableIndex.cs" />
-        <Compile Include="VariableAPI\VariableParser.cs" />
-        <Compile Include="VariableAPI\Variables\AllPlayers.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Tokens\MethodToken.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Tokens\CommentToken.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Tokens\KeywordToken.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Tokens\FlagToken.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Tokens\LiteralVariableToken.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Tokens\ParenthesesToken.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Tokens\PlayerVariableToken.cs" />
+        <Compile Include="ScriptSystem\TokenSystem\Tokens\UnclassifiedValueToken.cs" />
+        <Compile Include="VariableSystem\ObjectReferenceSystem.cs" />
+        <Compile Include="VariableSystem\Structures\LiteralVariable.cs" />
+        <Compile Include="VariableSystem\Structures\PlayerVariable.cs" />
+        <Compile Include="VariableSystem\PlayerVariableIndex.cs" />
+        <Compile Include="VariableSystem\VariableParser.cs" />
+        <Compile Include="VariableSystem\Variables\AllPlayers.cs" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="packages.config" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="Helpers\Flee\Parsing\Expression.grammar"/>
-        <Content Include="Helpers\Flee\Resources\DocComments.xml"/>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Helpers\Flee\Resources\CompileErrors.resx"/>
-        <EmbeddedResource Include="Helpers\Flee\Resources\ElementNames.resx"/>
-        <EmbeddedResource Include="Helpers\Flee\Resources\GeneralErrors.resx"/>
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

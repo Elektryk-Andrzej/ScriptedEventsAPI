@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using ScriptedEventsAPI.Helpers.Flee.PublicTypes;
-using ScriptedEventsAPI.ScriptAPI;
+using NCalc;
+using ScriptedEventsAPI.ScriptSystem;
 using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.Helpers;
 
 public static class Condition
 {
-    public static TryGet<bool> TryEval(string expr, Script scr)
+    public static TryGet<bool> TryEval(string value, Script scr)
     {
         try
         {
             // flee being weird
-            expr = expr.Replace("!=", "<>");
-            expr = VariableParser.ReplaceVariablesInContaminatedString(expr, scr);
+            value = value.Replace("!=", "<>");
+            value = VariableParser.ReplaceVariablesInContaminatedString(value, scr);
             
-            ExpressionContext context = new();
+            var expression = new Expression(value);
             
-            var matches = Regex.Matches(expr, @"\w+");
+            var matches = Regex.Matches(value, @"\w+");
             foreach (Match match in matches)
             {
                 if (double.TryParse(match.Value, out _))
@@ -26,15 +26,16 @@ public static class Condition
                     continue;
                 }
                 
-                context.Variables[match.Value] = match.Value;
+                expression.Parameters[match.Value] = match.Value;
             }
             
-            IDynamicExpression e = context.CompileDynamic(expr);
-            return (bool)e.Evaluate();
-        }
-        catch (ExpressionCompileException ex)
-        {
-            return $"Provided condition '{expr}' is invalid: {ex.Message}";
+            var result = expression.Evaluate();
+            if (result is not bool boolRes)
+            {
+                return "Result is not a true/false value.";
+            }
+            
+            return boolRes;
         }
         catch (Exception ex)
         {

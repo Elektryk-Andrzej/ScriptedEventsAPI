@@ -1,4 +1,4 @@
-﻿using ScriptedEventsAPI.MethodAPI.Exceptions;
+﻿using ScriptedEventsAPI.MethodSystem.Exceptions;
 
 namespace ScriptedEventsAPI.Helpers.ResultStructure;
 

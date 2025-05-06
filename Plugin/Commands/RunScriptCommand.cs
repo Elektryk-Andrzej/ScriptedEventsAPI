@@ -1,9 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using System.Text;
 using CommandSystem;
-using ScriptedEventsAPI.ScriptAPI;
+using ScriptedEventsAPI.ScriptSystem;
 
 namespace ScriptedEventsAPI.Plugin.Commands;
 
@@ -12,13 +10,22 @@ public class RunScriptCommand : ICommand
 {
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
-        new Script
+        var name = arguments.FirstOrDefault();
+        
+        if (name is null)
         {
-            Name = Path.GetFileNameWithoutExtension(arguments.First().Replace("\"", "")),
-            Content = File.ReadAllText(arguments.First(), Encoding.UTF8)
-        }.Execute();
+            response = "No script name provided.";
+            return false;
+        }
 
-        response = string.Empty;
+        if (Script.CreateByScriptName(name).HasErrored(out var err, out var script))
+        {
+            response = err;
+            return false;
+        }
+        
+        script.Execute();
+        response = "Script is now running!";
         return true;
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Exiled.API.Features;
 using MEC;
+using ScriptedEventsAPI.MethodSystem.Exceptions;
 
 namespace ScriptedEventsAPI.Helpers;
 
@@ -25,6 +26,11 @@ public static class BetterCoros
             {
                 if (!routine.MoveNext()) break;
             }
+            catch (ArgumentFetchException ex)
+            {
+                Log.Error(ex.Message);
+                yield break;
+            }
             catch (Exception ex)
             {
                 Log.Error($"Coroutine failed with {ex.GetType().Name}: {ex.Message}\n{ex.StackTrace}");
@@ -35,7 +41,7 @@ public static class BetterCoros
             yield return routine.Current;
         }
     }
-
+    
     public static IEnumerator<float> SlowWaitUntilTrue(Func<bool> condition)
     {
         while (true)
