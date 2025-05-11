@@ -2,13 +2,15 @@
 using ScriptedEventsAPI.ScriptSystem;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
-using ScriptedEventsAPI.VariableAPI;
+using ScriptedEventsAPI.VariableSystem;
 
 namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
 public class TextArgument(string name) : BaseMethodArgument(name)
 {
-    public static ArgEvalRes<string> GetConvertSolution(BaseToken token, Script scr)
+    public override string OperatingValueDescription => "Text value e.g. (Never Gonna Give You Up)";
+    
+    public static ArgumentEvaluation<string> GetConvertSolution(BaseToken token, Script scr)
     {
         var value = token is ParenthesesToken parentheses
             ? parentheses.ValueWithoutBraces
@@ -20,7 +22,7 @@ public class TextArgument(string name) : BaseMethodArgument(name)
                 Result = true,
                 Value = getProcessedVariableValueFunc()
             })
-            : new(new ArgEvalRes<string>.ResInfo
+            : new(new ArgumentEvaluation<string>.EvalRes
             {
                 Result = true,
                 Value = value

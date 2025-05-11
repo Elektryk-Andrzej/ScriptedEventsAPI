@@ -9,7 +9,9 @@ namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
 public class ConditionArgument(string name) : BaseMethodArgument(name)
 {
-    public static ArgEvalRes<bool> GetConvertSolution(BaseToken token, Script scr)
+    public override string OperatingValueDescription => "A statement that evaluates to True or False e.g. ({value} = 5)";
+    
+    public static ArgumentEvaluation<bool> GetConvertSolution(BaseToken token, Script scr)
     {
         if (token is not ParenthesesToken parentheses)
             return new(
@@ -19,7 +21,7 @@ public class ConditionArgument(string name) : BaseMethodArgument(name)
         return new(DynamicSolver(parentheses.ValueWithoutBraces, scr));
     }
 
-    private static ArgEvalRes<bool>.ResInfo DynamicSolver(string expression, Script scr)
+    private static ArgumentEvaluation<bool>.EvalRes DynamicSolver(string expression, Script scr)
     {
         Logger.Debug($"evaluating expression '{expression}'");
         if (!Condition.TryEval(expression, scr).HasErrored(out var errorMsg, out var result))

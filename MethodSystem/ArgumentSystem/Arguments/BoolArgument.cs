@@ -1,21 +1,19 @@
 ﻿using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
 public class BoolArgument(string name) : BaseMethodArgument(name)
 {
-    public static ArgEvalRes<bool> GetConvertSolution(BaseToken token, Script scr)
+    public override string OperatingValueDescription => "True/False (bool) value";
+
+    public ArgumentEvaluation<bool> GetConvertSolution(BaseToken token, Script scr)
     {
-        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr,
-            out var getProcessedVariableValueFunc)
-            ? new(() => InternalConvert(getProcessedVariableValueFunc()))
-            : new(InternalConvert(token.RawRepresentation));
+        return DefaultConvertSolution(token, scr, InternalConvert);
     }
 
-    private static ArgEvalRes<bool>.ResInfo InternalConvert(string value)
+    private static ArgumentEvaluation<bool>.EvalRes InternalConvert(string value)
     {
         if (!bool.TryParse(value, out var result))
         {

@@ -9,7 +9,7 @@ namespace ScriptedEventsAPI.MethodSystem;
 
 public static class MethodIndex
 {
-    public static readonly Dictionary<string, Type> NameToMethodIndex = new();
+    public static readonly Dictionary<string, BaseMethod> NameToMethodIndex = new();
 
     public static void Initalize()
     {
@@ -34,7 +34,7 @@ public static class MethodIndex
             return;
         }
 
-        NameToMethodIndex.Add(method.Name, method.GetType());
+        NameToMethodIndex.Add(method.Name, method);
     }
 
     public static void Clear()

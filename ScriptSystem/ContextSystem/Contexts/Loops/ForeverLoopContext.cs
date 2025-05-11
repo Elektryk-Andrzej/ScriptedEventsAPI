@@ -15,7 +15,7 @@ public class ForeverLoopContext : TreeContext
 
     public override TryAddTokenRes TryAddToken(BaseToken token)
     {
-        return TryAddTokenRes.Error(_rs.Add($"Loop doesn't expect any arguments."));
+        return TryAddTokenRes.Error(_rs.Add("Loop doesn't expect any arguments."));
     }
 
     public override Result VerifyCurrentState()

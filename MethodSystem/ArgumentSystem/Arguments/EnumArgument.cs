@@ -1,31 +1,33 @@
 ﻿using System;
+using System.Linq;
+using Exiled.API.Extensions;
 using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
-public class EnumArgument(string name, Type enumType) : BaseMethodArgument(name)
+public class EnumArgument<TEnum>(string name) : BaseMethodArgument(name) where TEnum : Enum
 {
-    public ArgEvalRes<object> GetConvertSolution(BaseToken token, Script scr)
+    public override string OperatingValueDescription => 
+        $"{typeof(TEnum).Name} enum value " +
+        $"e.g. {Enum.GetValues(typeof(TEnum)).Cast<TEnum>().GetRandomValue().ToString()}";
+    
+    public ArgumentEvaluation<object> GetConvertSolution(BaseToken token, Script scr)
     {
-        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr,
-            out var getProcessedVariableValueFunc)
-            ? new(() => InternalConvert(getProcessedVariableValueFunc()))
-            : new(InternalConvert(token.RawRepresentation));
+        return DefaultConvertSolution(token, scr, InternalConvert);
     }
 
-    private ArgEvalRes<object>.ResInfo InternalConvert(string value)
+    private static ArgumentEvaluation<object>.EvalRes InternalConvert(string value)
     {
-        if (!Enum.IsDefined(enumType, value))
+        if (!Enum.IsDefined(typeof(TEnum), value))
             return new()
             {
-                Result = $"Enum {enumType.Name} does not include '{value}' as a valid value.",
+                Result = $"Enum {typeof(TEnum).Name} does not include '{value}' as a valid value.",
                 Value = null!
             };
 
-        var enumValue = Enum.Parse(enumType, value, true);
+        var enumValue = Enum.Parse(typeof(TEnum), value, true);
         return new()
         {
             Result = true,

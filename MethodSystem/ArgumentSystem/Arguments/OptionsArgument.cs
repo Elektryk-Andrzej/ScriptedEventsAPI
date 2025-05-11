@@ -3,27 +3,27 @@ using System.Linq;
 using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
 public class OptionsArgument(string name, params Option[] options) : BaseMethodArgument(name)
 {
-    public ArgEvalRes<string> GetConvertSolution(BaseToken token, Script scr)
+    public readonly Option[] Options = options;
+    public override string OperatingValueDescription => "Valid option from listed";
+    
+    public ArgumentEvaluation<string> GetConvertSolution(BaseToken token, Script scr)
     {
-        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr, out var replacedVariablesFunc)
-            ? new(() => InternalConvert(replacedVariablesFunc()))
-            : new(InternalConvert(token.RawRepresentation));
+        return DefaultConvertSolution(token, scr, InternalConvert);
     }
 
-    private ArgEvalRes<string>.ResInfo InternalConvert(string value)
+    private ArgumentEvaluation<string>.EvalRes InternalConvert(string value)
     {
-        var option = options.FirstOrDefault(opt => opt.Value.Equals(value, StringComparison.CurrentCultureIgnoreCase));
+        var option = Options.FirstOrDefault(opt => opt.Value.Equals(value, StringComparison.CurrentCultureIgnoreCase));
         if (option == null)
             return new()
             {
                 Result = $"Value '{value}' does not match any of the following options: " +
-                         $"{string.Join(", ", options.Select(o => o.Value))}",
+                         $"{string.Join(", ", Options.Select(o => o.Value))}",
                 Value = null!
             };
 

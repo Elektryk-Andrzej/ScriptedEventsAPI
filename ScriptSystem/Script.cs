@@ -13,8 +13,8 @@ using ScriptedEventsAPI.ScriptSystem.ContextSystem.Extensions;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
-using ScriptedEventsAPI.VariableAPI;
-using ScriptedEventsAPI.VariableAPI.Structures;
+using ScriptedEventsAPI.VariableSystem;
+using ScriptedEventsAPI.VariableSystem.Structures;
 
 namespace ScriptedEventsAPI.ScriptSystem;
 
@@ -127,7 +127,7 @@ public class Script
         }
         catch (Exception e)
         {
-            Logger.Error(e);
+            Logger.Error(this, e);
         }
     }
     
@@ -138,14 +138,14 @@ public class Script
             if (new Contexter(this).LinkAllTokens(Tokens)
                 .HasErrored(out var err, out var val))
             {
-                Logger.Error(err);
+                Logger.Error(this, err);
             }
 
             Contexts = val!;
         }
         catch (Exception e)
         {
-            Logger.Error(e);
+            Logger.Error(this, e);
         }
     }
 

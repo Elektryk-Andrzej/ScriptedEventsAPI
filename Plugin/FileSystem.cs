@@ -1,14 +1,14 @@
 ﻿using System.IO;
 using System.Linq;
 using Exiled.API.Features;
-using ScriptedEventsAPI.Plugin.ScriptFlags;
 using ScriptedEventsAPI.ScriptSystem;
+using ScriptedEventsAPI.ScriptSystem.ScriptFlags;
 
 namespace ScriptedEventsAPI.Plugin;
 
 public static class FileSystem
 {
-    public static readonly string DirPath = Path.Combine(Exiled.API.Features.Paths.Configs, "SER");
+    public static readonly string DirPath = Path.Combine(Paths.Configs, "SER");
     public static string[] RegisteredScriptPaths = [];
 
     public static void UpdateScriptPathCollection()
@@ -25,6 +25,7 @@ public static class FileSystem
         }
         
         UpdateScriptPathCollection();
+        ScriptFlagHandler.ClearIndex();
         
         foreach (var scriptPath in RegisteredScriptPaths)
         {

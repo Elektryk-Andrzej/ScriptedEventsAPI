@@ -15,10 +15,10 @@ public class MethodToken(Script scr) : BaseContextableToken(scr)
 
     public override TryGet<BaseContext> TryGetResultingContext()
     {
-        if (!MethodIndex.NameToMethodIndex.TryGetValue(RawRepresentation, out var type))
+        if (!MethodIndex.NameToMethodIndex.TryGetValue(RawRepresentation, out var method))
             return $"There is no method named '{RawRepresentation}'.";
 
-        if (Activator.CreateInstance(type) is not BaseMethod createdMethod)
+        if (Activator.CreateInstance(method.GetType()) is not BaseMethod createdMethod)
             return $"Method '{RawRepresentation}' couldn't be created.";
 
         Method = createdMethod;

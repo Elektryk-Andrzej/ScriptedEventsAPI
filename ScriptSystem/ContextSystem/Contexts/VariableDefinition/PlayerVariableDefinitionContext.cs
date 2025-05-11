@@ -7,14 +7,14 @@ using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
 using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
-using ScriptedEventsAPI.VariableAPI.Structures;
+using ScriptedEventsAPI.VariableSystem.Structures;
 
 namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.VariableDefinition;
 
 public class PlayerVariableDefinitionContext(PlayerVariableToken varToken, Script scr) : StandardContext
 {
     private bool _hasEqualsSignBeenVerified = false;
-    private PlayerReturningStandardMethod? _method;
+    private PlayerReturningMethod? _method;
     private MethodContext? _methodContext;
     private PlayerVariable? _variable;
 
@@ -43,7 +43,7 @@ public class PlayerVariableDefinitionContext(PlayerVariableToken varToken, Scrip
 
             _methodContext = (MethodContext)context!;
 
-            if (_methodContext.Method is not PlayerReturningStandardMethod playerMethod)
+            if (_methodContext.Method is not PlayerReturningMethod playerMethod)
                 return TryAddTokenRes.Error(
                     $"Method {methodToken.Method.Name} does not return a value, " +
                     "so you cannot use it to define a value of a variable.");

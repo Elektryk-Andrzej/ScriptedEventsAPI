@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
-using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.Helpers.ResultStructure;
 using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Interfaces;
 using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
 using ScriptedEventsAPI.MethodSystem.BaseMethods;
 using ScriptedEventsAPI.MethodSystem.Exceptions;
-using ScriptedEventsAPI.VariableAPI;
+using ScriptedEventsAPI.VariableSystem;
+using UnityEngine;
+using Logger = ScriptedEventsAPI.Helpers.Logger;
 
 namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem;
 
@@ -20,6 +21,26 @@ public class ProvidedArguments(BaseMethod method)
 
     public int Count => Arguments.Count;
 
+    public Color GetColor(string argName)
+    {
+        return GetValue<Color, ColorArgument>(argName);
+    }
+    
+    public Room[] GetRooms(string argName)
+    {
+        return GetValue<Room[], RoomsArgument>(argName);
+    }
+    
+    public bool GetBool(string argName)
+    {
+        return GetValue<bool, BoolArgument>(argName);
+    }
+    
+    public float GetPercentage(string argName)
+    {
+        return GetValue<float, PercentageArgument>(argName);
+    }
+    
     public T GetReference<T>(string argName)
     {
         return GetValue<T, ReferenceArgument<T>>(argName);
@@ -27,7 +48,7 @@ public class ProvidedArguments(BaseMethod method)
     
     public Door[] GetDoors(string argName)
     {
-        return GetValue<Door[], DoorArgument>(argName);
+        return GetValue<Door[], DoorsArgument>(argName);
     }
     
     public TimeSpan GetDuration(string argName)
@@ -41,9 +62,14 @@ public class ProvidedArguments(BaseMethod method)
             method.Script);
     }
 
-    public int GetAmount(string argName)
+    public int GetIntAmount(string argName)
     {
-        return GetValue<int, AmountArgument>(argName);
+        return GetValue<int, IntAmountArgument>(argName);
+    }
+    
+    public float GetFloatAmount(string argName)
+    {
+        return GetValue<float, FloatAmountArgument>(argName);
     }
 
     public string GetUnprocessedText(string argName)
@@ -72,9 +98,9 @@ public class ProvidedArguments(BaseMethod method)
         return evalRes.GetValue;
     }
 
-    public TEnum GetEnum<TEnum>(string argName)
+    public TEnum GetEnum<TEnum>(string argName) where TEnum : Enum
     {
-        var obj = GetValue<object, EnumArgument>(argName);
+        var obj = GetValue<object, EnumArgument<TEnum>>(argName);
         if (obj is not TEnum value)
             throw new DeveloperFuckupException($"Cannot convert {obj.GetType().Name} to {typeof(TEnum).Name}");
 
@@ -91,7 +117,7 @@ public class ProvidedArguments(BaseMethod method)
         return GetValueWithEvaluator<TValue, TArg>(argName, out _);
     }
 
-    private TValue GetValueWithEvaluator<TValue, TArg>(string argName, out ArgEvalRes<TValue> evalRes)
+    private TValue GetValueWithEvaluator<TValue, TArg>(string argName, out ArgumentEvaluation<TValue> evalRes)
     {
         var rs = new ResultStacker(
             $"Fetching argument '{argName}' (value {typeof(TValue).Name}) (argtype {typeof(TArg).Name}) " +
@@ -105,7 +131,7 @@ public class ProvidedArguments(BaseMethod method)
             throw new ArgumentFetchException(rs.Add(res).ErrorMsg);
         }
 
-        if (evaluator is not ArgEvalRes<TValue> argEvalRes)
+        if (evaluator is not ArgumentEvaluation<TValue> argEvalRes)
             throw new DeveloperFuckupException(
                 rs.Add($"Argument value is not of type {typeof(TValue).Name}"));
 
@@ -121,19 +147,24 @@ public class ProvidedArguments(BaseMethod method)
         }
 
         var foundArg = method.ExpectedArguments.FirstOrDefault(arg => arg.Name == argName);
-        if (foundArg?.DefaultValue is null)
+        if (foundArg is null)
         {
-            throw new Exception($"There is no argument registered of type '{nameof(TArg)}' and name '{argName}'.");
+            throw new DeveloperFuckupException($"There is no argument registered of type '{nameof(TArg)}' and name '{argName}'.");
+        }
+
+        if (!foundArg.IsOptional)
+        {
+            throw new MissingArgumentException($"Method '{method.Name}' is missing required argument '{argName}'.");
         }
 
         if (foundArg.DefaultValue is not TValue argValue)
         {
             throw new DeveloperFuckupException(
                 $"Argument {argName} of type {nameof(TArg)} for method {method.Name} has its default value set " +
-                $"to type {foundArg.DefaultValue.GetType().Name}, expected of type {typeof(TArg).Name}.");
+                $"to type {foundArg.DefaultValue?.GetType().Name}, expected of type {typeof(TArg).Name}.");
         }
 
-        return new ArgEvalRes<TValue>(argValue);
+        return new ArgumentEvaluation<TValue>(argValue);
     }
 
     public void Add(ArgumentSkeleton skeleton)

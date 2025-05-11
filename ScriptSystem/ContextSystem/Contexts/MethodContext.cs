@@ -46,7 +46,7 @@ public class MethodContext(MethodToken methodToken) : YieldingContext
 
         switch (Method)
         {
-            case StandardMethod stdAct:
+            case Method stdAct:
                 stdAct.Execute();
                 yield break;
             case YieldingMethod yieldAct:

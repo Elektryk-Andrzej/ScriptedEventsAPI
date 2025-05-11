@@ -24,10 +24,8 @@ public class ResultStacker(string initMsg)
     }
     
     [Pure]
-    public Result Add(Result other)
+    public Result Add(string other)
     {
-        return !other.HasErrored()
-            ? Process(other.ErrorMsg)
-            : $"{other.ErrorMsg}\n-> {Process(initMsg)}";
+        return $"{other}\n-> {Process(initMsg)}";
     }
 }

@@ -2,4 +2,13 @@
 
 namespace ScriptedEventsAPI.MethodSystem.Exceptions;
 
-public class DeveloperFuckupException(string msg) : SystemException(msg);
+public class DeveloperFuckupException : SystemException
+{
+    public DeveloperFuckupException()
+    {
+    }
+    
+    public DeveloperFuckupException(string msg) : base(msg)
+    {
+    }
+}

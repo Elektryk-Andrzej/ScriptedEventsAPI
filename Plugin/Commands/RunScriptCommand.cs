@@ -29,7 +29,7 @@ public class RunScriptCommand : ICommand
         return true;
     }
 
-    public string Command => "runscr";
+    public string Command => "serrun";
     public string[] Aliases => [];
     public string Description => string.Empty;
 }

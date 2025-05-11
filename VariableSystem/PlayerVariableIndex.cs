@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ScriptedEventsAPI.VariableAPI.Structures;
+using ScriptedEventsAPI.VariableSystem.Structures;
 
-namespace ScriptedEventsAPI.VariableAPI;
+namespace ScriptedEventsAPI.VariableSystem;
 
 public static class PlayerVariableIndex
 {

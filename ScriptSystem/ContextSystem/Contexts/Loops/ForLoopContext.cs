@@ -7,7 +7,7 @@ using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem.Exceptions;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
-using ScriptedEventsAPI.VariableAPI.Structures;
+using ScriptedEventsAPI.VariableSystem.Structures;
 
 namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.Loops;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScriptedEventsAPI.VariableAPI.Structures;
+namespace ScriptedEventsAPI.VariableSystem.Structures;
 
 public class LiteralVariable
 {

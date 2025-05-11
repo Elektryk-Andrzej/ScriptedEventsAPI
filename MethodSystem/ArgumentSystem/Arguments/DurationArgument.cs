@@ -4,21 +4,25 @@ using ScriptedEventsAPI.Helpers;
 using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
 public class DurationArgument(string name) : BaseMethodArgument(name)
 {
-    public static ArgEvalRes<TimeSpan> GetConvertSolution(BaseToken token, Script scr)
+    public override string OperatingValueDescription => "Duration e.g. 5.3s";
+    
+    public ArgumentEvaluation<TimeSpan> GetConvertSolution(BaseToken token, Script scr)
     {
-        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr, out var procValFunc)
-            ? new(() => InternalConvert(procValFunc()))
-            : new(InternalConvert(token.RawRepresentation));
+        return DefaultConvertSolution(token, scr, InternalConvert);
     }
 
-    private static ArgEvalRes<TimeSpan>.ResInfo InternalConvert(string value)
+    private ArgumentEvaluation<TimeSpan>.EvalRes InternalConvert(string value)
     {
+        if (TimeSpan.TryParse(value, out var result) && result.TotalMilliseconds > 0)
+        {
+            return result;
+        }
+        
         var unitIndex = Array.FindIndex(value.ToCharArray(), char.IsLetter);
         if (unitIndex == -1)
             return new()
@@ -28,19 +32,17 @@ public class DurationArgument(string name) : BaseMethodArgument(name)
             };
 
         var valuePart = value.Take(unitIndex).ToArray();
-        if (!valuePart.All(char.IsDigit))
+        if (!valuePart.All(char.IsDigit) || !double.TryParse(string.Join("", valuePart), out var valueAsDouble))
             return new()
             {
                 Result = $"Value parts ({string.Join("", valuePart)}) only be made of numbers.",
                 Value = TimeSpan.Zero
             };
 
-        if (!double.TryParse(string.Join("", valuePart), out var valueAsDouble))
-            return new()
-            {
-                Result = $"Value parts ({string.Join("", valuePart)}) only be made of numbers.",
-                Value = TimeSpan.Zero
-            };
+        if (valueAsDouble < 0)
+        {
+            return Rs.Add("Duration cannot be negative..");
+        }
 
         var unit = value.Substring(unitIndex);
         TimeSpan? timeSpan = unit switch

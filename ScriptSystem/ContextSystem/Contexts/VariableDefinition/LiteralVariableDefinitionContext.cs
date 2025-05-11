@@ -7,14 +7,16 @@ using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
 using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
-using ScriptedEventsAPI.VariableAPI.Structures;
+using ScriptedEventsAPI.VariableSystem;
+using ScriptedEventsAPI.VariableSystem.Structures;
 
 namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.VariableDefinition;
 
 public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Script scr) : StandardContext
 {
     private bool _hasEqualsSignBeenVerified = false;
-    private TextReturningStandardMethod? _method;
+    private TextReturningMethod? _textReturningMethod;
+    private ReferenceReturningMethod? _referenceReturningMethod;
     private MethodContext? _methodContext;
     private LiteralVariable? _variable;
 
@@ -35,64 +37,108 @@ public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Scr
             return TryAddTokenRes.Continue();
         }
 
-        if (token is MethodToken methodToken)
+        if (token is not MethodToken methodToken)
         {
-            if (methodToken.TryGetResultingContext().HasErrored(out var err, out var context))
-                return TryAddTokenRes.Error(err);
+            _variable = new()
+            {
+                Name = varToken.NameWithoutBraces,
+                Value = () => token.RawRepresentation
+            };
 
-            _methodContext = (MethodContext)context!;
+            return TryAddTokenRes.End();
+        }
+        
+        if (methodToken.TryGetResultingContext().HasErrored(out var err, out var context))
+            return TryAddTokenRes.Error(err);
 
-            if (_methodContext.Method is not TextReturningStandardMethod textMethod)
+        _methodContext = (MethodContext)context!;
+
+        switch (_methodContext.Method)
+        {
+            case TextReturningMethod textMethod:
+                _textReturningMethod = textMethod;
+                break;
+            case ReferenceReturningMethod referenceMethod:
+                _referenceReturningMethod = referenceMethod;
+                break;
+            default:
                 return TryAddTokenRes.Error(
                     $"Method {methodToken.Method.Name} does not return a value, " +
                     "so you cannot use it to define a value of a variable.");
-
-            _method = textMethod;
-            return TryAddTokenRes.Continue();
         }
-
-        _variable = new()
-        {
-            Name = varToken.NameWithoutBraces,
-            Value = () => token.RawRepresentation
-        };
-
-        return TryAddTokenRes.End();
+            
+        return TryAddTokenRes.Continue();
     }
 
     public override Result VerifyCurrentState()
     {
         var rs = new ResultStacker($"Variable '{varToken.RawRepresentation}' cannot be created.");
 
-        if (varToken.NameWithoutBraces.Any(c => !char.IsLetter(c)))
-            return rs.Add("Variable name can only contain letters.");
+        if (varToken.NameWithoutBraces.FirstOrDefault() != '*')
+        {
+            if (_referenceReturningMethod is not null)
+            {
+                return rs.Add(
+                    "When an action returns an object reference, " +
+                    "'*' must be used before the name e.g. {*myVariable}");
+            }
+            
+            if (varToken.NameWithoutBraces.Length == 0)
+            {
+                return rs.Add("Variable must have a name.");
+            }
+            
+            if (varToken.NameWithoutBraces.Any(c => !char.IsLetter(c)))
+                return rs.Add("Variable name can only contain letters.");
 
-        if (char.IsUpper(varToken.NameWithoutBraces.First()))
-            return rs.Add("The first character in the name must be lowercase.");
+            if (char.IsUpper(varToken.NameWithoutBraces.First()))
+                return rs.Add("The first character in the name must be lowercase.");
+        }
+        else
+        {
+            if (varToken.NameWithoutBraces.Length < 2)
+            {
+                return rs.Add("Variable must have a name, just '*' doesn't count as name.");
+            }
+        }
 
-        return _variable is not null || _method is not null
+        return _variable is not null || _textReturningMethod is not null || _referenceReturningMethod is not null
             ? true
             : rs.Add("There is no value to be assigned.");
     }
 
     public override void Execute()
     {
-        if (_method != null)
+        if (_textReturningMethod != null)
         {
-            Logger.Debug($"Executing '{_method.Name}' to get value");
-            _method.Execute();
+            _textReturningMethod.Execute();
 
-            if (_method.TextReturn == null)
+            if (_textReturningMethod.TextReturn == null)
             {
-                throw new Exception($"Method {_method.Name} hasnt returned a value.");
+                Logger.Error(scr, $"Method {_textReturningMethod.Name} hasn't returned a value, variable {varToken.RawRepresentation} can't be created.");
+                return;
             }
             
-            Logger.Debug($"method returned {_method.TextReturn} to set the value of the variable");
+            _variable = new()
+            {
+                Name = varToken.NameWithoutBraces,
+                Value = () => _textReturningMethod.TextReturn
+            };
+        }
+        else if (_referenceReturningMethod != null)
+        {
+            _referenceReturningMethod.Execute();
+
+            if (_referenceReturningMethod.ValueReturn == null)
+            {
+                Logger.Error(scr, $"Method {_referenceReturningMethod.Name} hasn't returned a value, variable {varToken.RawRepresentation} can't be created.");
+                return;
+            }
 
             _variable = new()
             {
                 Name = varToken.NameWithoutBraces,
-                Value = () => _method.TextReturn
+                Value = () => ObjectReferenceSystem.RegisterObject(_referenceReturningMethod.ValueReturn)
             };
         }
         else if (_variable is null)

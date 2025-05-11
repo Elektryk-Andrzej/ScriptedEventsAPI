@@ -2,4 +2,4 @@
 
 namespace ScriptedEventsAPI.MethodSystem.Exceptions;
 
-public class MissingArgumentException : SystemException;
+public class MissingArgumentException(string msg) : SystemException(msg);

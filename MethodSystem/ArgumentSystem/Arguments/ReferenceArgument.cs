@@ -1,24 +1,20 @@
-﻿using System;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
+﻿using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.VariableAPI;
+using ScriptedEventsAPI.VariableSystem;
 
 namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
 public class ReferenceArgument<TValue>(string name) : BaseMethodArgument(name)
 {
-    public readonly Type ValueType = typeof(TValue);
+    public override string OperatingValueDescription => $"A reference to {typeof(TValue).Name}";
     
-    public static ArgEvalRes<TValue> GetConvertSolution(BaseToken token, Script scr)
+    public ArgumentEvaluation<TValue> GetConvertSolution(BaseToken token, Script scr)
     {
-        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr,
-            out var getProcessedVariableValueFunc)
-            ? new(() => InternalConvert(getProcessedVariableValueFunc()))
-            : new(InternalConvert(token.RawRepresentation));
+        return DefaultConvertSolution(token, scr, InternalConvert);
     }
 
-    private static ArgEvalRes<TValue>.ResInfo InternalConvert(string value)
+    private static ArgumentEvaluation<TValue>.EvalRes InternalConvert(string value)
     {
         if (!ObjectReferenceSystem.TryRetreiveObject(value, out var obj))
         {

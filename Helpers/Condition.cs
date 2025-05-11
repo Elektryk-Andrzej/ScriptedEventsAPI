@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using NCalc;
 using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.VariableAPI;
+using ScriptedEventsAPI.VariableSystem;
 
 namespace ScriptedEventsAPI.Helpers;
 

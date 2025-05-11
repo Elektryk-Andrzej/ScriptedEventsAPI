@@ -36,17 +36,15 @@ public class IfStatementContext(Script scr) : TreeContext
 
         if (Condition.TryEval(_condition, scr).HasErrored(out var error, out var resul))
         {
-            Logger.Error($"Error while evaluating condition: {error}");
+            Logger.Error(scr, $"Error while evaluating condition: {error}");
             yield break;
         }
         
-        Logger.Debug($"result of {_condition} was {resul}");
         if (resul == false)
         {
             yield break;
         }
-
-        Logger.Debug($"if statement has children: {string.Join(", ", Children)}");
+        
         foreach (var child in Children.TakeWhile(_ => !IsTerminated))
         {
             var coro = child.ExecuteBaseContext();

@@ -1,20 +1,19 @@
 ﻿using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
 using ScriptedEventsAPI.ScriptSystem;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.VariableAPI;
 
 namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
 public class NumberArgument(string name) : BaseMethodArgument(name)
 {
-    public static ArgEvalRes<float> GetConvertSolution(BaseToken token, Script scr)
+    public override string OperatingValueDescription => "Number (float) value e.g. 21.37";
+    
+    public ArgumentEvaluation<float> GetConvertSolution(BaseToken token, Script scr)
     {
-        return VariableParser.IsVariableUsedInString(token.RawRepresentation, scr, out var replacedVariablesFunc)
-            ? new(() => InternalConvert(replacedVariablesFunc()))
-            : new(InternalConvert(token.RawRepresentation));
+        return DefaultConvertSolution(token, scr, InternalConvert);
     }
 
-    private static ArgEvalRes<float>.ResInfo InternalConvert(string value)
+    private static ArgumentEvaluation<float>.EvalRes InternalConvert(string value)
     {
         return float.TryParse(value, out var result)
             ? result

@@ -1,4 +1,7 @@
-﻿using Exiled.API.Features;
+﻿using System;
+using Discord;
+using Exiled.API.Features;
+using ScriptedEventsAPI.ScriptSystem;
 
 namespace ScriptedEventsAPI.Helpers;
 
@@ -14,8 +17,8 @@ public static class Logger
         Log.Warn($"{obj!.ToString()}");
     }
 
-    public static void Error<T>(T obj)
+    public static void Error<T>(Script scr, T obj)
     {
-        Log.Error($"{obj!.ToString()}");
+        Log.Send($"[Script '{scr.Name}'] {obj!.ToString()}", LogLevel.Error, ConsoleColor.Red);
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Features;
-using ScriptedEventsAPI.VariableAPI.Structures;
+using ScriptedEventsAPI.VariableSystem.Structures;
 
-namespace ScriptedEventsAPI.VariableAPI.Variables;
+namespace ScriptedEventsAPI.VariableSystem.Variables;
 
 public class AllPlayers : PlayerVariable
 {

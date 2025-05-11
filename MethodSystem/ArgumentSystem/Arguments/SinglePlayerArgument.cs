@@ -9,7 +9,9 @@ namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
 public class SinglePlayerArgument(string name) : BaseMethodArgument(name)
 {
-    public static ArgEvalRes<Player> GetConvertSolution(BaseToken token, Script scr)
+    public override string OperatingValueDescription => "Player variable with a single player";
+    
+    public static ArgumentEvaluation<Player> GetConvertSolution(BaseToken token, Script scr)
     {
         if (token is not PlayerVariableToken playerVariableToken)
             return new(
@@ -19,7 +21,7 @@ public class SinglePlayerArgument(string name) : BaseMethodArgument(name)
         return new(() => DynamicSolver(playerVariableToken, scr));
     }
 
-    private static ArgEvalRes<Player>.ResInfo DynamicSolver(PlayerVariableToken token, Script scr)
+    private static ArgumentEvaluation<Player>.EvalRes DynamicSolver(PlayerVariableToken token, Script scr)
     {
         var res = scr.TryGetPlayerVariable(token.NameWithoutPrefix, out var variable);
         if (res.HasErrored())

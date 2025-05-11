@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ScriptedEventsAPI.VariableAPI;
+namespace ScriptedEventsAPI.VariableSystem;
 
 /// <summary>
 ///     Used when a value cannot be expressed with text, like a list, struct etc.
@@ -9,12 +9,12 @@ namespace ScriptedEventsAPI.VariableAPI;
 /// </summary>
 public static class ObjectReferenceSystem
 {
-    public static Dictionary<string, (object value, Type type)> StoredObjects = [];
+    private static readonly Dictionary<string, (object value, Type type)> StoredObjects = [];
 
     public static string RegisterObject(object obj)
     {
         var type = obj.GetType();
-        var key = $"<| {type.Name} reference | id {obj.GetHashCode()} |>";
+        var key = $"[{type.Name} reference | {obj.GetHashCode()}]";
         StoredObjects.Add(key, (obj, type));
         return key;
     }
@@ -23,7 +23,8 @@ public static class ObjectReferenceSystem
     {
         obj = null!;
 
-        if (!StoredObjects.TryGetValue(key, out var storedObject)) return false;
+        if (!StoredObjects.TryGetValue(key, out var storedObject)) 
+            return false;
 
         obj = storedObject.value;
         return true;

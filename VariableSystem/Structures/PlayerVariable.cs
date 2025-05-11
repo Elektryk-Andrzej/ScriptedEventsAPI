@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Exiled.API.Features;
 
-namespace ScriptedEventsAPI.VariableAPI.Structures;
+namespace ScriptedEventsAPI.VariableSystem.Structures;
 
 public class PlayerVariable
 {

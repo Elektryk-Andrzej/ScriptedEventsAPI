@@ -24,6 +24,6 @@ public class PlayerVariableToken(Script scr) : BaseContextableToken(scr)
 
     public override TryGet<BaseContext> TryGetResultingContext()
     {
-        return new PlayerVariableDefinitionContext(this, scr);
+        return new PlayerVariableDefinitionContext(this, Script);
     }
 }

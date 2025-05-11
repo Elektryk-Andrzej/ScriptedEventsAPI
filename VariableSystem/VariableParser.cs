@@ -10,7 +10,7 @@ using ScriptedEventsAPI.ScriptSystem.ContextSystem;
 using ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts;
 using ScriptedEventsAPI.ScriptSystem.TokenSystem;
 
-namespace ScriptedEventsAPI.VariableAPI;
+namespace ScriptedEventsAPI.VariableSystem;
 
 /// <summary>
 ///     Replaces variables in contaminated strings.
@@ -103,7 +103,7 @@ public static class VariableParser
                     continue;
                 }
 
-                if (methodContext.Method is not TextReturningStandardMethod textMethod)
+                if (methodContext.Method is not TextReturningMethod textMethod)
                 {
                     Logger.Debug($"{{{inner}}} method does not return a value!");
                     AddUnparsed();

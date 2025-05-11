@@ -9,7 +9,9 @@ namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
 
 public class PlayersArgument(string name) : BaseMethodArgument(name)
 {
-    public static ArgEvalRes<List<Player>> GetConvertSolution(BaseToken token, Script scr)
+    public override string OperatingValueDescription => "Player variable e.g. @all";
+    
+    public static ArgumentEvaluation<List<Player>> GetConvertSolution(BaseToken token, Script scr)
     {
         if (token is not PlayerVariableToken playerVariableToken)
         {
@@ -21,7 +23,7 @@ public class PlayersArgument(string name) : BaseMethodArgument(name)
         return new(() => DynamicSolver(playerVariableToken, scr));
     }
 
-    private static ArgEvalRes<List<Player>>.ResInfo DynamicSolver(PlayerVariableToken token, Script scr)
+    private static ArgumentEvaluation<List<Player>>.EvalRes DynamicSolver(PlayerVariableToken token, Script scr)
     {
         var res = scr.TryGetPlayerVariable(token.NameWithoutPrefix, out var variable);
         if (res.HasErrored())

@@ -18,7 +18,7 @@ public class StopAllCommand : ICommand
         return true;
     }
 
-    public string Command => "stopall";
+    public string Command => "serstopall";
     public string[] Aliases => [];
     public string Description => string.Empty;
 }

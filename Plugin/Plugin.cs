@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using ScriptedEventsAPI.MethodSystem;
-using ScriptedEventsAPI.Plugin.ScriptFlags;
 using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.VariableAPI;
+using ScriptedEventsAPI.ScriptSystem.ScriptFlags;
+using ScriptedEventsAPI.VariableSystem;
 
 namespace ScriptedEventsAPI.Plugin;
 
@@ -20,9 +20,10 @@ public class Plugin : Plugin<Config>
     public override void OnEnabled()
     {
         base.OnEnabled();
+        ExiledEventSystem.Initialize();
+        ScriptFlagHandler.Initialize();
         MethodIndex.Initalize();
         PlayerVariableIndex.Initalize();
         FileSystem.Initalize();
-        ScriptFlagHandler.Initialize();
     }
 }
