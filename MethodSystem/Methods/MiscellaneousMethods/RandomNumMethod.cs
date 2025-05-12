@@ -1,9 +1,9 @@
-﻿using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
-using ScriptedEventsAPI.MethodSystem.MethodDescriptors;
+﻿using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
+using SER.MethodSystem.MethodDescriptors;
 using UnityEngine;
 
-namespace ScriptedEventsAPI.MethodSystem.Methods.MiscellaneousMethods;
+namespace SER.MethodSystem.Methods.MiscellaneousMethods;
 
 public class RandomNumMethod : TextReturningMethod, IAdditionalDescription
 {

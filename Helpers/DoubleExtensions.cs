@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScriptedEventsAPI.Helpers;
+namespace SER.Helpers;
 
 public static class TimeSpanExtensions
 {

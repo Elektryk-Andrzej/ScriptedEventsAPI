@@ -2,7 +2,7 @@
 using System.IO;
 using Exiled.API.Features;
 
-namespace ScriptedEventsAPI.Helpers;
+namespace SER.Helpers;
 
 public static class Lg
 {

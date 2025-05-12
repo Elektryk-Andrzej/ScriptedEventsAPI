@@ -1,7 +1,7 @@
 ﻿using System;
 using CommandSystem;
 
-namespace ScriptedEventsAPI.Plugin.Commands;
+namespace SER.Plugin.Commands;
 
 [CommandHandler(typeof(GameConsoleCommandHandler))]
 public class StopAllCommand : ICommand

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.Control;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Structures;
+using SER.Helpers;
+using SER.Helpers.ResultStructure;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.ContextSystem.Contexts.Control;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.Structures;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem;
+namespace SER.ScriptSystem.ContextSystem;
 
 /// <summary>
 /// Responsible for joining file tokens together into contexts for execution.

@@ -1,10 +1,10 @@
-﻿using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
-using ScriptedEventsAPI.VariableSystem;
+﻿using SER.MethodSystem.ArgumentSystem.Structures;
+using SER.ScriptSystem;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.Tokens;
+using SER.VariableSystem;
 
-namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
+namespace SER.MethodSystem.ArgumentSystem.Arguments;
 
 public class TextArgument(string name) : BaseMethodArgument(name)
 {

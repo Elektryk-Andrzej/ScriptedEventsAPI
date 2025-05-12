@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace ScriptedEventsAPI.Helpers.ResultStructure;
+namespace SER.Helpers.ResultStructure;
 
 [Pure]
 public class ResultStacker(string initMsg)

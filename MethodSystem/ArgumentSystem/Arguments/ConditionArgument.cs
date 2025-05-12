@@ -1,11 +1,11 @@
-﻿using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
+﻿using SER.Helpers;
+using SER.Helpers.ResultStructure;
+using SER.MethodSystem.ArgumentSystem.Structures;
+using SER.ScriptSystem;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.Tokens;
 
-namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
+namespace SER.MethodSystem.ArgumentSystem.Arguments;
 
 public class ConditionArgument(string name) : BaseMethodArgument(name)
 {

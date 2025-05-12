@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.Contracts;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.MethodSystem.Exceptions;
+using SER.Helpers.ResultStructure;
+using SER.MethodSystem.Exceptions;
 
-namespace ScriptedEventsAPI.Helpers;
+namespace SER.Helpers;
 
 public class TryGet<TValue>(TValue? value, string errorMsg)
 {

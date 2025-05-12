@@ -1,4 +1,4 @@
-﻿namespace ScriptedEventsAPI.ScriptSystem.TokenSystem.Structures;
+﻿namespace SER.ScriptSystem.TokenSystem.Structures;
 
 public interface IUseBrackets
 {

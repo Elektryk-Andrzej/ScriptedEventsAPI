@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem;
+using SER.Helpers;
+using SER.MethodSystem.BaseMethods;
+using SER.ScriptSystem;
+using SER.ScriptSystem.ContextSystem;
+using SER.ScriptSystem.ContextSystem.Contexts;
+using SER.ScriptSystem.TokenSystem;
 
-namespace ScriptedEventsAPI.VariableSystem;
+namespace SER.VariableSystem;
 
 /// <summary>
 ///     Replaces variables in contaminated strings.

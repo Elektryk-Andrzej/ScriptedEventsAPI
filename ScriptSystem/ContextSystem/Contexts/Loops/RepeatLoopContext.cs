@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.MethodSystem.Exceptions;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Extensions;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.Exceptions;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.VariableSystem;
+using SER.ScriptSystem.ContextSystem.Extensions;
+using SER.ScriptSystem.TokenSystem;
+using SER.Helpers.ResultStructure;
+using SER.MethodSystem.Exceptions;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.ContextSystem.Structures;
+using SER.ScriptSystem.Exceptions;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.VariableSystem;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.Loops;
+namespace SER.ScriptSystem.ContextSystem.Contexts.Loops;
 
 public class RepeatLoopContext(Script scr) : TreeContext
 {

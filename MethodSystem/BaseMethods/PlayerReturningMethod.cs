@@ -1,6 +1,6 @@
 ﻿using Exiled.API.Features;
 
-namespace ScriptedEventsAPI.MethodSystem.BaseMethods;
+namespace SER.MethodSystem.BaseMethods;
 
 /// <summary>
 /// Represents a standard method that returns an array of players.

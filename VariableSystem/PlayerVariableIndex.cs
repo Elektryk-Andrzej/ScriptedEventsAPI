@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ScriptedEventsAPI.VariableSystem.Structures;
+using Exiled.API.Features;
+using PlayerRoles;
+using SER.VariableSystem.Structures;
 
-namespace ScriptedEventsAPI.VariableSystem;
+namespace SER.VariableSystem;
 
 public static class PlayerVariableIndex
 {
@@ -12,15 +14,58 @@ public static class PlayerVariableIndex
 
     public static void Initalize()
     {
-        GlobalPlayerVariables.Clear();
+        Clear();
+        var allApiVariables = Enum
+            .GetValues(typeof(RoleTypeId))
+            .Cast<RoleTypeId>()
+            .Select(roleType => {
+                return new PlayerVariable
+                {
+                    Name = roleType.ToString().First().ToString().ToLower() + roleType.ToString().Substring(1) +
+                           "Players",
+                    Players = () => Player.Get(plr => plr.Role.Type == roleType).ToList(),
+                };
+            })
+            .ToList();
+        
+        allApiVariables.AddRange(
+            Enum.GetValues(typeof(Team))
+                .Cast<Team>()
+                .Select(teamType =>
+                {
+                    string name = teamType.ToString();
+                    if (teamType is Team.SCPs)
+                    {
+                        name = "scp";
+                    }
+                    else if (name.EndsWith("s"))
+                    {
+                        name = name.Substring(0, name.Length - 1);
+                    }
 
-        var allApiVariables = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => t.IsClass && t != typeof(PlayerVariable) && typeof(PlayerVariable).IsAssignableFrom(t))
-            .Select(t => Activator.CreateInstance(t) as PlayerVariable);
+                    name = name.First().ToString().ToLower() + name.Substring(1) + "Players";
+                    if (allApiVariables.Any(v => v.Name == name))
+                    {
+                        return null;
+                    }
+                    
+                    return new PlayerVariable
+                    {
+                        Name = name,
+                        Players = () => Player.Get(plr => plr.Role.Team == teamType).ToList(),
+                    };
+                })
+                .OfType<PlayerVariable>());
+        
+        allApiVariables.Add(
+            new PlayerVariable
+            {
+                Name = "allPlayers",
+                Players = () => Player.List.ToList()
+            });
 
-        foreach (var variable in allApiVariables)
+        foreach (var variable in allApiVariables.OfType<PlayerVariable>())
         {
-            if (variable is null) continue;
             AddPlayerVariable(variable);
         }
     }

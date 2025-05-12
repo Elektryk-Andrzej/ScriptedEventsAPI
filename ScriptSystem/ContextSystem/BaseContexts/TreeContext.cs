@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
+using SER.Helpers;
+using SER.ScriptSystem.ContextSystem.Structures;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
+namespace SER.ScriptSystem.ContextSystem.BaseContexts;
 
 public abstract class TreeContext : YieldingContext
 {

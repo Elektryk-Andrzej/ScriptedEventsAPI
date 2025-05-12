@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
+namespace SER.ScriptSystem.ContextSystem.BaseContexts;
 
 public abstract class YieldingContext : BaseContext
 {

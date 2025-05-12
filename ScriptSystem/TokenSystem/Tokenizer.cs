@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using Exiled.API.Features;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
+using SER.Helpers;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.Structures;
+using SER.ScriptSystem.TokenSystem.Tokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.TokenSystem;
+namespace SER.ScriptSystem.TokenSystem;
 
 public class Tokenizer(Script script)
 {

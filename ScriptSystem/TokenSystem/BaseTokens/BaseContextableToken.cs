@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.Contracts;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
+using SER.Helpers;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
 
-namespace ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+namespace SER.ScriptSystem.TokenSystem.BaseTokens;
 
 public abstract class BaseContextableToken(Script scr) : BaseToken(scr)
 {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.Contracts;
-using ScriptedEventsAPI.Helpers.ResultStructure;
+using SER.Helpers.ResultStructure;
 
-namespace ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+namespace SER.ScriptSystem.TokenSystem.BaseTokens;
 
 public abstract class BaseToken(Script scr, string initRep = "")
 {

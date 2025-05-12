@@ -1,9 +1,9 @@
-﻿using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+﻿using SER.Helpers.ResultStructure;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.ContextSystem.Structures;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.Control;
+namespace SER.ScriptSystem.ContextSystem.Contexts.Control;
 
 public class StopScriptContext(Script scr) : StandardContext
 {

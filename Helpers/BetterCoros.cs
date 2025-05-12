@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Exiled.API.Features;
 using MEC;
-using ScriptedEventsAPI.MethodSystem.Exceptions;
+using SER.MethodSystem.Exceptions;
 
-namespace ScriptedEventsAPI.Helpers;
+namespace SER.Helpers;
 
 public static class BetterCoros
 {

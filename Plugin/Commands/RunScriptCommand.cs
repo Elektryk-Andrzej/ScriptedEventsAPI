@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using CommandSystem;
-using ScriptedEventsAPI.ScriptSystem;
+using SER.ScriptSystem;
 
-namespace ScriptedEventsAPI.Plugin.Commands;
+namespace SER.Plugin.Commands;
 
 [CommandHandler(typeof(GameConsoleCommandHandler))]
 public class RunScriptCommand : ICommand

@@ -1,4 +1,4 @@
-﻿namespace ScriptedEventsAPI.MethodSystem.BaseMethods;
+﻿namespace SER.MethodSystem.BaseMethods;
 
 /// <summary>
 /// Represents a standard method that returns a text value.

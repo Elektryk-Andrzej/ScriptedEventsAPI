@@ -1,4 +1,4 @@
-﻿namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
+﻿namespace SER.ScriptSystem.ContextSystem.Structures;
 
 public enum ParentContextControlMessage
 {

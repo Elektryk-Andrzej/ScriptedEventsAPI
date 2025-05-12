@@ -1,5 +1,5 @@
 ﻿using System;
 
-namespace ScriptedEventsAPI.MethodSystem.Exceptions;
+namespace SER.MethodSystem.Exceptions;
 
 public class ArgumentFetchException(string msg) : SystemException(msg);

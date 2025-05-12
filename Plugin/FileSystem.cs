@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Linq;
 using Exiled.API.Features;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.ScriptSystem.ScriptFlags;
+using SER.ScriptSystem;
+using SER.ScriptSystem.ScriptFlags;
 
-namespace ScriptedEventsAPI.Plugin;
+namespace SER.Plugin;
 
 public static class FileSystem
 {

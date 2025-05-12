@@ -1,4 +1,4 @@
-﻿namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
+﻿namespace SER.MethodSystem.ArgumentSystem.Structures;
 
 public record Option(string Value, string Description = "")
 {

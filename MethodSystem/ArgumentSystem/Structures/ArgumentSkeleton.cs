@@ -1,7 +1,7 @@
 ﻿using System;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Interfaces;
+using SER.MethodSystem.ArgumentSystem.Interfaces;
 
-namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
+namespace SER.MethodSystem.ArgumentSystem.Structures;
 
 public struct ArgumentSkeleton
 {

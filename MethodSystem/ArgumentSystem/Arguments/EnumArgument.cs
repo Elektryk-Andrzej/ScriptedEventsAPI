@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Exiled.API.Extensions;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+using SER.MethodSystem.ArgumentSystem.Structures;
+using SER.ScriptSystem;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
+namespace SER.MethodSystem.ArgumentSystem.Arguments;
 
 public class EnumArgument<TEnum>(string name) : BaseMethodArgument(name) where TEnum : Enum
 {

@@ -1,4 +1,4 @@
-﻿namespace ScriptedEventsAPI.ScriptSystem.ScriptFlags;
+﻿namespace SER.ScriptSystem.ScriptFlags;
 
 public enum SerScriptFlag
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using Discord;
 using Exiled.API.Features;
-using ScriptedEventsAPI.ScriptSystem;
+using SER.ScriptSystem;
 
-namespace ScriptedEventsAPI.Helpers;
+namespace SER.Helpers;
 
 public static class Logger
 {

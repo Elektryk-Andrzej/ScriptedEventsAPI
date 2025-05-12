@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.Contracts;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.Tokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.TokenSystem;
+namespace SER.ScriptSystem.TokenSystem;
 
 public static class TokenExtensions
 {

@@ -1,8 +1,8 @@
 ﻿using Exiled.API.Extensions;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
 
-namespace ScriptedEventsAPI.MethodSystem.Methods.CASSIEMethods;
+namespace SER.MethodSystem.Methods.CASSIEMethods;
 
 public class PlayerCassieMethod : Method
 {

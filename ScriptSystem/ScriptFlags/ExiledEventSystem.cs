@@ -7,10 +7,10 @@ using Exiled.API.Features;
 using Exiled.Events.EventArgs.Interfaces;
 using Exiled.Events.Features;
 using Exiled.Loader;
-using ScriptedEventsAPI.MethodSystem.Exceptions;
-using ScriptedEventsAPI.VariableSystem;
+using SER.MethodSystem.Exceptions;
+using SER.VariableSystem;
 
-namespace ScriptedEventsAPI.ScriptSystem.ScriptFlags;
+namespace SER.ScriptSystem.ScriptFlags;
 
 public static class ExiledEventSystem
 {

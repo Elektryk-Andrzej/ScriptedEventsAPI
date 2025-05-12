@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScriptedEventsAPI.MethodSystem.Exceptions;
+namespace SER.MethodSystem.Exceptions;
 
 public class DeveloperFuckupException : SystemException
 {

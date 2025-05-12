@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
+using SER.Helpers;
+using SER.MethodSystem.BaseMethods;
 
-namespace ScriptedEventsAPI.MethodSystem;
+namespace SER.MethodSystem;
 
 public static class MethodIndex
 {

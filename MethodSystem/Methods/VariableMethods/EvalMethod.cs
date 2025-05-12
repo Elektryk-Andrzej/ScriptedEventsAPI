@@ -1,8 +1,8 @@
 ﻿using NCalc;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
 
-namespace ScriptedEventsAPI.MethodSystem.Methods.VariableMethods;
+namespace SER.MethodSystem.Methods.VariableMethods;
 
 public class EvalMethod : TextReturningMethod
 {

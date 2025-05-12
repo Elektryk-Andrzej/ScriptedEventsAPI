@@ -1,9 +1,9 @@
-﻿using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+﻿using SER.MethodSystem.ArgumentSystem.Structures;
+using SER.ScriptSystem;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 using UnityEngine;
 
-namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
+namespace SER.MethodSystem.ArgumentSystem.Arguments;
 
 public class ColorArgument(string name) : BaseMethodArgument(name)
 {

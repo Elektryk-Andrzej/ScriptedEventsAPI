@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Exiled.API.Features;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Structures;
+using SER.ScriptSystem.TokenSystem;
+using SER.ScriptSystem.TokenSystem.Structures;
 using Events = Exiled.Events.Handlers;
 
-namespace ScriptedEventsAPI.ScriptSystem.ScriptFlags;
+namespace SER.ScriptSystem.ScriptFlags;
 
 public static class ScriptFlagHandler
 {

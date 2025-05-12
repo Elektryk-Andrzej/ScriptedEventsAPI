@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ScriptedEventsAPI.VariableSystem;
+namespace SER.VariableSystem;
 
 /// <summary>
 ///     Used when a value cannot be expressed with text, like a list, struct etc.

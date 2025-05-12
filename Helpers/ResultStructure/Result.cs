@@ -1,6 +1,6 @@
-﻿using ScriptedEventsAPI.MethodSystem.Exceptions;
+﻿using SER.MethodSystem.Exceptions;
 
-namespace ScriptedEventsAPI.Helpers.ResultStructure;
+namespace SER.Helpers.ResultStructure;
 
 public readonly struct Result(bool wasSuccess, string errorMsg)
 {

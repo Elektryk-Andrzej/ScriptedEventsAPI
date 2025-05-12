@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Exiled.API.Features;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
 
-namespace ScriptedEventsAPI.MethodSystem.Methods.PlayerMethods;
+namespace SER.MethodSystem.Methods.PlayerMethods;
 
 public class GetAllPlayersMethod : PlayerReturningMethod
 {

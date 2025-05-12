@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+using SER.Helpers;
+using SER.MethodSystem.ArgumentSystem.Structures;
+using SER.ScriptSystem;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
+namespace SER.MethodSystem.ArgumentSystem.Arguments;
 
 public class DurationArgument(string name) : BaseMethodArgument(name)
 {

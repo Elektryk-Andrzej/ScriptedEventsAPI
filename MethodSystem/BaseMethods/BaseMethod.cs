@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.ScriptSystem;
+using SER.MethodSystem.ArgumentSystem;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.ScriptSystem;
 
-namespace ScriptedEventsAPI.MethodSystem.BaseMethods;
+namespace SER.MethodSystem.BaseMethods;
 
 /// <summary>
 ///     Represents a base method.

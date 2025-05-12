@@ -4,19 +4,19 @@ using System.IO;
 using System.Linq;
 using Exiled.API.Features;
 using MEC;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.Plugin;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Extensions;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
-using ScriptedEventsAPI.VariableSystem;
-using ScriptedEventsAPI.VariableSystem.Structures;
+using SER.ScriptSystem.ContextSystem.Extensions;
+using SER.Helpers;
+using SER.Helpers.ResultStructure;
+using SER.Plugin;
+using SER.ScriptSystem.ContextSystem;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.TokenSystem;
+using SER.ScriptSystem.TokenSystem.Structures;
+using SER.ScriptSystem.TokenSystem.Tokens;
+using SER.VariableSystem;
+using SER.VariableSystem.Structures;
 
-namespace ScriptedEventsAPI.ScriptSystem;
+namespace SER.ScriptSystem;
 
 public class Script
 {

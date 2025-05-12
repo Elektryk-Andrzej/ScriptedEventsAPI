@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
+using SER.Helpers;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Extensions;
+namespace SER.ScriptSystem.ContextSystem.Extensions;
 
 public static class BaseContextExtensions
 {

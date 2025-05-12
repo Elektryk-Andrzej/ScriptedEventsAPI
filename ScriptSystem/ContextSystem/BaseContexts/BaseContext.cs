@@ -1,8 +1,8 @@
-﻿using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+﻿using SER.Helpers.ResultStructure;
+using SER.ScriptSystem.ContextSystem.Structures;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
+namespace SER.ScriptSystem.ContextSystem.BaseContexts;
 
 public abstract class BaseContext
 {

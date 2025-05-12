@@ -1,4 +1,4 @@
-﻿namespace ScriptedEventsAPI.MethodSystem.MethodDescriptors;
+﻿namespace SER.MethodSystem.MethodDescriptors;
 
 /// <summary>
 ///     Represents a method which only purpose is to return a value.

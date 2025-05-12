@@ -1,10 +1,10 @@
-﻿using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.VariableDefinition;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+﻿using SER.Helpers;
+using SER.Helpers.ResultStructure;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.ContextSystem.Contexts.VariableDefinition;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
+namespace SER.ScriptSystem.TokenSystem.Tokens;
 
 public class PlayerVariableToken(Script scr) : BaseContextableToken(scr)
 {

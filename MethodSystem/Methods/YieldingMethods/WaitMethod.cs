@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using MEC;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
 
-namespace ScriptedEventsAPI.MethodSystem.Methods.YieldingMethods;
+namespace SER.MethodSystem.Methods.YieldingMethods;
 
 public class WaitMethod : YieldingMethod
 {

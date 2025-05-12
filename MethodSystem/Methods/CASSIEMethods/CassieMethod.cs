@@ -1,8 +1,8 @@
 ﻿using Exiled.API.Features;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
 
-namespace ScriptedEventsAPI.MethodSystem.Methods.CASSIEMethods;
+namespace SER.MethodSystem.Methods.CASSIEMethods;
 
 public class CassieMethod : Method
 {
@@ -11,7 +11,7 @@ public class CassieMethod : Method
     public override BaseMethodArgument[] ExpectedArguments =>
     [
         new OptionsArgument("mode",
-            "loud",
+            "jingle",
             "silent"),
         new TextArgument("message"),
         new TextArgument("translation")
@@ -22,7 +22,7 @@ public class CassieMethod : Method
     
     public override void Execute()
     {
-        var isNoisy = Args.GetOption("mode") == "loud";
+        var isNoisy = Args.GetOption("mode") == "jingle";
         var message = Args.GetText("message");
         var translation = Args.GetText("translation");
 

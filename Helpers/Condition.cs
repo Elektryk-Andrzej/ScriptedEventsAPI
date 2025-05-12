@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using NCalc;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.VariableSystem;
+using SER.ScriptSystem;
+using SER.VariableSystem;
 
-namespace ScriptedEventsAPI.Helpers;
+namespace SER.Helpers;
 
 public static class Condition
 {

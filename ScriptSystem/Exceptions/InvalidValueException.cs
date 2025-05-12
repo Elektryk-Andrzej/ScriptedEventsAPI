@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScriptedEventsAPI.ScriptSystem.Exceptions;
+namespace SER.ScriptSystem.Exceptions;
 
 public class InvalidValueException(string expectedValue, string valueReceived)
     : SystemException(

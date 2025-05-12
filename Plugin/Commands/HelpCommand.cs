@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CommandSystem;
-using ScriptedEventsAPI.MethodSystem;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
+using SER.MethodSystem;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
+using SER.MethodSystem.MethodDescriptors;
+using SER.VariableSystem;
 
-namespace ScriptedEventsAPI.Plugin.Commands;
+namespace SER.Plugin.Commands;
 
 [CommandHandler(typeof(GameConsoleCommandHandler))]
 public class HelpCommand : ICommand
@@ -28,10 +30,14 @@ public class HelpCommand : ICommand
 
         var arg = arguments.First().ToLower();
 
-        if (arg == "methodlist")
+        switch (arg)
         {
-            response = GetMethodList();
-            return true;
+            case "methods":
+                response = GetMethodList();
+                return true;
+            case "variables":
+                response = GetVariableList();
+                return true;
         }
         
         var method = MethodIndex.NameToMethodIndex.Values
@@ -52,12 +58,13 @@ public class HelpCommand : ICommand
                Welcome to the help command of SER! 
                
                To get specific information for your script creation adventure:
-               (1) find the desired option (like 'methodlist')
-               (2) use this command, attaching the option after it (like 'serhelp methodlist')
+               (1) find the desired option (like 'methods')
+               (2) use this command, attaching the option after it (like 'serhelp methods')
                (3) enjoy!
                
                Here are all the available options:
-               > methodlist 
+               > methods
+               > variables
                > exiledevents
                """;
     }
@@ -119,26 +126,44 @@ public class HelpCommand : ICommand
         
         return sb.ToString();
     }
+    
+    private static string GetVariableList()
+    {
+        var allVars = PlayerVariableIndex.GlobalPlayerVariables.ToList();
+        var sb = new StringBuilder($"Hi! There are {allVars.Count} variables available for your use!\n");
+        
+        allVars.ForEach(var => sb.AppendLine($"> @{var.Name}"));
+        
+        return sb.ToString();
+    }
 
     private static string GetMethodHelp(BaseMethod method)
     {
         var sb = new StringBuilder($"=== {method.Name} ===\n");
-        sb.AppendLine($"> {method.Description}\n");
+        sb.AppendLine($"> {method.Description}");
+        if (method is IAdditionalDescription addDesc)
+        {
+            sb.AppendLine($"> {addDesc.AdditionalDescription}");
+        }
+
+        sb.AppendLine();
         
         switch (method)
         {
             case TextReturningMethod:
-                sb.AppendLine("This method returns a text value, which can be saved or used directly.\n");
+                sb.AppendLine("This method returns a text value, which can be saved or used directly.");
                 break;
             case PlayerReturningMethod:
-                sb.AppendLine("This method returns a player value, which can be saved or used directly.\n");
+                sb.AppendLine("This method returns a player value, which can be saved or used directly.");
                 break;
             case ReferenceReturningMethod refMethod:
                 sb.AppendLine($"This method returns a reference to {refMethod.ReturnType.Name} object, which can be saved or used directly.\n" +
                               $"References represent an object which cannot be fully represented in text.\n" +
-                              $"If you wish to use that reference further, find methods supporting references of this type.\n");
+                              $"If you wish to use that reference further, find methods supporting references of this type.");
                 break;
         } 
+        
+        sb.AppendLine();
 
         if (method.ExpectedArguments.Length == 0)
         {

@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
+using SER.Helpers;
+using SER.Helpers.ResultStructure;
+using SER.MethodSystem.ArgumentSystem;
+using SER.MethodSystem.BaseMethods;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.ContextSystem.Structures;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.Tokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts;
+namespace SER.ScriptSystem.ContextSystem.Contexts;
 
 public class MethodContext(MethodToken methodToken) : YieldingContext
 {

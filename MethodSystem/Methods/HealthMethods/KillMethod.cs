@@ -1,0 +1,27 @@
+﻿using Exiled.API.Enums;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
+
+namespace SER.MethodSystem.Methods.PlayerMethods.HealthMethods;
+
+public class KillMethod : Method
+{
+    public override string Description => "Kills players.";
+
+    public override BaseMethodArgument[] ExpectedArguments =>
+    [
+        new PlayersArgument("players"),
+        new EnumArgument<DamageType>("damageType")
+    ];
+    
+    public override void Execute()
+    {
+        var players = Args.GetPlayers("players");
+        var damageType = Args.GetEnum<DamageType>("damageType");
+        
+        foreach (var player in players)
+        {
+            player.Kill(damageType);
+        }
+    }
+}

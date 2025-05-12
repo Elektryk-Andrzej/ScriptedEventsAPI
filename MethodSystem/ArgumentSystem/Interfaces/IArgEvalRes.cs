@@ -1,7 +1,7 @@
 ﻿using System;
-using ScriptedEventsAPI.Helpers.ResultStructure;
+using SER.Helpers.ResultStructure;
 
-namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem.Interfaces;
+namespace SER.MethodSystem.ArgumentSystem.Interfaces;
 
 public interface IArgEvalRes
 {

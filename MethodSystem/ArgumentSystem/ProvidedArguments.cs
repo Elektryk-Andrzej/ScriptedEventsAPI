@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Features;
 using Exiled.API.Features.Doors;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Interfaces;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
-using ScriptedEventsAPI.MethodSystem.Exceptions;
-using ScriptedEventsAPI.VariableSystem;
+using SER.Helpers.ResultStructure;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.ArgumentSystem.Interfaces;
+using SER.MethodSystem.ArgumentSystem.Structures;
+using SER.MethodSystem.BaseMethods;
+using SER.MethodSystem.Exceptions;
+using SER.VariableSystem;
 using UnityEngine;
-using Logger = ScriptedEventsAPI.Helpers.Logger;
+using Logger = SER.Helpers.Logger;
 
-namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem;
+namespace SER.MethodSystem.ArgumentSystem;
 
 public class ProvidedArguments(BaseMethod method)
 {
@@ -169,7 +169,7 @@ public class ProvidedArguments(BaseMethod method)
 
     public void Add(ArgumentSkeleton skeleton)
     {
-        Logger.Debug(
+        Helpers.Logger.Debug(
             $"Registering argument {skeleton.Name} of type {skeleton.ArgumentType.Name} for method {method.Name}.");
         Arguments.Add((skeleton.Name, skeleton.ArgumentType), skeleton.Evaluator);
     }

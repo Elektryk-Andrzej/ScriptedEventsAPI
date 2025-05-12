@@ -1,6 +1,6 @@
 ﻿using Exiled.API.Interfaces;
 
-namespace ScriptedEventsAPI.Plugin;
+namespace SER.Plugin;
 
 public class Config : IConfig
 {

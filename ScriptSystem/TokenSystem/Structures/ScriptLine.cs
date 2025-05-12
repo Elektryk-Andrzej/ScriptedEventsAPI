@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.TokenSystem.Structures;
+namespace SER.ScriptSystem.TokenSystem.Structures;
 
 public struct ScriptLine
 {

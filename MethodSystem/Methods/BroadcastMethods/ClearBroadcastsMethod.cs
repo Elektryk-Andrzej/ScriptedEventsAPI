@@ -1,7 +1,7 @@
-﻿using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
+﻿using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
 
-namespace ScriptedEventsAPI.MethodSystem.Methods.BroadcastMethods;
+namespace SER.MethodSystem.Methods.BroadcastMethods;
 
 public class ClearBroadcastsMethod : Method
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ScriptedEventsAPI.MethodSystem.BaseMethods;
+namespace SER.MethodSystem.BaseMethods;
 
 /// <summary>
 ///     Represents a SER method that can stop the execution of a script using its <see cref="IEnumerable{Float}" />.

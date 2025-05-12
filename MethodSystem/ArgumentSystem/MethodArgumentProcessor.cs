@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Interfaces;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Structures;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+using SER.Helpers;
+using SER.Helpers.ResultStructure;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.ArgumentSystem.Interfaces;
+using SER.MethodSystem.ArgumentSystem.Structures;
+using SER.MethodSystem.BaseMethods;
+using SER.ScriptSystem;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.MethodSystem.ArgumentSystem;
+namespace SER.MethodSystem.ArgumentSystem;
 
 public class MethodArgumentProcessor(BaseMethod method, Script scr)
 {

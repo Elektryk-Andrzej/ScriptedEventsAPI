@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Linq;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
-using ScriptedEventsAPI.VariableSystem;
-using ScriptedEventsAPI.VariableSystem.Structures;
+using SER.Helpers;
+using SER.Helpers.ResultStructure;
+using SER.MethodSystem.BaseMethods;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.ContextSystem.Structures;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.Tokens;
+using SER.VariableSystem;
+using SER.VariableSystem.Structures;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.VariableDefinition;
+namespace SER.ScriptSystem.ContextSystem.Contexts.VariableDefinition;
 
 public class LiteralVariableDefinitionContext(LiteralVariableToken varToken, Script scr) : StandardContext
 {

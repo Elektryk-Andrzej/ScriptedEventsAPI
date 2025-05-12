@@ -1,10 +1,10 @@
 ﻿using System;
 using Discord;
 using Exiled.API.Features;
-using ScriptedEventsAPI.MethodSystem.ArgumentSystem.Arguments;
-using ScriptedEventsAPI.MethodSystem.BaseMethods;
+using SER.MethodSystem.ArgumentSystem.Arguments;
+using SER.MethodSystem.BaseMethods;
 
-namespace ScriptedEventsAPI.MethodSystem.Methods.BackendMethods;
+namespace SER.MethodSystem.Methods.BackendMethods;
 
 public class PrintMethod : Method
 {

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Extensions;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.ContextSystem.Extensions;
+using SER.Helpers.ResultStructure;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.ContextSystem.Structures;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.Loops;
+namespace SER.ScriptSystem.ContextSystem.Contexts.Loops;
 
 public class ForeverLoopContext : TreeContext
 {

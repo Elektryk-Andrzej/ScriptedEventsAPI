@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ScriptedEventsAPI.Helpers;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Extensions;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.ContextSystem.Extensions;
+using SER.ScriptSystem.TokenSystem;
+using SER.Helpers;
+using SER.Helpers.ResultStructure;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.ContextSystem.Structures;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.Control;
+namespace SER.ScriptSystem.ContextSystem.Contexts.Control;
 
 public class IfStatementContext(Script scr) : TreeContext
 {

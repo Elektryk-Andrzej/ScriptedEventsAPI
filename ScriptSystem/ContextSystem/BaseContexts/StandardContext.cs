@@ -1,4 +1,4 @@
-﻿namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
+﻿namespace SER.ScriptSystem.ContextSystem.BaseContexts;
 
 public abstract class StandardContext : BaseContext
 {

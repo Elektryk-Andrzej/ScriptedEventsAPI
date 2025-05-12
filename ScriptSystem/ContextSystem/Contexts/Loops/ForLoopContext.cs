@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.BaseContexts;
-using ScriptedEventsAPI.ScriptSystem.ContextSystem.Structures;
-using ScriptedEventsAPI.ScriptSystem.Exceptions;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
-using ScriptedEventsAPI.VariableSystem.Structures;
+using SER.Helpers.ResultStructure;
+using SER.ScriptSystem.ContextSystem.BaseContexts;
+using SER.ScriptSystem.ContextSystem.Structures;
+using SER.ScriptSystem.Exceptions;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.Tokens;
+using SER.VariableSystem.Structures;
 
-namespace ScriptedEventsAPI.ScriptSystem.ContextSystem.Contexts.Loops;
+namespace SER.ScriptSystem.ContextSystem.Contexts.Loops;
 
 public class ForLoopContext(Script scr) : TreeContext
 {
@@ -38,7 +38,7 @@ public class ForLoopContext(Script scr) : TreeContext
             return token.RawRepresentation == "in"
                 ? TryAddTokenRes.Continue()
                 : TryAddTokenRes.Error(_rs.Add(
-                    $"Expected keyword 'in', got'{token.RawRepresentation}' instead."));
+                    $"Expected keyword 'in', got '{token.RawRepresentation}' instead."));
         }
 
         if (_loopCollectionToken == null)

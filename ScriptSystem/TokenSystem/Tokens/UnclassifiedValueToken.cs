@@ -1,7 +1,7 @@
-﻿using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
+﻿using SER.Helpers.ResultStructure;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
 
-namespace ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
+namespace SER.ScriptSystem.TokenSystem.Tokens;
 
 public class UnclassifiedValueToken(Script scr, string initRep = "") : BaseToken(scr, initRep)
 {

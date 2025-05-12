@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Exiled.API.Enums;
 using Exiled.API.Features;
-using ScriptedEventsAPI.MethodSystem;
-using ScriptedEventsAPI.ScriptSystem;
-using ScriptedEventsAPI.ScriptSystem.ScriptFlags;
-using ScriptedEventsAPI.VariableSystem;
+using SER.MethodSystem;
+using SER.ScriptSystem;
+using SER.ScriptSystem.ScriptFlags;
+using SER.VariableSystem;
 
-namespace ScriptedEventsAPI.Plugin;
+namespace SER.Plugin;
 
 public class Plugin : Plugin<Config>
 {

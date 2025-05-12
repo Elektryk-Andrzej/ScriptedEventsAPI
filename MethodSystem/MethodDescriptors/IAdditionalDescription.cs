@@ -1,4 +1,4 @@
-﻿namespace ScriptedEventsAPI.MethodSystem.MethodDescriptors;
+﻿namespace SER.MethodSystem.MethodDescriptors;
 
 public interface IAdditionalDescription
 {

@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ScriptedEventsAPI")]
+[assembly: AssemblyTitle("SER")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Elektryk_Andrzej")]
-[assembly: AssemblyProduct("ScriptedEventsAPI")]
+[assembly: AssemblyProduct("SER")]
 [assembly: AssemblyCopyright("Copyright © Elektryk_Andrzej 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

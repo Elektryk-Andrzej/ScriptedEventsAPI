@@ -1,8 +1,8 @@
-﻿using ScriptedEventsAPI.Helpers.ResultStructure;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.BaseTokens;
-using ScriptedEventsAPI.ScriptSystem.TokenSystem.Structures;
+﻿using SER.Helpers.ResultStructure;
+using SER.ScriptSystem.TokenSystem.BaseTokens;
+using SER.ScriptSystem.TokenSystem.Structures;
 
-namespace ScriptedEventsAPI.ScriptSystem.TokenSystem.Tokens;
+namespace SER.ScriptSystem.TokenSystem.Tokens;
 
 public class ParenthesesToken(Script scr) : BaseToken(scr), IUseBrackets
 {
