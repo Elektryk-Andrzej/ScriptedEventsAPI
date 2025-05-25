@@ -9,7 +9,7 @@ Have a unique idea, but can't find the right plugin? Build it yourself!
 - A lucky coin with custom effects? Got it!
 - A heavy containment decontamination system? Easy peasy!
 - A party in the intercom? Heck yeah!
-- A 10% chance for someone to become an ant? Of course!
+- A 10% chance for SCPs to explode when opening a checkpoint? Of course!
 - And much more...
 
 ## 🧠 Learning Potential
